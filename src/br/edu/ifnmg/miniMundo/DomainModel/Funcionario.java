@@ -14,15 +14,18 @@ import java.util.Objects;
  */
 public class Funcionario extends Pessoa {
     private String senha;
+    private String user;
 
     public Funcionario() {
         super();
         this.senha = "";
+        this.user = "";
     }
 
     public Funcionario(int id, String nome, String cpf, List<String> telefones, Sexo sexo) {
         super(id, nome, cpf, telefones, sexo);
-        this.senha = "";
+        this.senha = senha;
+        this.user = user;
     }
 
     public String getSenha() {
@@ -34,6 +37,18 @@ public class Funcionario extends Pessoa {
             throw new ErroValidacaoException("A senha deve possuir no minimo 4 caracteres.");
         this.senha = senha;
     }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) throws ErroValidacaoException {
+        if(user.length() < 5)
+            throw new ErroValidacaoException("O Usuário deve ter no mínimo 4 caracteres.");
+        this.user = user;
+    }
+    
+    
 
     @Override
     public int hashCode() {

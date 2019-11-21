@@ -11,5 +11,5 @@ package br.edu.ifnmg.miniMundo.DomainModel;
  */
 public enum Estado {
     Ativo,
-    Desativado
+    Inativo
 }

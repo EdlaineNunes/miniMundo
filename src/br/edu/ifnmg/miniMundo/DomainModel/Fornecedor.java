@@ -48,7 +48,7 @@ public class Fornecedor {
     }
 
     public void setCnpj(String cnpj) throws ErroValidacaoException {
-         //formatação do cpf no formato 000.000.000-00
+         //formatação do CNPJ 39.113.709/0001-39
         Matcher cnpjFormatado = regex_cnpj.matcher(cnpj);
         if(cnpjFormatado.matches())
             this.cnpj = cnpj.replace(".", "").replace("/","").replace("-","");
@@ -77,7 +77,7 @@ public class Fornecedor {
     }
 
     public void addEmail(String email){
-        if(email != null && email.length() == 11) // 
+        if(email != null && email.length() <50) //verificar @ 
             this.email.add(email);
     }
     public void removeEmail(String email){

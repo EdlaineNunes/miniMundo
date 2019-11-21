@@ -5,6 +5,8 @@
  */
 package br.edu.ifnmg.miniMundo.DomainModel;
 
+import java.util.Objects;
+
 /**
  *
  * @author Edlâine
@@ -12,36 +14,39 @@ package br.edu.ifnmg.miniMundo.DomainModel;
 public class Produto {
     private int id;
     private String descricao;
-    private Fornecedor forncedor; //classe já existente
+    private Fornecedor fornecedor; //classe já existente
     private String unidCompra;
     private String unidVenda;
     private float precoCompra;
     private float precoVenda;
     private int unidEstoque;
+    private Estado status;
 
     public Produto() {
         this.id = 0;
         this.descricao = "";
-        this.forncedor = new Fornecedor();
+        this.fornecedor = new Fornecedor();
         this.unidCompra = "";
         this.unidVenda = "";
         this.precoCompra = 0;
         this.precoVenda = 0;
         this.unidEstoque = 0;
+        this.status = Estado.Ativo;
     }
 
     public Produto(int id, String descricao, Fornecedor forncedor, String unidCompra, String unidVenda, float precoCompra, float precoVenda, int unidEstoque) {
         this.id = id;
         this.descricao = descricao;
-        this.forncedor = new Fornecedor();
+        this.fornecedor = new Fornecedor();
         this.unidCompra = unidCompra;
         this.unidVenda = unidVenda;
         this.precoCompra = precoCompra;
         this.precoVenda = precoVenda;
         this.unidEstoque = unidEstoque;
+        this.status = status;
     }
 
-    public int getI5d() {
+    public int getId() {
         return id;
     }
 
@@ -65,19 +70,21 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public Fornecedor getForncedor() {
-        return forncedor;
+    public Fornecedor getFornecedor() {
+        return fornecedor;
     }
 
-    public void setForncedor(Fornecedor forncedor) {
-        this.forncedor = forncedor;
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
     public String getUnidCompra() {
         return unidCompra;
     }
 
-    public void setUnidCompra(String unidCompra) {
+    public void setUnidCompra(String unidCompra) throws ErroValidacaoException {
+        if (unidCompra.length() < 5)
+            throw new ErroValidacaoException("Unidade de compra inválida!");
         this.unidCompra = unidCompra;
     }
 
@@ -85,7 +92,9 @@ public class Produto {
         return unidVenda;
     }
 
-    public void setUnidVenda(String unidVenda) {
+    public void setUnidVenda(String unidVenda) throws ErroValidacaoException {
+        if (unidCompra.length() < 5)
+            throw new ErroValidacaoException("Unidade de venda inválida!");
         this.unidVenda = unidVenda;
     }
 
@@ -93,7 +102,9 @@ public class Produto {
         return precoCompra;
     }
 
-    public void setPrecoCompra(float precoCompra) {
+    public void setPrecoCompra(float precoCompra) throws ErroValidacaoException {
+        if(precoCompra <= 0)
+            throw new ErroValidacaoException("Preço de compra INVÁLIDO!");
         this.precoCompra = precoCompra;
     }
 
@@ -101,7 +112,9 @@ public class Produto {
         return precoVenda;
     }
 
-    public void setPrecoVenda(float precoVenda) {
+    public void setPrecoVenda(float precoVenda) throws ErroValidacaoException {
+        if(precoVenda <= 0)
+            throw new ErroValidacaoException("Preço de venda INVÁLIDO!");
         this.precoVenda = precoVenda;
     }
 
@@ -110,9 +123,67 @@ public class Produto {
     }
 
     public void setUnidEstoque(int unidEstoque) {
+        if(unidEstoque > 0 )
+            this.unidEstoque += unidEstoque;
         this.unidEstoque = unidEstoque;
     }
 
+    public Estado getStatus() {
+        return status;
+    }
+
+    public void setStatus(Estado status) {
+        this.status = status;
+    }
     
-    
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + this.id;
+        hash = 41 * hash + Objects.hashCode(this.descricao);
+        hash = 41 * hash + Objects.hashCode(this.fornecedor);
+        hash = 41 * hash + Objects.hashCode(this.unidVenda);
+        hash = 41 * hash + Float.floatToIntBits(this.precoVenda);
+        hash = 41 * hash + this.unidEstoque;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Produto other = (Produto) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.precoVenda) != Float.floatToIntBits(other.precoVenda)) {
+            return false;
+        }
+        if (this.unidEstoque != other.unidEstoque) {
+            return false;
+        }
+        if (!Objects.equals(this.descricao, other.descricao)) {
+            return false;
+        }
+        if (!Objects.equals(this.unidVenda, other.unidVenda)) {
+            return false;
+        }
+        if (!Objects.equals(this.fornecedor, other.fornecedor)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Produto{" + "id=" + id + ", descricao=" + descricao + ", fornecedor=" + fornecedor + ", unidCompra=" + unidCompra + ", unidVenda=" + unidVenda + ", precoCompra=" + precoCompra + ", precoVenda=" + precoVenda + ", unidEstoque=" + unidEstoque + '}';
+    }
+   
 }

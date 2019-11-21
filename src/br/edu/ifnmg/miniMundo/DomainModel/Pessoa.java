@@ -85,7 +85,7 @@ public class Pessoa {
             this.telefones.add(telefone);
     }
     public void removeTelefone(String telefone){
-        if(this.telefones.contains(telefone))// o cantais faz um for e compara com tds os dados da lista
+        if(this.telefones.contains(telefone))// o contais faz um for e compara com tds os dados da lista
             this.telefones.remove(telefone);
     }    
     

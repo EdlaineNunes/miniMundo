@@ -143,5 +143,5 @@ public class Pessoa {
         return "Pessoa{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", telefones=" + telefones + ", sexo=" + sexo + ", regex_cpf=" + regex_cpf + '}';
     }
 
-         
+    
 }

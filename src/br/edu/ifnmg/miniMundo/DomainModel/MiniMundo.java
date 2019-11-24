@@ -12,6 +12,7 @@ import static br.edu.ifnmg.miniMundo.DomainModel.Sexo.M;
 import br.edu.ifnmg.miniMundo.Persistence.ClienteRepositorio;
 import br.edu.ifnmg.miniMundo.Persistence.FornecedorRepositorio;
 import br.edu.ifnmg.miniMundo.Persistence.FuncionarioRepositorio;
+import br.edu.ifnmg.miniMundo.Persistence.ProdutoRepositorio;
 
 /**
  *
@@ -61,6 +62,7 @@ public class MiniMundo {
             System.out.print(ex.getMessage());
         }
 */
+        /*
         Fornecedor fornecedor = new Fornecedor();
         
         try{
@@ -75,7 +77,29 @@ public class MiniMundo {
         }catch(ErroValidacaoException ex){
             System.out.print(ex.getMessage());
         }
+        */
+        Produto produto = new Produto();
+        FornecedorRepositorio fornecedor_repo = new FornecedorRepositorio();
+        
+        try{
+            produto.setDescricao("arroz");
+                    
+            produto.setFornecedor(fornecedor_repo.Abrir(1));
+            
+            produto.setUnidCompra("pacote");
+            produto.setUnidVenda("unidade");
+            produto.setPrecoCompra((float)250.35);
+            produto.setPrecoVenda((float)2.5);
+            produto.setUnidComprada(15);
+            
+            ProdutoRepositorio prod_repo = new ProdutoRepositorio();
+            prod_repo.Salvar(produto);
+            
+        }catch(ErroValidacaoException ex){
+            System.out.print(ex.getMessage());
+        }
         
     }
+    
         
 }

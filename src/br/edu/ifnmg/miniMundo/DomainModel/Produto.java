@@ -19,7 +19,7 @@ public class Produto {
     private String unidVenda;
     private float precoCompra;
     private float precoVenda;
-    private int unidEstoque;
+    private int unidComprada;
     private Status status;
 
     public Produto() {
@@ -30,7 +30,7 @@ public class Produto {
         this.unidVenda = "";
         this.precoCompra = 0;
         this.precoVenda = 0;
-        this.unidEstoque = 0;
+        this.unidComprada = 0;
         this.status = Status.Ativo;
     }
 
@@ -42,7 +42,7 @@ public class Produto {
         this.unidVenda = unidVenda;
         this.precoCompra = precoCompra;
         this.precoVenda = precoVenda;
-        this.unidEstoque = unidEstoque;
+        this.unidComprada = unidEstoque;
         this.status = status;
     }
 
@@ -118,14 +118,14 @@ public class Produto {
         this.precoVenda = precoVenda;
     }
 
-    public int getUnidEstoque() {
-        return unidEstoque;
+    public int getUnidComprada() {
+        return unidComprada;
     }
 
-    public void setUnidEstoque(int unidEstoque) {
-        if(unidEstoque > 0 )
-            this.unidEstoque += unidEstoque;
-        this.unidEstoque = unidEstoque;
+    public void setUnidComprada(int unidComprada) {
+        if(unidComprada > 0 )
+            this.unidComprada += unidComprada;
+        this.unidComprada = unidComprada;
     }
 
     public Status getStatus() {
@@ -144,7 +144,7 @@ public class Produto {
         hash = 41 * hash + Objects.hashCode(this.fornecedor);
         hash = 41 * hash + Objects.hashCode(this.unidVenda);
         hash = 41 * hash + Float.floatToIntBits(this.precoVenda);
-        hash = 41 * hash + this.unidEstoque;
+        hash = 41 * hash + this.unidComprada;
         return hash;
     }
 
@@ -166,7 +166,7 @@ public class Produto {
         if (Float.floatToIntBits(this.precoVenda) != Float.floatToIntBits(other.precoVenda)) {
             return false;
         }
-        if (this.unidEstoque != other.unidEstoque) {
+        if (this.unidComprada != other.unidComprada) {
             return false;
         }
         if (!Objects.equals(this.descricao, other.descricao)) {
@@ -183,7 +183,7 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto{" + "id=" + id + ", descricao=" + descricao + ", fornecedor=" + fornecedor + ", unidCompra=" + unidCompra + ", unidVenda=" + unidVenda + ", precoCompra=" + precoCompra + ", precoVenda=" + precoVenda + ", unidEstoque=" + unidEstoque + '}';
+        return "Produto{" + "id=" + id + ", descricao=" + descricao + ", fornecedor=" + fornecedor + ", unidCompra=" + unidCompra + ", unidVenda=" + unidVenda + ", precoCompra=" + precoCompra + ", precoVenda=" + precoVenda + ", unidEstoque=" + unidComprada + '}';
     }
    
 }

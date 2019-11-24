@@ -23,7 +23,7 @@ public class Funcionario {
     private Sexo sexo; //enumeração
     private String senha;
     private String user;
-    private Estado status;
+    private Status status;
     
     private Pattern regex_cpf = Pattern.compile("\\d{3}\\.?\\d{3}\\.?\\d{3}\\-?\\d{2}"); //formatar cpf
 
@@ -35,10 +35,10 @@ public class Funcionario {
         this.sexo = Sexo.M;
         this.senha = "";
         this.user = "";
-        this.status = Estado.Ativo;
+        this.status = Status.Ativo;
     }
 
-    public Funcionario(int id, String nome, String cpf, List<String> telefones, Sexo sexo, String senha, String user,Estado status) {
+    public Funcionario(int id, String nome, String cpf, List<String> telefones, Sexo sexo, String senha, String user,Status status) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -134,11 +134,11 @@ public class Funcionario {
         this.user = user;
     }
 
-    public Estado getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Estado status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
     

@@ -9,7 +9,7 @@ package br.edu.ifnmg.miniMundo.DomainModel;
  *
  * @author Edlâine
  */
-public enum Estado {
+public enum Status {
     Ativo,
     Inativo
 }

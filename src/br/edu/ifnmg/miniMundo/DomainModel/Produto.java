@@ -20,7 +20,7 @@ public class Produto {
     private float precoCompra;
     private float precoVenda;
     private int unidEstoque;
-    private Estado status;
+    private Status status;
 
     public Produto() {
         this.id = 0;
@@ -31,7 +31,7 @@ public class Produto {
         this.precoCompra = 0;
         this.precoVenda = 0;
         this.unidEstoque = 0;
-        this.status = Estado.Ativo;
+        this.status = Status.Ativo;
     }
 
     public Produto(int id, String descricao, Fornecedor forncedor, String unidCompra, String unidVenda, float precoCompra, float precoVenda, int unidEstoque) {
@@ -128,11 +128,11 @@ public class Produto {
         this.unidEstoque = unidEstoque;
     }
 
-    public Estado getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Estado status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
     

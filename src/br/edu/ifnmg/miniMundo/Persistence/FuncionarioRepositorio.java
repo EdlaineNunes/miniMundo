@@ -6,7 +6,7 @@
 package br.edu.ifnmg.miniMundo.Persistence;
 
 import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
-import br.edu.ifnmg.miniMundo.DomainModel.Estado;
+import br.edu.ifnmg.miniMundo.DomainModel.Status;
 import br.edu.ifnmg.miniMundo.DomainModel.Funcionario;
 import br.edu.ifnmg.miniMundo.DomainModel.Sexo;
 import java.sql.PreparedStatement;
@@ -85,7 +85,7 @@ public class FuncionarioRepositorio extends BancoDados{
                funcionario.setSexo( Sexo.valueOf(resultado.getString("sexo")));
                funcionario.setUser(resultado.getString("user"));
                funcionario.setSenha(resultado.getString("senha"));
-               funcionario.setStatus(Estado.valueOf(resultado.getString("status")));
+               funcionario.setStatus(Status.valueOf(resultado.getString("status")));
                
             }catch(SQLException ex) {
                funcionario = null;
@@ -127,6 +127,17 @@ public class FuncionarioRepositorio extends BancoDados{
                     where += " and ";
                 where += "sexo = '"+filtro.getSexo().name() +"'";
             }
+            if(filtro.getUser() != null && !filtro.getUser().isEmpty()){
+                if(where.length() > 0)
+                    where += " and ";
+                where += "bairro like '%"+filtro.getUser() + "%'";
+            }                 
+            if(filtro.getStatus() != null ){
+                if(where.length() > 0)
+                    where += " and ";
+                where += "status = '"+filtro.getStatus().name() +"'";
+            }
+            
             String consulta = "select * from Funcionario";
             if(where.length() >0 )
                 consulta += " where " + where;
@@ -142,7 +153,7 @@ public class FuncionarioRepositorio extends BancoDados{
                funcionario.setSexo( Sexo.valueOf(resultado.getString("sexo")));
                funcionario.setUser(resultado.getString("user"));
                funcionario.setSenha(resultado.getString("senha"));
-               funcionario.setStatus(Estado.valueOf(resultado.getString("status")));               
+               funcionario.setStatus(Status.valueOf(resultado.getString("status")));               
                funcionarios.add(funcionario);
             }
             return funcionarios;

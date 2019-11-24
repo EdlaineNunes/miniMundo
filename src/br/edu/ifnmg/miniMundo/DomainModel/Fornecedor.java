@@ -16,28 +16,48 @@ import java.util.regex.Pattern;
  * @author Edlâine
  */
 public class Fornecedor {
+    private int id;
     private String cnpj;
     private String razaoSocial;
     private String endCompleto;
     private List<String> email;
+    private Status status;
 
     //formato CNPJ 39.113.709/0001-39
     private Pattern regex_cnpj = Pattern.compile("\\d{2}\\.?\\d{3}\\.?\\d{3}\\/?\\d{4}\\-?\\d{2}");
          
     public Fornecedor() {
+        this.id = 0;
         this.cnpj = "";
         this.razaoSocial = "";
         this.endCompleto = "";
         this.email = new ArrayList<>();
+        this.status = Status.Ativo;
     }
 
-    public Fornecedor(String cnpj, String razaoSocial, String endCompleto, List<String> email) {
+    public Fornecedor(int id, String cnpj, String razaoSocial, String endCompleto, List<String> email, Status status) {
+        this.id = id;
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
         this.endCompleto = endCompleto;
-        this.email = email;
+        this.email = new ArrayList<>();
+        this.status = status;
     }
 
+   
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        try{
+            if(id > 0)
+                this.id = id;
+        }catch(Exception ex){
+            System.out.println("Erro!" + ex.getMessage());
+        }
+    }
+    
     public String getCnpj() {
         //formato CNPJ 39.113.709/0001-39
         return cnpj.substring(0,2) + "." + 
@@ -93,6 +113,15 @@ public class Fornecedor {
         this.email = email;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 3;
@@ -128,7 +157,7 @@ public class Fornecedor {
 
     @Override
     public String toString() {
-        return "Fornecedor{" + "cnpj=" + cnpj + ", razaoSocial=" + razaoSocial + ", endCompleto=" + endCompleto + ", email=" + email + ", regex_cnpj=" + regex_cnpj + '}';
+        return "Fornecedor{" + "id=" + id + ", cnpj=" + cnpj + ", razaoSocial=" + razaoSocial + ", endCompleto=" + endCompleto + ", email=" + email + ", status=" + status + '}';
     }
-    
+
 }

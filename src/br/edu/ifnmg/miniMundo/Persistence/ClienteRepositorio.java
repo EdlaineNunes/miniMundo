@@ -8,7 +8,7 @@ package br.edu.ifnmg.miniMundo.Persistence;
 import br.edu.ifnmg.miniMundo.DomainModel.Cliente;
 import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
 import br.edu.ifnmg.miniMundo.DomainModel.Cliente;
-import br.edu.ifnmg.miniMundo.DomainModel.Estado;
+import br.edu.ifnmg.miniMundo.DomainModel.Status;
 import br.edu.ifnmg.miniMundo.DomainModel.Sexo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -93,7 +93,7 @@ public class ClienteRepositorio extends BancoDados {
                cliente.setnCasa(resultado.getString("nCasa"));
                cliente.setBairro(resultado.getString("bairro"));
                cliente.setCidade(resultado.getString("cidade"));
-               cliente.setStatus(Estado.valueOf(resultado.getString("status")));
+               cliente.setStatus(Status.valueOf(resultado.getString("status")));
                
             }catch(SQLException ex) {
                cliente = null;
@@ -135,6 +135,32 @@ public class ClienteRepositorio extends BancoDados {
                     where += " and ";
                 where += "sexo = '"+filtro.getSexo().name() +"'";
             }
+            if(filtro.getRua() != null && !filtro.getRua().isEmpty()){
+                if(where.length() > 0)
+                    where += " and ";
+                where += "rua like '%"+filtro.getRua() + "%'";
+            }
+            if(filtro.getnCasa() != null && !filtro.getnCasa().isEmpty()){
+                if(where.length() > 0)
+                    where += " and ";
+                where += "nCasa like '%"+filtro.getnCasa() + "%'";
+            }          
+            if(filtro.getBairro() != null && !filtro.getBairro().isEmpty()){
+                if(where.length() > 0)
+                    where += " and ";
+                where += "bairro like '%"+filtro.getBairro() + "%'";
+            }          
+            if(filtro.getCidade() != null && !filtro.getCidade().isEmpty()){
+                if(where.length() > 0)
+                    where += " and ";
+                where += "cidade like '%"+filtro.getCidade() + "%'";
+            }          
+            if(filtro.getStatus() != null ){
+                if(where.length() > 0)
+                    where += " and ";
+                where += "status = '"+filtro.getStatus().name() +"'";
+            }
+            
             String consulta = "select * from Cliente";
             if(where.length() >0 )
                 consulta += " where " + where;
@@ -152,7 +178,7 @@ public class ClienteRepositorio extends BancoDados {
                cliente.setnCasa(resultado.getString("nCasa"));
                cliente.setBairro(resultado.getString("bairro"));
                cliente.setCidade(resultado.getString("cidade"));
-               cliente.setStatus(Estado.valueOf(resultado.getString("status")));               
+               cliente.setStatus(Status.valueOf(resultado.getString("status")));               
                clientes.add(cliente);
             }
             return clientes;

@@ -5,11 +5,12 @@
  */
 package br.edu.ifnmg.miniMundo.DomainModel;
 
-import static br.edu.ifnmg.miniMundo.DomainModel.Estado.Ativo;
-import static br.edu.ifnmg.miniMundo.DomainModel.Estado.Inativo;
+import static br.edu.ifnmg.miniMundo.DomainModel.Status.Ativo;
+import static br.edu.ifnmg.miniMundo.DomainModel.Status.Inativo;
 import static br.edu.ifnmg.miniMundo.DomainModel.Sexo.F;
 import static br.edu.ifnmg.miniMundo.DomainModel.Sexo.M;
 import br.edu.ifnmg.miniMundo.Persistence.ClienteRepositorio;
+import br.edu.ifnmg.miniMundo.Persistence.FornecedorRepositorio;
 import br.edu.ifnmg.miniMundo.Persistence.FuncionarioRepositorio;
 
 /**
@@ -42,16 +43,16 @@ public class MiniMundo {
             System.out.print(ex.getMessage());
         }
         */
-        
+        /*
         Funcionario funcionario = new Funcionario();
         
         try{
-            funcionario.setNome("Pedro");
-            funcionario.setCpf("11111111111");
+            funcionario.setNome("Joao");
+            funcionario.setCpf("11111114111");
             funcionario.setSexo(M);
-            funcionario.setUser("Pedro123");
-            funcionario.setSenha("pedro123");
-            funcionario.setStatus(Ativo);
+            funcionario.setUser("joao53");
+            funcionario.setSenha("joaozinho3");
+            //funcionario.setStatus(Ativo);
             
             FuncionarioRepositorio func_repo = new FuncionarioRepositorio();
             func_repo.Salvar(funcionario);
@@ -59,6 +60,22 @@ public class MiniMundo {
         }catch(ErroValidacaoException ex){
             System.out.print(ex.getMessage());
         }
+*/
+        Fornecedor fornecedor = new Fornecedor();
+        
+        try{
+            fornecedor.setRazaoSocial("BSI desenv sistemas");
+            fornecedor.setCnpj("39.113.709/0001-39");
+            fornecedor.setEndCompleto("Rua A,n 38-B, Nova Brasilina, Januaria");
+            //fornecedor.setStatus(Ativo);
+                   
+            FornecedorRepositorio fornecedor_repo = new FornecedorRepositorio();
+            fornecedor_repo.Salvar(fornecedor);
+        
+        }catch(ErroValidacaoException ex){
+            System.out.print(ex.getMessage());
+        }
+        
     }
         
 }

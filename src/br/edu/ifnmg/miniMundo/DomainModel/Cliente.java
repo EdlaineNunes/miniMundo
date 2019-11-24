@@ -26,7 +26,7 @@ public class Cliente {
     private String nCasa;
     private String cidade;
     private List<String> emails;
-    private Estado status;
+    private Status status;
     
     private Pattern regex_cpf = Pattern.compile("\\d{3}\\.?\\d{3}\\.?\\d{3}\\-?\\d{2}"); //formatar cpf
 
@@ -42,12 +42,12 @@ public class Cliente {
         this.nCasa = "";
         this.cidade = "";
         this.emails = new ArrayList<>();
-        this.status = Estado.Ativo;
+        this.status = Status.Ativo;
     }
 
     public Cliente(int id, String nome, String cpf, List<String> telefones, 
                 Sexo sexo, String rua, String bairro, String nCasa,    
-                    String cidade, List<String> emails,Estado status) {
+                    String cidade, List<String> emails,Status status) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -183,11 +183,11 @@ public class Cliente {
         this.emails = emails;
     }
 
-    public Estado getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Estado status) {
+    public void setStatus(Status status) {
         this.status = status;
     }  
     

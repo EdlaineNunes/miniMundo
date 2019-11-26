@@ -15,12 +15,7 @@ import java.util.regex.Pattern;
  *
  * @author Edlâine
  */
-public class Cliente {
-    private int id;
-    private String nome;
-    private String cpf;
-    private List<String> telefones;
-    private Sexo sexo; //enumeração
+public class Cliente extends Pessoa {
     private String rua;
     private String bairro;
     private String nCasa;
@@ -28,14 +23,13 @@ public class Cliente {
     private List<String> emails;
     private Status status;
     
+    // no banco de dados ao inves de float utilizar numeric (8,2)
+    //no java utilizar BigDecimal
+    
     private Pattern regex_cpf = Pattern.compile("\\d{3}\\.?\\d{3}\\.?\\d{3}\\-?\\d{2}"); //formatar cpf
 
     public Cliente() {
-        this.id = 0;
-        this.nome = "";
-        this.cpf = "00000000000";
-        this.telefones = new ArrayList<>();
-        this.sexo = Sexo.M;
+        super();
         this.rua = "";
         this.bairro = "";
         this.nCasa = "";
@@ -47,12 +41,12 @@ public class Cliente {
 
     public Cliente(int id, String nome, String cpf, List<String> telefones, 
                 Sexo sexo, String rua, String bairro, String nCasa,    
-                    String cidade, List<String> emails,Status status) {
-        this.id = id;
-        this.nome = nome;
-        this.cpf = cpf;
-        this.telefones = new ArrayList<>();
-        this.sexo = sexo;
+                    String cidade, List<String> emails,Status status) throws ErroValidacaoException {
+        setId(id);
+        setNome(nome);
+        setCpf(cpf);
+        //setTelefone(telefones);
+        setSexo(sexo);
         this.rua = rua;
         this.bairro = bairro;
         this.nCasa = nCasa;
@@ -61,72 +55,7 @@ public class Cliente {
         this.status = status;
     }
     
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        try{
-            if(id > 0)
-                this.id = id;
-        }catch(Exception ex){
-            System.out.println("Erro!" + ex.getMessage());
-        }
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) throws ErroValidacaoException {
-        if(nome.length() < 3)
-            throw new ErroValidacaoException("O nome deve ser maior que três caracteres.Tente novamente");
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        //formatação do cpf no formato 000.000.000-00
-        return cpf.substring(0, 3)+"." +
-               cpf.substring(3, 6)+"." +
-               cpf.substring(6, 9)+"-" +
-               cpf.substring(9, 11);
-    }
-
-    public void setCpf(String cpf) throws ErroValidacaoException {
-        //formatação do cpf no formato 000.000.000-00
-        Matcher m = regex_cpf.matcher(cpf);
-        if(m.matches())
-            this.cpf = cpf.replace(".", "").replace("-", "");
-        else
-            throw new ErroValidacaoException("CPF Inválido!");
-    }
-
-    public void addTelefone(String telefone){
-        if(telefone != null && telefone.length() == 11) // o método length retorna o tamanho da string
-            this.telefones.add(telefone);
-    }
-    public void removeTelefone(String telefone){
-        if(this.telefones.contains(telefone))// o contais faz um for e compara com tds os dados da lista
-            this.telefones.remove(telefone);
-    }    
-    
-    public List<String> getTelefones() {
-        return telefones;
-    }
-
-    public void setTelefones(List<String> telefones) {
-        this.telefones = telefones;
-    }
-
-    public Sexo getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(Sexo sexo) {
-        this.sexo = sexo;
-    }
-    
-     public String getRua() {
+    public String getRua() {
         return rua;
     }
 
@@ -190,18 +119,13 @@ public class Cliente {
     public void setStatus(Status status) {
         this.status = status;
     }  
-    
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.id;
-        hash = 97 * hash + Objects.hashCode(this.nome);
-        hash = 97 * hash + Objects.hashCode(this.cpf);
-        hash = 97 * hash + Objects.hashCode(this.telefones);
-        hash = 97 * hash + Objects.hashCode(this.sexo);
-        hash = 97 * hash + Objects.hashCode(this.nCasa);
-        hash = 97 * hash + Objects.hashCode(this.cidade);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.rua);
+        hash = 37 * hash + Objects.hashCode(this.bairro);
+        hash = 37 * hash + Objects.hashCode(this.nCasa);
         return hash;
     }
 
@@ -217,16 +141,13 @@ public class Cliente {
             return false;
         }
         final Cliente other = (Cliente) obj;
-        if (this.id != other.id) {
+        if (!Objects.equals(this.rua, other.rua)) {
             return false;
         }
-        if (!Objects.equals(this.cpf, other.cpf)) {
+        if (!Objects.equals(this.bairro, other.bairro)) {
             return false;
         }
-        if (this.sexo != other.sexo) {
-            return false;
-        }
-        if (!Objects.equals(this.emails, other.emails)) {
+        if (this.status != other.status) {
             return false;
         }
         return true;
@@ -234,8 +155,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", telefones=" + telefones + ", sexo=" + sexo + ", rua=" + rua + ", bairro=" + bairro + ", nCasa=" + nCasa + ", cidade=" + cidade + ", emails=" + emails + ", status=" + status + ", regex_cpf=" + regex_cpf + '}';
+        return "Cliente{" + "rua=" + rua + ", bairro=" + bairro + ", nCasa=" + nCasa + ", cidade=" + cidade + ", emails=" + emails + ", status=" + status + '}';
     }
-
-     
+      
 }

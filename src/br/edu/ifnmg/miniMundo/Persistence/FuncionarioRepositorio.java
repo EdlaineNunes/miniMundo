@@ -8,6 +8,7 @@ package br.edu.ifnmg.miniMundo.Persistence;
 import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
 import br.edu.ifnmg.miniMundo.DomainModel.Status;
 import br.edu.ifnmg.miniMundo.DomainModel.Funcionario;
+import br.edu.ifnmg.miniMundo.DomainModel.Pessoa;
 import br.edu.ifnmg.miniMundo.DomainModel.Sexo;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -20,49 +21,38 @@ import java.util.List;
  *
  * @author Edlâine
  */
-public class FuncionarioRepositorio extends BancoDados{
+public class FuncionarioRepositorio extends PessoaRepositorio{
     public FuncionarioRepositorio(){
         super();
     }
     
     public boolean Salvar(Funcionario obj){
+        super.Salvar((Pessoa) obj);
         try {  
-            if(obj.getId() == 0){
+            if(obj.getId() != 0){
                 PreparedStatement sql = this.getConexao()
-                        .prepareStatement("insert into Funcionario(nome, cpf, sexo, user, senha,status)"
-                                + " values(?,?,?,?,?,?)",
-                                Statement.RETURN_GENERATED_KEYS);
-                sql.setString(1, obj.getNome());
-                sql.setString(2, obj.getCpf().replace(".", "").replace("-", ""));
-                sql.setString(3, obj.getSexo().name());
-                sql.setString(4, obj.getUser());
-                sql.setString(5, obj.getSenha());
-                sql.setString(6, obj.getStatus().name());
-                               
-                if(sql.executeUpdate() > 0){ 
-                    ResultSet chave = sql.getGeneratedKeys();
-                    chave.next();
-                    obj.setId(chave.getInt(1));
-                    return true;
-                }
-                else
-                    return false;
+                        .prepareStatement("insert into Funcionario(pessoa_fk, user, senha,status)"
+                                + " values(?,?,?,?)");
+                               // Statement.RETURN_GENERATED_KEYS);
+                sql.setInt(1, obj.getId());
+                sql.setString(2, obj.getUser());
+                sql.setString(3, obj.getSenha());
+                sql.setString(4, obj.getStatus().name());
+                
+                sql.executeUpdate();
+                return true;
             } else {
                 PreparedStatement sql = this.getConexao()
-                        .prepareStatement("update Funcionario set nome = ?, cpf = ?, "
-                                + "sexo = ?, user = ?, senha = ?, status = ? where id = ?");
-                sql.setString(1, obj.getNome());
-                sql.setString(2, obj.getCpf().replace(".", "").replace("-", ""));
-                sql.setString(3, obj.getSexo().name());
-                sql.setString(4, obj.getUser());
-                sql.setString(5, obj.getSenha());
-                sql.setString(6, obj.getStatus().name());
-                sql.setInt(7, obj.getId());
+                        .prepareStatement("update Funcionario set user = ?, "
+                                + "senha = ?, status = ? where pessoa_fk = ?");
                 
-                if(sql.executeUpdate() > 0) 
-                    return true;
-                else
-                    return false;
+                sql.setString(1, obj.getUser());
+                sql.setString(2, obj.getSenha());
+                sql.setString(3, obj.getStatus().name());
+                sql.setInt(4, obj.getId());
+                
+                sql.executeUpdate();
+                return true;
             }                   
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -70,16 +60,16 @@ public class FuncionarioRepositorio extends BancoDados{
         return false;     
     }
 
-    public Funcionario Abrir(int id) throws ErroValidacaoException{
+    public Funcionario Abrir(Funcionario obj) throws ErroValidacaoException{
         try {     
             PreparedStatement sql = this.getConexao()
-                    .prepareStatement("select * from Funcionario where id = ?");   
-            sql.setInt(1, id);
+                    .prepareStatement("select * from Funcionario where pessoa_fk = ?");   
+            sql.setInt(1, obj.getId());
             ResultSet resultado = sql.executeQuery();
             resultado.next();
             Funcionario funcionario = new Funcionario();   
             try{
-               funcionario.setId( resultado.getInt("id"));
+               funcionario.setId( resultado.getInt("pessoa_fk"));
                funcionario.setNome( resultado.getString("nome"));
                funcionario.setCpf( resultado.getString("cpf"));
                funcionario.setSexo( Sexo.valueOf(resultado.getString("sexo")));
@@ -100,7 +90,7 @@ public class FuncionarioRepositorio extends BancoDados{
     public boolean Desativar(Funcionario obj){
         try {
             PreparedStatement sql = this.getConexao()
-                    .prepareStatement("update Funcionario set status = 'Inativo' where id = ?");          
+                    .prepareStatement("update Funcionario set status = 'Inativo' where pessoa_fk = ?");          
             sql.setInt(1, obj.getId());          
             if(sql.executeUpdate() > 0)
                 return true;
@@ -147,7 +137,7 @@ public class FuncionarioRepositorio extends BancoDados{
             List<Funcionario> funcionarios = new ArrayList<>();
             while(resultado.next()) {
                Funcionario funcionario = new Funcionario();
-               funcionario.setId( resultado.getInt("id"));
+               funcionario.setId( resultado.getInt("pessoa_fk"));
                funcionario.setNome( resultado.getString("nome"));
                funcionario.setCpf( resultado.getString("cpf"));
                funcionario.setSexo( Sexo.valueOf(resultado.getString("sexo")));

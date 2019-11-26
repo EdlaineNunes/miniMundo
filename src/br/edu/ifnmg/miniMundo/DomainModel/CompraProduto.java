@@ -17,8 +17,7 @@ public class CompraProduto {
     private int id;
     private List<Produto> produtos;
     private Funcionario pessoaFunc;
-    private Fornecedor fornecedor;
-    private int qnt;
+    private Fornecedor fornecedor; //um so fornecedor
     private float precoFinal;
 
     public CompraProduto() {
@@ -26,16 +25,14 @@ public class CompraProduto {
         this.produtos = new ArrayList<Produto>();
         this.pessoaFunc = new Funcionario();
         this.fornecedor = new Fornecedor();
-        this.qnt = 0;
         this.precoFinal = 0;
     }
 
-    public CompraProduto(int id, Produto produto, Funcionario pessoaFunc, Fornecedor fornecedor, int qnt, float precoFinal) {
+    public CompraProduto(int id, Produto produto, Funcionario pessoaFunc, Fornecedor fornecedor, float precoFinal) {
         this.id = id;
         this.produtos = new ArrayList<Produto>();
         this.pessoaFunc = new Funcionario();
         this.fornecedor = new Fornecedor();
-        this.qnt = qnt;
         this.precoFinal = precoFinal;
     }
 
@@ -78,21 +75,11 @@ public class CompraProduto {
     }
 
     public Fornecedor getFornecedor() {
-        return fornecedor;
+        return (Fornecedor) fornecedor;
     }
 
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
-    }
-
-    public int getQnt() {
-        return qnt;
-    }
-
-    public void setQnt(int qnt) throws ErroValidacaoException {
-        if(qnt <= 0)
-            throw new ErroValidacaoException("Quantidade inválida!");
-        this.qnt = qnt;
     }
 
     public float getPrecoFinal() {
@@ -140,7 +127,7 @@ public class CompraProduto {
 
     @Override
     public String toString() {
-        return "CompraProduto{" + "id=" + id + ", produto=" + produtos + ", pessoaFunc=" + pessoaFunc + ", fornecedor=" + fornecedor + ", qnt=" + qnt + ", precoFinal=" + precoFinal + '}';
+        return "CompraProduto{" + "id=" + id + ", produtos=" + produtos + ", pessoaFunc=" + pessoaFunc + ", fornecedor=" + fornecedor + ", precoFinal=" + precoFinal + '}';
     }
     
 }

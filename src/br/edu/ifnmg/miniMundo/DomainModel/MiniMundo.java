@@ -25,7 +25,7 @@ public class MiniMundo {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        /*Cliente cliente = new Cliente();
+       /* Cliente cliente = new Cliente();
         
         try{
             cliente.setNome("Ana");
@@ -43,8 +43,8 @@ public class MiniMundo {
         }catch(ErroValidacaoException ex){
             System.out.print(ex.getMessage());
         }
+        
         */
-        /*
         Funcionario funcionario = new Funcionario();
         
         try{
@@ -53,7 +53,7 @@ public class MiniMundo {
             funcionario.setSexo(M);
             funcionario.setUser("joao53");
             funcionario.setSenha("joaozinho3");
-            //funcionario.setStatus(Ativo);
+            funcionario.setStatus(Ativo);
             
             FuncionarioRepositorio func_repo = new FuncionarioRepositorio();
             func_repo.Salvar(funcionario);
@@ -61,7 +61,7 @@ public class MiniMundo {
         }catch(ErroValidacaoException ex){
             System.out.print(ex.getMessage());
         }
-*/
+
         /*
         Fornecedor fornecedor = new Fornecedor();
         
@@ -78,7 +78,7 @@ public class MiniMundo {
             System.out.print(ex.getMessage());
         }
         */
-        Produto produto = new Produto();
+        /*Produto produto = new Produto();
         FornecedorRepositorio fornecedor_repo = new FornecedorRepositorio();
         
         try{
@@ -98,8 +98,8 @@ public class MiniMundo {
         }catch(ErroValidacaoException ex){
             System.out.print(ex.getMessage());
         }
-        
+     */   
     }
-    
+   
         
 }

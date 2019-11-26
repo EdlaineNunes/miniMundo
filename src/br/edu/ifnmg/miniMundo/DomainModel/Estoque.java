@@ -12,21 +12,20 @@ import java.util.Objects;
  *
  * @author Edlâine
  */
-class Estoque extends CompraProduto{
+class Estoque extends CompraProduto{  
     private Date data;
-    private int id;
 
     public Estoque() {
         super();
-        this.data = new Date();
-        this.id = 0;
+        this.data = data;
     }
 
-    public Estoque(int id, Produto produto, Funcionario pessoaFunc, Fornecedor fornecedor, int qnt, float precoFinal) {
-        super(id, produto, pessoaFunc, fornecedor, qnt, precoFinal);
+    public Estoque(int id, Produto produto, Funcionario pessoaFunc, Fornecedor fornecedor, float precoFinal) {
+        super(id, produto, pessoaFunc, fornecedor, precoFinal);
         this.data = data;
-        this.id = id;
     }
+
+    
 
     public Date getData() {
         return data;
@@ -36,22 +35,10 @@ class Estoque extends CompraProduto{
         this.data = data;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-         try{
-            if(id > 0)
-                this.id = id;
-        }catch(Exception ex){
-            System.out.println("Erro!" + ex.getMessage());
-        }
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.data);
         return hash;
     }
 
@@ -67,9 +54,6 @@ class Estoque extends CompraProduto{
             return false;
         }
         final Estoque other = (Estoque) obj;
-        if (this.id != other.id) {
-            return false;
-        }
         if (!Objects.equals(this.data, other.data)) {
             return false;
         }
@@ -78,7 +62,8 @@ class Estoque extends CompraProduto{
 
     @Override
     public String toString() {
-        return "Estoque{" + "data=" + data + ", id=" + id + '}';
+        return "Estoque{" + "data=" + data + '}';
     }
-    
+
+   
 }

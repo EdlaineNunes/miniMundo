@@ -8,6 +8,7 @@ package br.edu.ifnmg.miniMundo.Persistence;
 import br.edu.ifnmg.miniMundo.DomainModel.Cliente;
 import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
 import br.edu.ifnmg.miniMundo.DomainModel.Cliente;
+import br.edu.ifnmg.miniMundo.DomainModel.Pessoa;
 import br.edu.ifnmg.miniMundo.DomainModel.Status;
 import br.edu.ifnmg.miniMundo.DomainModel.Sexo;
 import java.sql.PreparedStatement;
@@ -21,54 +22,44 @@ import java.util.List;
  *
  * @author Edlâine
  */
-public class ClienteRepositorio extends BancoDados {
+public class ClienteRepositorio extends PessoaRepositorio {
     
     public ClienteRepositorio() {
         super();
     }
     
     public boolean Salvar(Cliente obj){
+        super.Salvar((Pessoa) obj);
         try {  
-            if(obj.getId() == 0){
+          
+            if(obj.getId() != 0){
                 PreparedStatement sql = this.getConexao()
-                        .prepareStatement("insert into Cliente(nome, cpf, sexo, rua, nCasa, bairro, cidade,status)"
-                                + " values(?,?,?,?,?,?,?,?)",
-                                Statement.RETURN_GENERATED_KEYS);
-                sql.setString(1, obj.getNome());
-                sql.setString(2, obj.getCpf().replace(".", "").replace("-", ""));
-                sql.setString(3, obj.getSexo().name());
-                sql.setString(4, obj.getRua());
-                sql.setString(5, obj.getnCasa());
-                sql.setString(6, obj.getBairro());
-                sql.setString(7, obj.getCidade());
-                sql.setString(8, obj.getStatus().name());
+                        .prepareStatement("insert into Cliente(pessoa_fk, rua, nCasa, bairro, cidade, status)"
+                                + " values(?,?,?,?,?) ");
+
+                sql.setInt(1, obj.getId());
+                sql.setString(2, obj.getRua());
+                sql.setString(3, obj.getnCasa());
+                sql.setString(4, obj.getBairro());
+                sql.setString(5, obj.getCidade());
+                sql.setString(6, obj.getStatus().name());
                 
-                if(sql.executeUpdate() > 0){ 
-                    ResultSet chave = sql.getGeneratedKeys();
-                    chave.next();
-                    obj.setId(chave.getInt(1));
-                    return true;
-                }
-                else
-                    return false;
+                sql.executeUpdate();
+                return true;
+                
             } else {
                 PreparedStatement sql = this.getConexao()
-                        .prepareStatement("update Cliente set nome = ?, cpf = ?, sexo = ?,"
-                                + "rua = ?, nCasa =?, bairro =?, cidade = ?, status = ? where id = ?");
-                sql.setString(1, obj.getNome());
-                sql.setString(2, obj.getCpf().replace(".", "").replace("-", ""));
-                sql.setString(3, obj.getSexo().name());
-                sql.setString(4, obj.getRua());
-                sql.setString(5, obj.getnCasa());
-                sql.setString(6, obj.getBairro());
-                sql.setString(7, obj.getCidade());
-                sql.setString(8, obj.getStatus().name());
-                sql.setInt(9, obj.getId());
+                        .prepareStatement("update Cliente set rua = ?, nCasa =?,"
+                                + " bairro =?, cidade = ?, status = ? where pessoa_fk = ?");
+                sql.setString(1, obj.getRua());
+                sql.setString(2, obj.getnCasa());
+                sql.setString(3, obj.getBairro());
+                sql.setString(4, obj.getCidade());
+                sql.setString(5, obj.getStatus().name());
+                sql.setInt(6, obj.getId());
                 
-                if(sql.executeUpdate() > 0) 
-                    return true;
-                else
-                    return false;
+                sql.executeUpdate();
+                return true;
             }                   
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -76,11 +67,11 @@ public class ClienteRepositorio extends BancoDados {
         return false;     
     }
 
-    public Cliente Abrir(int id) throws ErroValidacaoException{
-        try {     
+    public Cliente Abrir(Cliente obj) throws ErroValidacaoException{
+        try {    
             PreparedStatement sql = this.getConexao()
                     .prepareStatement("select * from Cliente where id = ?");   
-            sql.setInt(1, id);
+            sql.setInt(1, obj.getId());
             ResultSet resultado = sql.executeQuery();
             resultado.next();
             Cliente cliente = new Cliente();   

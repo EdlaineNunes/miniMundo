@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.miniMundo.DomainModel;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -17,31 +18,34 @@ public class Produto {
     private Fornecedor fornecedor; //classe já existente
     private String unidCompra;
     private String unidVenda;
-    private float precoCompra;
-    private float precoVenda;
+    private BigDecimal precoCompra;
+    private BigDecimal precoVenda;
     private int unidComprada;
     private Status status;
 
+     // no banco de dados ao inves de float utilizar numeric (8,2)
+    //no java utilizar BigDecimal
+    
     public Produto() {
         this.id = 0;
         this.descricao = "";
         this.fornecedor = new Fornecedor();
         this.unidCompra = "";
         this.unidVenda = "";
-        this.precoCompra = 0;
-        this.precoVenda = 0;
+        this.precoCompra =  new BigDecimal("0");
+        this.precoVenda = new BigDecimal("0");
         this.unidComprada = 0;
         this.status = Status.Ativo;
     }
 
-    public Produto(int id, String descricao, Fornecedor forncedor, String unidCompra, String unidVenda, float precoCompra, float precoVenda, int unidEstoque) {
+    public Produto(int id, String descricao, Fornecedor forncedor, String unidCompra, String unidVenda, BigDecimal precoCompra, BigDecimal precoVenda, int unidEstoque) {
         this.id = id;
         this.descricao = descricao;
         this.fornecedor = new Fornecedor();
         this.unidCompra = unidCompra;
         this.unidVenda = unidVenda;
-        this.precoCompra = precoCompra;
-        this.precoVenda = precoVenda;
+        this.precoCompra = new BigDecimal("precoCompra");
+        this.precoVenda = new BigDecimal("precoVenda");
         this.unidComprada = unidEstoque;
         this.status = status;
     }
@@ -98,24 +102,25 @@ public class Produto {
         this.unidVenda = unidVenda;
     }
 
-    public float getPrecoCompra() {
+    public BigDecimal getPrecoCompra() {
         return precoCompra;
     }
 
-    public void setPrecoCompra(float precoCompra) throws ErroValidacaoException {
-        if(precoCompra <= 0)
+    public void setPrecoCompra(BigDecimal precoCompra) throws ErroValidacaoException {
+        if(precoCompra.intValue() <= 0)
             throw new ErroValidacaoException("Preço de compra INVÁLIDO!");
         this.precoCompra = precoCompra;
     }
 
-    public float getPrecoVenda() {
+    public BigDecimal getPrecoVenda() {
         return precoVenda;
     }
 
-    public void setPrecoVenda(float precoVenda) throws ErroValidacaoException {
-        if(precoVenda <= 0)
-            throw new ErroValidacaoException("Preço de venda INVÁLIDO!");
+    public void setPrecoVenda(BigDecimal precoVenda) throws ErroValidacaoException {
+        if(precoVenda.intValue() <= 0)
+          throw new ErroValidacaoException("Preço de venda INVÁLIDO!");  
         this.precoVenda = precoVenda;
+       
     }
 
     public int getUnidComprada() {
@@ -135,16 +140,15 @@ public class Produto {
     public void setStatus(Status status) {
         this.status = status;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + this.id;
-        hash = 41 * hash + Objects.hashCode(this.descricao);
-        hash = 41 * hash + Objects.hashCode(this.fornecedor);
-        hash = 41 * hash + Objects.hashCode(this.unidVenda);
-        hash = 41 * hash + Float.floatToIntBits(this.precoVenda);
-        hash = 41 * hash + this.unidComprada;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.descricao);
+        hash = 97 * hash + Objects.hashCode(this.unidCompra);
+        hash = 97 * hash + Objects.hashCode(this.unidVenda);
+        hash = 97 * hash + Objects.hashCode(this.status);
         return hash;
     }
 
@@ -163,19 +167,16 @@ public class Produto {
         if (this.id != other.id) {
             return false;
         }
-        if (Float.floatToIntBits(this.precoVenda) != Float.floatToIntBits(other.precoVenda)) {
-            return false;
-        }
-        if (this.unidComprada != other.unidComprada) {
-            return false;
-        }
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
-        if (!Objects.equals(this.unidVenda, other.unidVenda)) {
+        if (!Objects.equals(this.precoCompra, other.precoCompra)) {
             return false;
         }
-        if (!Objects.equals(this.fornecedor, other.fornecedor)) {
+        if (!Objects.equals(this.precoVenda, other.precoVenda)) {
+            return false;
+        }
+        if (this.status != other.status) {
             return false;
         }
         return true;
@@ -183,7 +184,7 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto{" + "id=" + id + ", descricao=" + descricao + ", fornecedor=" + fornecedor + ", unidCompra=" + unidCompra + ", unidVenda=" + unidVenda + ", precoCompra=" + precoCompra + ", precoVenda=" + precoVenda + ", unidEstoque=" + unidComprada + '}';
+        return "Produto{" + "id=" + id + ", descricao=" + descricao + ", fornecedor=" + fornecedor + ", unidCompra=" + unidCompra + ", unidVenda=" + unidVenda + ", precoCompra=" + precoCompra + ", precoVenda=" + precoVenda + ", unidComprada=" + unidComprada + ", status=" + status + '}';
     }
-   
+ 
 }

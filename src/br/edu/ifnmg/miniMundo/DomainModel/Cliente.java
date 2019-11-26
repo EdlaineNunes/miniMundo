@@ -23,9 +23,6 @@ public class Cliente extends Pessoa {
     private List<String> emails;
     private Status status;
     
-    // no banco de dados ao inves de float utilizar numeric (8,2)
-    //no java utilizar BigDecimal
-    
     private Pattern regex_cpf = Pattern.compile("\\d{3}\\.?\\d{3}\\.?\\d{3}\\-?\\d{2}"); //formatar cpf
 
     public Cliente() {

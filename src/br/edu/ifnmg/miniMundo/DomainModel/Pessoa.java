@@ -23,12 +23,6 @@ public class Pessoa {
     private String cpf;
     private List<String> telefones;
     private Sexo sexo; //enumeração
-
-    //usar no repositorio ===> herdar bd -> pessoa -> cliente e pessoa-> func
-    //no metodo salvar coverter os tipos
-    // salvar (cliente c){
-    // base.salvar((pessoa)c)
-    //}
     
     private Pattern regex_cpf = Pattern.compile("\\d{3}\\.?\\d{3}\\.?\\d{3}\\-?\\d{2}"); //formatar cpf
    

@@ -9,6 +9,7 @@ import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
 import br.edu.ifnmg.miniMundo.DomainModel.Fornecedor;
 import br.edu.ifnmg.miniMundo.DomainModel.Produto;
 import br.edu.ifnmg.miniMundo.DomainModel.Status;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,8 +39,8 @@ public class ProdutoRepositorio extends BancoDados{
                 sql.setInt(2, obj.getFornecedor().getId());
                 sql.setString(3, obj.getUnidCompra());
                 sql.setString(4, obj.getUnidVenda());
-                sql.setFloat(5, obj.getPrecoCompra());
-                sql.setFloat(6, obj.getPrecoVenda());
+                sql.setFloat(5, obj.getPrecoCompra().floatValue());
+                sql.setFloat(6, obj.getPrecoVenda().floatValue());
                 sql.setString(7, obj.getStatus().name());
                 sql.setInt(8, obj.getUnidComprada());
                 
@@ -60,8 +61,8 @@ public class ProdutoRepositorio extends BancoDados{
                 sql.setInt(2, obj.getFornecedor().getId());
                 sql.setString(3, obj.getUnidCompra());
                 sql.setString(4, obj.getUnidVenda());
-                sql.setFloat(5, obj.getPrecoCompra());
-                sql.setFloat(6, obj.getPrecoVenda());
+                sql.setFloat(5, obj.getPrecoCompra().floatValue());
+                sql.setFloat(6, obj.getPrecoVenda().floatValue());
                 sql.setString(7, obj.getStatus().name());
                 sql.setInt(8, obj.getUnidComprada());
                 sql.setInt(9, obj.getId());
@@ -95,8 +96,8 @@ public class ProdutoRepositorio extends BancoDados{
                
                produto.setUnidCompra( resultado.getString("unidCompra"));
                produto.setUnidVenda(resultado.getString("unidVenda"));
-               produto.setPrecoCompra(resultado.getFloat("precoCompra"));
-               produto.setPrecoVenda(resultado.getFloat("precoVenda"));
+               produto.setPrecoCompra(resultado.getBigDecimal("precoCompra"));
+               produto.setPrecoVenda(resultado.getBigDecimal("precoVenda"));
                produto.setStatus(Status.valueOf(resultado.getString("status")));
                produto.setUnidComprada(resultado.getInt("unidComprada"));
                
@@ -146,12 +147,12 @@ public class ProdutoRepositorio extends BancoDados{
                     where += " and ";
                 where += "unidVenda = '"+filtro.getUnidCompra() + "'";   
             }
-            if(filtro.getPrecoCompra() > 0){
+            if(filtro.getPrecoCompra().compareTo(BigDecimal.ONE) > 0){
                 if(where.length() > 0)
                     where += " and ";
                 where += "precoCompra = '"+filtro.getPrecoCompra() + "'";
             }
-            if(filtro.getPrecoVenda() > 0){
+            if(filtro.getPrecoVenda().compareTo(BigDecimal.ONE) > 0){
                 if(where.length() > 0)
                     where += " and ";
                 where += "precoVenda = '"+filtro.getPrecoVenda() + "'";   
@@ -185,8 +186,8 @@ public class ProdutoRepositorio extends BancoDados{
                     produto.setFornecedor(fornecedor_repo.Abrir(resultado.getInt("fornecedor_fk")));
                     produto.setUnidCompra( resultado.getString("unidCompra"));
                     produto.setUnidVenda( resultado.getString("unidVenda"));
-                    produto.setPrecoCompra( resultado.getFloat("precoCompra"));
-                    produto.setPrecoVenda( resultado.getFloat("precoVenda"));
+                    produto.setPrecoCompra( resultado.getBigDecimal("precoCompra"));
+                    produto.setPrecoVenda( resultado.getBigDecimal("precoVenda"));
                     produto.setUnidComprada( resultado.getInt("unidComprada"));
                     produtos.add(produto);
             }

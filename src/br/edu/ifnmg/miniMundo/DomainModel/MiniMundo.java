@@ -13,6 +13,7 @@ import br.edu.ifnmg.miniMundo.Persistence.ClienteRepositorio;
 import br.edu.ifnmg.miniMundo.Persistence.FornecedorRepositorio;
 import br.edu.ifnmg.miniMundo.Persistence.FuncionarioRepositorio;
 import br.edu.ifnmg.miniMundo.Persistence.ProdutoRepositorio;
+import java.math.BigDecimal;
 
 /**
  *
@@ -45,6 +46,7 @@ public class MiniMundo {
         }
         
         */
+       /*
         Funcionario funcionario = new Funcionario();
         
         try{
@@ -61,8 +63,8 @@ public class MiniMundo {
         }catch(ErroValidacaoException ex){
             System.out.print(ex.getMessage());
         }
-
-        /*
+*/
+       /* 
         Fornecedor fornecedor = new Fornecedor();
         
         try{
@@ -78,7 +80,7 @@ public class MiniMundo {
             System.out.print(ex.getMessage());
         }
         */
-        /*Produto produto = new Produto();
+        Produto produto = new Produto();
         FornecedorRepositorio fornecedor_repo = new FornecedorRepositorio();
         
         try{
@@ -88,8 +90,8 @@ public class MiniMundo {
             
             produto.setUnidCompra("pacote");
             produto.setUnidVenda("unidade");
-            produto.setPrecoCompra((float)250.35);
-            produto.setPrecoVenda((float)2.5);
+            produto.setPrecoCompra(new BigDecimal("250.35"));
+            produto.setPrecoVenda(new BigDecimal ("2.5"));
             produto.setUnidComprada(15);
             
             ProdutoRepositorio prod_repo = new ProdutoRepositorio();
@@ -98,7 +100,7 @@ public class MiniMundo {
         }catch(ErroValidacaoException ex){
             System.out.print(ex.getMessage());
         }
-     */   
+      
     }
    
         

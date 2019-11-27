@@ -38,7 +38,7 @@ public class Pessoa {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
-        this.telefones = telefones;
+        this.telefones = new ArrayList<>();
         this.sexo = sexo;
     }
 
@@ -83,7 +83,9 @@ public class Pessoa {
     }
 
     public void addTelefone(String telefone){
-        if(telefone != null && telefone.length() == 11) // o método length retorna o tamanho da string
+        //038 9 9999 9999 
+        if(telefone != null )//&& telefone.length() == 11) // o método length retorna o tamanho da string
+        //if(!this.telefones.contains(telefone))    
             this.telefones.add(telefone);
     }
 

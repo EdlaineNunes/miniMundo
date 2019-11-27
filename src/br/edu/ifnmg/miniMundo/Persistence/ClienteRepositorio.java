@@ -35,7 +35,7 @@ public class ClienteRepositorio extends PessoaRepositorio {
             if(obj.getId() != 0){
                 PreparedStatement sql = this.getConexao()
                         .prepareStatement("insert into Cliente(pessoa_fk, rua, nCasa, bairro, cidade, status)"
-                                + " values(?,?,?,?,?) ");
+                                + " values(?,?,?,?,?,?) ");
 
                 sql.setInt(1, obj.getId());
                 sql.setString(2, obj.getRua());
@@ -116,36 +116,20 @@ public class ClienteRepositorio extends PessoaRepositorio {
             String where = "";
             if(filtro.getNome() != null && !filtro.getNome().isEmpty())
                 where += "nome like '%"+filtro.getNome() + "%'";            
-            if(filtro.getCpf() != null && !filtro.getCpf().isEmpty()){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "cpf = '"+filtro.getCpf().replace(".", "").replace("-", "") + "'";
-            }          
+            
+            if(filtro.getCpf() != null && !filtro.getCpf().isEmpty() && 
+                        !"000.000.000-00".equals(filtro.getCpf())){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "cpf = '"+filtro.getCpf().replace(".", "").replace("-", "") + "'";
+                }
+             
             if(filtro.getSexo() != null ){
                 if(where.length() > 0)
                     where += " and ";
                 where += "sexo = '"+filtro.getSexo().name() +"'";
             }
-            if(filtro.getRua() != null && !filtro.getRua().isEmpty()){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "rua like '%"+filtro.getRua() + "%'";
-            }
-            if(filtro.getnCasa() != null && !filtro.getnCasa().isEmpty()){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "nCasa like '%"+filtro.getnCasa() + "%'";
-            }          
-            if(filtro.getBairro() != null && !filtro.getBairro().isEmpty()){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "bairro like '%"+filtro.getBairro() + "%'";
-            }          
-            if(filtro.getCidade() != null && !filtro.getCidade().isEmpty()){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "cidade like '%"+filtro.getCidade() + "%'";
-            }          
+            
             if(filtro.getStatus() != null ){
                 if(where.length() > 0)
                     where += " and ";
@@ -158,18 +142,21 @@ public class ClienteRepositorio extends PessoaRepositorio {
             PreparedStatement sql = this.getConexao()
                     .prepareStatement(consulta);
             ResultSet resultado = sql.executeQuery();
+            
             List<Cliente> clientes = new ArrayList<>();
             while(resultado.next()) {
                Cliente cliente = new Cliente();
-               cliente.setId( resultado.getInt("id"));
-               cliente.setNome( resultado.getString("nome"));
-               cliente.setCpf( resultado.getString("cpf"));
-               cliente.setSexo( Sexo.valueOf(resultado.getString("sexo")));
-               cliente.setRua(resultado.getString("rua"));
-               cliente.setnCasa(resultado.getString("nCasa"));
-               cliente.setBairro(resultado.getString("bairro"));
-               cliente.setCidade(resultado.getString("cidade"));
-               cliente.setStatus(Status.valueOf(resultado.getString("status")));               
+               try{
+                    cliente.setId( resultado.getInt("id"));
+                    cliente.setNome( resultado.getString("nome"));
+                    cliente.setCpf( resultado.getString("cpf"));
+                    cliente.setSexo( Sexo.valueOf(resultado.getString("sexo")));
+                    cliente.setStatus(Status.valueOf(resultado.getString("status")));
+                    abrirTelefones(cliente);
+               }catch(Exception ex){
+                    cliente = null;
+                }
+               
                clientes.add(cliente);
             }
             return clientes;

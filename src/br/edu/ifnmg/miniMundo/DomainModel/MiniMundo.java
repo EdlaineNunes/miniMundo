@@ -26,7 +26,7 @@ public class MiniMundo {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-       /* Cliente cliente = new Cliente();
+        Cliente cliente = new Cliente();
         
         try{
             cliente.setNome("Ana");
@@ -37,7 +37,7 @@ public class MiniMundo {
             cliente.setnCasa("34A");
             cliente.setCidade("Januária");
             cliente.setStatus(Ativo);
-            
+            //cliente.setTelefones(038991721403);
             ClienteRepositorio cliente_repo = new ClienteRepositorio();
             cliente_repo.Salvar(cliente);           
             
@@ -45,7 +45,7 @@ public class MiniMundo {
             System.out.print(ex.getMessage());
         }
         
-        */
+        
        /*
         Funcionario funcionario = new Funcionario();
         
@@ -80,6 +80,7 @@ public class MiniMundo {
             System.out.print(ex.getMessage());
         }
         */
+       /*
         Produto produto = new Produto();
         FornecedorRepositorio fornecedor_repo = new FornecedorRepositorio();
         
@@ -100,7 +101,7 @@ public class MiniMundo {
         }catch(ErroValidacaoException ex){
             System.out.print(ex.getMessage());
         }
-      
+      */
     }
    
         

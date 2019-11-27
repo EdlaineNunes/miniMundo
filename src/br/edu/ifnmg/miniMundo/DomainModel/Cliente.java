@@ -42,7 +42,7 @@ public class Cliente extends Pessoa {
         setId(id);
         setNome(nome);
         setCpf(cpf);
-        //setTelefone(telefones);
+        setTelefones(telefones);
         setSexo(sexo);
         this.rua = rua;
         this.bairro = bairro;
@@ -152,7 +152,9 @@ public class Cliente extends Pessoa {
 
     @Override
     public String toString() {
-        return "Cliente{" + "rua=" + rua + ", bairro=" + bairro + ", nCasa=" + nCasa + ", cidade=" + cidade + ", emails=" + emails + ", status=" + status + '}';
+        return "Cliente{" + "rua=" + rua + ", bairro=" + bairro + ", nCasa=" + nCasa + ", cidade=" + cidade + ", emails=" + emails + ", status=" + status + ", regex_cpf=" + regex_cpf + '}';
     }
+
+    
       
 }

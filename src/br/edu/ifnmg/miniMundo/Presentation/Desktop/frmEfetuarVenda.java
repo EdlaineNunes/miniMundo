@@ -29,7 +29,7 @@ public class frmEfetuarVenda extends javax.swing.JInternalFrame {
 
         lblIdentificacaoCliente = new javax.swing.JLabel();
         txtIdentificacaoCliente = new javax.swing.JTextField();
-        btnConfirmarIdentCliente = new javax.swing.JButton();
+        btnBuscarCliente = new javax.swing.JButton();
         btnAdicionarProduto = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         lblSelecionarProduto = new javax.swing.JLabel();
@@ -49,10 +49,16 @@ public class frmEfetuarVenda extends javax.swing.JInternalFrame {
 
         lblIdentificacaoCliente.setText("Insira a identificação do Cliente:");
 
-        btnConfirmarIdentCliente.setText("Confirmar");
-        btnConfirmarIdentCliente.addActionListener(new java.awt.event.ActionListener() {
+        txtIdentificacaoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmarIdentClienteActionPerformed(evt);
+                txtIdentificacaoClienteActionPerformed(evt);
+            }
+        });
+
+        btnBuscarCliente.setText("Buscar");
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
             }
         });
 
@@ -60,6 +66,12 @@ public class frmEfetuarVenda extends javax.swing.JInternalFrame {
         btnAdicionarProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdicionarProdutoActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
             }
         });
 
@@ -120,7 +132,7 @@ public class frmEfetuarVenda extends javax.swing.JInternalFrame {
                                         .addComponent(lblQtdDesejada)))
                                 .addGap(27, 27, 27)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnConfirmarIdentCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnAdicionarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButton1)
                                     .addComponent(btnInserirQtd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
@@ -137,7 +149,7 @@ public class frmEfetuarVenda extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblIdentificacaoCliente)
                             .addComponent(txtIdentificacaoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnConfirmarIdentCliente))
+                            .addComponent(btnBuscarCliente))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,18 +173,26 @@ public class frmEfetuarVenda extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnConfirmarIdentClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarIdentClienteActionPerformed
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfirmarIdentClienteActionPerformed
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void btnAdicionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarProdutoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAdicionarProdutoActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void txtIdentificacaoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdentificacaoClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdentificacaoClienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionarProduto;
-    private javax.swing.JButton btnConfirmarIdentCliente;
+    private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnInserirQtd;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;

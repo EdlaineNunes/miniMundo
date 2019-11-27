@@ -9,13 +9,15 @@ package br.edu.ifnmg.miniMundo.Persistence;
 import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
 import br.edu.ifnmg.miniMundo.DomainModel.Pessoa;
 import br.edu.ifnmg.miniMundo.DomainModel.Sexo;
-import br.edu.ifnmg.miniMundo.DomainModel.Status;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -42,6 +44,9 @@ public class PessoaRepositorio extends BancoDados {
                     ResultSet chave = sql.getGeneratedKeys();
                     chave.next();
                     obj.setId(chave.getInt(1));
+                    
+                    atualizarTelefones(obj);
+                    
                     return true;
                 }
                 else
@@ -55,8 +60,10 @@ public class PessoaRepositorio extends BancoDados {
                 sql.setString(3, obj.getSexo().name());
                 sql.setInt(4, obj.getId());
 
-                if(sql.executeUpdate() > 0) 
+                if(sql.executeUpdate() > 0){ 
+                    atualizarTelefones(obj);
                     return true;
+                }
                 else
                     return false;
             }                   
@@ -65,6 +72,29 @@ public class PessoaRepositorio extends BancoDados {
         }      
         return false;     
     }
+  
+    public void atualizarTelefones(Pessoa pessoa) throws SQLException{
+        try {
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("delete from telefonePessoa where pessoa_fk = ?");
+       
+            sql.setInt(1, pessoa.getId());     
+            String values = "";
+
+            for(String telefone : pessoa.getTelefones()){
+                if(values.length() > 0) 
+                    values += ", ";             
+                values += "("+pessoa.getId()+",'"+telefone+"')";
+            }
+            
+            Statement sql2 = this.getConexao().createStatement();
+            sql2.executeUpdate("insert into telefonePessoa(pessoa_fk, telefone) VALUES " + values);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(PessoaRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     public Pessoa Abrir(int id) throws ErroValidacaoException{
         try {     
@@ -80,6 +110,7 @@ public class PessoaRepositorio extends BancoDados {
                 pessoa.setNome( resultado.getString("nome"));
                 pessoa.setCpf( resultado.getString("cpf"));
                 pessoa.setSexo( Sexo.valueOf(resultado.getString("sexo")));
+                //abrirTelefones(pessoa);
              }catch(SQLException ex) {
                 pessoa = null;
              }
@@ -89,6 +120,21 @@ public class PessoaRepositorio extends BancoDados {
         }
         return null;
     }
+    
+    public void abrirTelefones(Pessoa obj){
+        try {
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("select telefone from telefonePessoa where pessoa_fk = ?");
+            sql.setInt(1, obj.getId());       
+            ResultSet resultado = sql.executeQuery();         
+            while(resultado.next()){
+                obj.addTelefone(resultado.getString("telefone"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PessoaRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 /*
     public boolean Desativar(Pessoa obj){
         try {
@@ -126,21 +172,21 @@ public class PessoaRepositorio extends BancoDados {
             if(where.length() >0 )
                 consulta += " where " + where;
             
-             PreparedStatement sql = this.getConexao()
-                     .prepareStatement(consulta);
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement(consulta);
 
-             ResultSet resultado = sql.executeQuery();
-             List<Pessoa> pessoas = new ArrayList<>();
-             while(resultado.next()) {
-                Pessoa pessoa = new Pessoa();
-                pessoa.setId( resultado.getInt("id"));
-                pessoa.setNome( resultado.getString("nome"));
-                pessoa.setCpf( resultado.getString("cpf"));
-                pessoa.setSexo( Sexo.valueOf(resultado.getString("sexo")));
-  
-                pessoas.add(pessoa);
-             }
-             return pessoas;
+            ResultSet resultado = sql.executeQuery();
+            List<Pessoa> pessoas = new ArrayList<>();
+            while(resultado.next()) {
+               Pessoa pessoa = new Pessoa();
+               pessoa.setId( resultado.getInt("id"));
+               pessoa.setNome( resultado.getString("nome"));
+               pessoa.setCpf( resultado.getString("cpf"));
+               pessoa.setSexo( Sexo.valueOf(resultado.getString("sexo")));
+ 
+               pessoas.add(pessoa);
+            }
+            return pessoas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

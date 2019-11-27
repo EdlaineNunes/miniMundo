@@ -36,11 +36,18 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuSistema = new javax.swing.JMenu();
         mnuSair = new javax.swing.JMenuItem();
+        mnuCadastro = new javax.swing.JMenu();
+        mnuCadCliente = new javax.swing.JMenuItem();
+        mnuBuscarCliente = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
         btnLoginEntrar.setText("Entrar");
+        btnLoginEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginEntrarActionPerformed(evt);
+            }
+        });
 
         txtUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,6 +75,31 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         mnuSistema.add(mnuSair);
 
         jMenuBar1.add(mnuSistema);
+
+        mnuCadastro.setText("Cadastrar");
+        mnuCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCadastroActionPerformed(evt);
+            }
+        });
+
+        mnuCadCliente.setText("Cadastro Cliente");
+        mnuCadCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCadClienteActionPerformed(evt);
+            }
+        });
+        mnuCadastro.add(mnuCadCliente);
+
+        mnuBuscarCliente.setText("Buscar Cliente");
+        mnuBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuBuscarClienteActionPerformed(evt);
+            }
+        });
+        mnuCadastro.add(mnuBuscarCliente);
+
+        jMenuBar1.add(mnuCadastro);
 
         setJMenuBar(jMenuBar1);
 
@@ -125,6 +157,30 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mnuSairActionPerformed
 
+    private void btnLoginEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginEntrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLoginEntrarActionPerformed
+
+    private void mnuCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnuCadastroActionPerformed
+
+    private void mnuCadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadClienteActionPerformed
+        // TODO add your handling code here:
+        CadastrarCliente tela = new CadastrarCliente();
+        
+        this.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_mnuCadClienteActionPerformed
+
+    private void mnuBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuBuscarClienteActionPerformed
+        // TODO add your handling code here:
+        BuscarCliente tela = new BuscarCliente();
+        
+        this.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_mnuBuscarClienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -151,14 +207,14 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(frmTelaInicial_LOGIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-
+        //</editor-fold>   
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new frmTelaInicial_LOGIN().setVisible(true);
             }
-        });
+        });       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -167,6 +223,9 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
     private javax.swing.JLabel lblMiniMundo;
     private javax.swing.JLabel lblSenha;
     private javax.swing.JLabel lblUser;
+    private javax.swing.JMenuItem mnuBuscarCliente;
+    private javax.swing.JMenuItem mnuCadCliente;
+    private javax.swing.JMenu mnuCadastro;
     private javax.swing.JMenuItem mnuSair;
     private javax.swing.JMenu mnuSistema;
     private javax.swing.JTextField txtSenha;

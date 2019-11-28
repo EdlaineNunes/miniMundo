@@ -7,8 +7,12 @@ package br.edu.ifnmg.miniMundo.Presentation.Desktop;
 
 import br.edu.ifnmg.miniMundo.DomainModel.Cliente;
 import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
+import br.edu.ifnmg.miniMundo.DomainModel.Pessoa;
 import br.edu.ifnmg.miniMundo.DomainModel.Sexo;
+import br.edu.ifnmg.miniMundo.DomainModel.Status;
 import br.edu.ifnmg.miniMundo.Persistence.ClienteRepositorio;
+import br.edu.ifnmg.miniMundo.Persistence.PessoaRepositorio;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -27,18 +31,25 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
      */
     
     private Cliente filtro;
-    private ClienteRepositorio repo;
+    private ClienteRepositorio repo_cliente;
+    private Pessoa pessoa;
+    private PessoaRepositorio repo_pessoa;
     
     public BuscarCliente() {
         filtro = new Cliente();
-        repo = new ClienteRepositorio();
+        repo_cliente = new ClienteRepositorio();
+        pessoa = new Pessoa();
+        repo_pessoa = new PessoaRepositorio();
         initComponents();
         
     }
 
-    public BuscarCliente(Cliente filtro, ClienteRepositorio repo) {
+    public BuscarCliente(Cliente filtro, ClienteRepositorio repo_cliente,
+            Pessoa pessoa,PessoaRepositorio repo_pessoa) {
         this.filtro = filtro;
-        this.repo = repo;
+        this.repo_cliente = repo_cliente;
+        this.pessoa = pessoa;
+        this.repo_pessoa = repo_pessoa;
         initComponents();
     }
 
@@ -58,15 +69,42 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         lblSexoBusca = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        btnNovo = new javax.swing.JButton();
         cbxSexo = new javax.swing.JComboBox<>();
         lblCPFBusca = new javax.swing.JLabel();
         txtCPF = new javax.swing.JTextField();
-        lblStatusBusca = new javax.swing.JLabel();
-        cbxStatus = new javax.swing.JComboBox<>();
-        JScrollPane = new javax.swing.JScrollPane();
+        pessoaScrollPane = new javax.swing.JScrollPane();
         tabResultado = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        txtId_pessoaBusca = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        lblNome_clienteBusca = new javax.swing.JLabel();
+        txtId_clienteBusca = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtRua = new javax.swing.JTextField();
+        lblStatus = new javax.swing.JLabel();
+        cbxStatusBusca = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtnCasa = new javax.swing.JTextField();
+        txtBairro = new javax.swing.JTextField();
+        txtCidade = new javax.swing.JTextField();
+        btnBuscarCliente = new javax.swing.JButton();
+        btnNovoCliente = new javax.swing.JButton();
+        clienteScrollPane = new javax.swing.JScrollPane();
+        tabResultadoCliente = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        lblId_telefoneBusca = new javax.swing.JLabel();
+        txtId_telefoneBuscar = new javax.swing.JTextField();
+        lblTelefoneBuscar = new javax.swing.JLabel();
+        txtTelefoneBuscar = new javax.swing.JTextField();
+        btnBuscarTelefone = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabResultadoTelefone = new javax.swing.JTable();
 
+        setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Mini Mundo Supermecados - Buscar Clientes");
 
         lblNomeBusca.setText("Nome:");
@@ -80,20 +118,9 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        btnNovo.setText("NOVO");
-        btnNovo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoActionPerformed(evt);
-            }
-        });
-
         cbxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
 
         lblCPFBusca.setText("CPF:");
-
-        lblStatusBusca.setText("Status:");
-
-        cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
 
         tabResultado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -116,7 +143,9 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
                 tabResultadoMouseClicked(evt);
             }
         });
-        JScrollPane.setViewportView(tabResultado);
+        pessoaScrollPane.setViewportView(tabResultado);
+
+        jLabel5.setText("ID:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -125,27 +154,27 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblNomeBusca)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNome)
+                    .addComponent(pessoaScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblCPFBusca)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtId_pessoaBusca))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblNomeBusca)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNome)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblSexoBusca)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblSexoBusca)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblCPFBusca)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblStatusBusca)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnNovo)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxSexo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -160,17 +189,190 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscar)
-                    .addComponent(btnNovo)
                     .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCPFBusca)
-                    .addComponent(lblStatusBusca)
-                    .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
+                    .addComponent(txtId_pessoaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                .addComponent(pessoaScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Busca de Cliente", jPanel3);
+        jTabbedPane1.addTab("Buscar Pessoas", jPanel3);
+
+        lblNome_clienteBusca.setText("ID Cliente:");
+
+        jLabel2.setText("Rua:");
+
+        lblStatus.setText("Status:");
+
+        cbxStatusBusca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
+
+        jLabel1.setText("Nº Residencial:");
+
+        jLabel3.setText("Bairro:");
+
+        jLabel4.setText("Cidade:");
+
+        btnBuscarCliente.setText("BUSCAR");
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
+            }
+        });
+
+        btnNovoCliente.setText("NOVO");
+        btnNovoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoClienteActionPerformed(evt);
+            }
+        });
+
+        tabResultadoCliente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Status", "Rua", "Nº Resid.", "Bairro", "Cidade"
+            }
+        ));
+        clienteScrollPane.setViewportView(tabResultadoCliente);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(clienteScrollPane)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(lblNome_clienteBusca)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtId_clienteBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(lblStatus)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(cbxStatusBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnNovoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtRua, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtnCasa, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCidade)))))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNome_clienteBusca)
+                    .addComponent(txtId_clienteBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblStatus)
+                    .addComponent(cbxStatusBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarCliente)
+                    .addComponent(btnNovoCliente))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtnCasa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(clienteScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Buscar Clientes", jPanel1);
+
+        lblId_telefoneBusca.setText("ID:");
+
+        lblTelefoneBuscar.setText("Telefone:");
+
+        btnBuscarTelefone.setText("BUSCAR");
+        btnBuscarTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarTelefoneActionPerformed(evt);
+            }
+        });
+
+        tabResultadoTelefone.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Telefone"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tabResultadoTelefone);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblId_telefoneBusca)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtId_telefoneBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addComponent(lblTelefoneBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtTelefoneBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(btnBuscarTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblId_telefoneBusca)
+                    .addComponent(txtId_telefoneBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTelefoneBuscar)
+                    .addComponent(txtTelefoneBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarTelefone))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Telefones Cliente", jPanel2);
 
         tblGerenciarCliente.addTab("Buscar", jTabbedPane1);
 
@@ -194,39 +396,6 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        // TODO add your handling code here:
-        CadastrarCliente tela = new CadastrarCliente(
-            new Cliente(),
-            this.repo
-            //new ClienteRepositorio()
-        );
-
-        this.getParent().add(tela);
-        tela.show();
-    }//GEN-LAST:event_btnNovoActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-        filtro = new Cliente();
-        try {
-            if(txtNome.getText().length() > 0)
-                filtro.setNome( txtNome.getText() );
-            filtro.setSexo(Sexo.valueOf(cbxSexo.getSelectedItem().toString()));
-            if(!txtCPF.getText().isEmpty())// && txtCPF.getText().length() >= 11)
-                filtro.setCpf(txtCPF.getText());
-        }catch(ErroValidacaoException ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-        List<Cliente> clientes = null;
-        try {
-            clientes = repo.Buscar(filtro);
-        } catch (ErroValidacaoException ex) {
-            Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        preencherTabela(clientes);
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
     private void tabResultadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabResultadoMouseClicked
         // TODO add your handling code here:
         int linha = this.tabResultado.getSelectedRow();
@@ -235,40 +404,131 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         //abro o aluno daquele id
         Cliente cliente = null;
         try {
-            cliente = (Cliente) repo.Abrir(id);
+            cliente = (Cliente) repo_cliente.Abrir(id);
         } catch (ErroValidacaoException ex) {
             Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-              
-        CadastrarCliente tela = new CadastrarCliente (cliente, repo);
-        
+
+        CadastrarCliente tela = new CadastrarCliente (cliente, repo_cliente);
+
         this.getParent().add(tela);
         tela.show();
-        
+
     }//GEN-LAST:event_tabResultadoMouseClicked
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        pessoa = new Pessoa();
+        try {
+            if(txtNome.getText().length() > 0)
+                pessoa.setNome( txtNome.getText() );
+            pessoa.setSexo(Sexo.valueOf(cbxSexo.getSelectedItem().toString()));
+            if(!txtCPF.getText().isEmpty())
+                pessoa.setCpf(txtCPF.getText());
+            if(!txtId_pessoaBusca.getText().isEmpty())
+                pessoa.setId(Integer.parseInt(txtId_pessoaBusca.getText()));
+        }catch(ErroValidacaoException ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        List<Pessoa> pessoas = null;
+        try {
+            pessoas = repo_pessoa.Buscar(pessoa);
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        preencherTabela(pessoas);
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        // TODO add your handling code here:
+        filtro = new Cliente();
+        try {
+            if(txtId_clienteBusca.getText().length() > 0)
+                filtro.setId(Integer.parseInt(txtId_clienteBusca.getText()));
+            filtro.setStatus(Status.valueOf(cbxStatusBusca.getSelectedItem().toString()));
+            if(txtRua.getText().length() > 0)
+                filtro.setRua( txtRua.getText() );
+            if(!txtnCasa.getText().isEmpty())
+                filtro.setnCasa(txtnCasa.getText());
+            if(txtBairro.getText().length() > 0)
+                filtro.setBairro( txtBairro.getText() );
+            if(txtCidade.getText().length() > 0)
+                filtro.setCidade( txtCidade.getText() );
+            
+        }catch(ErroValidacaoException ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        List<Cliente> clientes = null;
+        try {
+            clientes = repo_cliente.Buscar(filtro);
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        preencherTabelaCliente(clientes);
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void btnNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoClienteActionPerformed
+        // TODO add your handling code here:
+        CadastrarCliente novatela = new CadastrarCliente(new Cliente(),this.repo_cliente);    
+        this.getParent().add(novatela);
+        dispose();
+        novatela.show();
+    }//GEN-LAST:event_btnNovoClienteActionPerformed
+
+    private void btnBuscarTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTelefoneActionPerformed
+        // TODO add your handling code here:
+        pessoa = new Pessoa();
+        if(txtId_telefoneBuscar.getText().length() > 0)
+            pessoa.setId(Integer.parseInt(txtId_telefoneBuscar.getText()));
+        if(txtTelefoneBuscar.getText().length() > 0)
+            pessoa.setTelefones( Arrays.asList(txtTelefoneBuscar.getText()) );
+        
+        //List<Pessoa> pessoa = null;
+        //pessoa = repo_pessoa.Abrir(WIDTH);
+       // preencherTabelaTelefones((List<Pessoa>) pessoa);
+        
+    }//GEN-LAST:event_btnBuscarTelefoneActionPerformed
+
+    private void preencherTabelaTelefones(List<Pessoa> lista) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        //adiciona coluna por coluna
+        modelo.addColumn("ID");
+        modelo.addColumn("Telefone");
+          
+        //para cada aluno da lista 
+        for (Pessoa pessoa: lista){
+            //cria um vetor de linha
+            Vector linha = new Vector();
+            //adiciona linha por linha
+            linha.add(pessoa.getId());
+            linha.add(pessoa.getTelefones());
+                        
+            //adiciona cada linha na tabela
+            modelo.addRow(linha);
+        }        
+        //adiciona o modelo que é a minha tabela na tabela da interface
+        tabResultadoTelefone.setModel(modelo);  
+    }
     //para preencher a tabela
-    public void preencherTabela(List<Cliente> lista){
+    public void preencherTabela(List<Pessoa> lista){
         //cria uma tabela vazia
         DefaultTableModel modelo = new DefaultTableModel();
         //adiciona coluna por coluna
         modelo.addColumn("ID");
-       // modelo.addColumn("Status");
         modelo.addColumn("Nome");
         modelo.addColumn("Cpf");
         modelo.addColumn("Sexo");
         
         
         //para cada aluno da lista 
-        for (Cliente c: lista){
+        for (Pessoa pessoa: lista){
             //cria um vetor de linha
             Vector linha = new Vector();
             //adiciona linha por linha
-            linha.add(c.getId());
-          //  linha.add(c.getStatus());
-            linha.add(c.getNome());
-            linha.add(c.getCpf());
-            linha.add(c.getSexo());
+            linha.add(pessoa.getId());
+            linha.add(pessoa.getNome());
+            linha.add(pessoa.getCpf());
+            linha.add(pessoa.getSexo());
             
             //adiciona cada linha na tabela
             modelo.addRow(linha);
@@ -277,22 +537,78 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         tabResultado.setModel(modelo);  
     
     }
+    
+    private void preencherTabelaCliente(List<Cliente> lista) {
+       //cria uma tabela vazia
+        DefaultTableModel modelo = new DefaultTableModel();
+        //adiciona coluna por coluna
+        modelo.addColumn("ID");
+        modelo.addColumn("Status");
+        modelo.addColumn("Rua");
+        modelo.addColumn("Nº Resid.");
+        modelo.addColumn("Bairro");
+        modelo.addColumn("Cidade");
+        
+        //para cada aluno da lista 
+        for (Cliente cliente: lista){
+            //cria um vetor de linha
+            Vector linha = new Vector();
+            //adiciona linha por linha
+            linha.add(cliente.getId());
+            linha.add(cliente.getStatus());
+            linha.add(cliente.getRua());
+            linha.add(cliente.getnCasa());
+            linha.add(cliente.getBairro());
+            linha.add(cliente.getCidade());
+            
+            //adiciona cada linha na tabela
+            modelo.addRow(linha);
+        }
+        tabResultadoCliente.setModel(modelo);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane JScrollPane;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnBuscarCliente;
+    private javax.swing.JButton btnBuscarTelefone;
+    private javax.swing.JButton btnNovoCliente;
     private javax.swing.JComboBox<String> cbxSexo;
-    private javax.swing.JComboBox<String> cbxStatus;
+    private javax.swing.JComboBox<String> cbxStatusBusca;
+    private javax.swing.JScrollPane clienteScrollPane;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblCPFBusca;
+    private javax.swing.JLabel lblId_telefoneBusca;
     private javax.swing.JLabel lblNomeBusca;
+    private javax.swing.JLabel lblNome_clienteBusca;
     private javax.swing.JLabel lblSexoBusca;
-    private javax.swing.JLabel lblStatusBusca;
+    private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblTelefoneBuscar;
+    private javax.swing.JScrollPane pessoaScrollPane;
     private javax.swing.JTable tabResultado;
+    private javax.swing.JTable tabResultadoCliente;
+    private javax.swing.JTable tabResultadoTelefone;
     private javax.swing.JTabbedPane tblGerenciarCliente;
+    private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCPF;
+    private javax.swing.JTextField txtCidade;
+    private javax.swing.JTextField txtId_clienteBusca;
+    private javax.swing.JTextField txtId_pessoaBusca;
+    private javax.swing.JTextField txtId_telefoneBuscar;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtRua;
+    private javax.swing.JTextField txtTelefoneBuscar;
+    private javax.swing.JTextField txtnCasa;
     // End of variables declaration//GEN-END:variables
+
+    
+
 }

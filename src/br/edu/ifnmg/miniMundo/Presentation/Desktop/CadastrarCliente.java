@@ -40,7 +40,8 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
     }
 
     public CadastrarCliente(Cliente cliente, ClienteRepositorio repo) {
-        setCliente(cliente);
+        //setCliente(cliente);
+        this.cliente = cliente;
         this.repo = repo;
         initComponents();
     }
@@ -124,6 +125,8 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        setClosable(true);
+        setMaximizable(true);
         setTitle("Mini Mundo Supermecados - Cadastrar Clientes");
 
         lblNomeCompleto.setText("Nome completo:");
@@ -232,7 +235,7 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
                         .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblBairro))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         tblDadosPessoais.addTab("Dados Pessoais", jPanel1);
@@ -295,7 +298,7 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
                     .addComponent(btnRemoverTelefone))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         tblDadosPessoais.addTab("Telefone", jPanel2);
@@ -327,20 +330,20 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalvar)
-                .addGap(84, 84, 84)
+                .addGap(81, 81, 81)
                 .addComponent(btnCancelar)
-                .addGap(81, 81, 81))
+                .addGap(83, 83, 83))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(tblGerenciarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(tblGerenciarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -395,6 +398,13 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        //mostra msg de confirmação
+        if (JOptionPane.showConfirmDialog(null, "Deseja realmente CANCELAR?",
+            "Confirmar", JOptionPane.YES_NO_OPTION) == 0){
+            dispose();
+        }
+       
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCidadeActionPerformed

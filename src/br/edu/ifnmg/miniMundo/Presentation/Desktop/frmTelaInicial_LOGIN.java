@@ -5,6 +5,8 @@
  */
 package br.edu.ifnmg.miniMundo.Presentation.Desktop;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Edlâine
@@ -67,6 +69,11 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         mnuSistema.setText("Sistema");
 
         mnuSair.setText("Sair");
+        mnuSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnuSairMouseClicked(evt);
+            }
+        });
         mnuSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuSairActionPerformed(evt);
@@ -180,6 +187,10 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         this.add(tela);
         tela.setVisible(true);
     }//GEN-LAST:event_mnuBuscarClienteActionPerformed
+
+    private void mnuSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuSairMouseClicked
+        // TODO add your handling code here:       
+    }//GEN-LAST:event_mnuSairMouseClicked
 
     /**
      * @param args the command line arguments

@@ -167,6 +167,11 @@ public class PessoaRepositorio extends BancoDados {
                     where += " and ";
                 where += "sexo = '"+filtro.getSexo().name() +"'";
             }
+            if(filtro.getId() > 0 ){
+                if(where.length() > 0)
+                    where += " and ";
+                where += "id = '"+filtro.getId()+"'";
+            }
                      
             String consulta = "select * from Pessoa";
 

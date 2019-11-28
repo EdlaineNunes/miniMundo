@@ -119,30 +119,36 @@ public class ClienteRepositorio extends PessoaRepositorio {
         //super.Buscar(filtro);
         try {
             String where = "";
-            if(filtro.getNome() != null && !filtro.getNome().isEmpty())
-                where += "nome like '%"+filtro.getNome() + "%'";            
-            
-            if(filtro.getCpf() != null && !filtro.getCpf().isEmpty() &&
-                        !"000.000.000-00".equals(filtro.getCpf())){
+            if(filtro.getId() !=  0)
+                where += "pessoa_fk = '"+filtro.getId() + "'";
+            if(filtro.getRua() != null && !filtro.getRua().isEmpty()){
+                if(where.length() > 0)
+                        where += " and ";
+                where += "rua like '%"+filtro.getRua() + "%'";            
+            }
+            if(filtro.getnCasa() != null && !filtro.getnCasa().isEmpty()){
                     if(where.length() > 0)
                         where += " and ";
-                    where += "cpf = '"+filtro.getCpf().replace(".", "").replace("-", "") + "'";
+                    where += "nCasa = '"+filtro.getnCasa() + "'";
                 }
-             
-            if(filtro.getSexo() != null ){
+            if(filtro.getBairro() != null && !filtro.getBairro().isEmpty() ){
                 if(where.length() > 0)
                     where += " and ";
-                where += "sexo = '"+filtro.getSexo().name() +"'";
-            }
-            /*
+                where += "bairro = '"+filtro.getBairro() +"'";
+            }   
+            if(filtro.getCidade() != null && !filtro.getCidade().isEmpty() ){
+                if(where.length() > 0)
+                    where += " and ";
+                where += "cidade = '"+filtro.getCidade() +"'";
+            } 
             if(filtro.getStatus() != null ){
                 if(where.length() > 0)
                     where += " and ";
                 where += "status = '"+filtro.getStatus().name() +"'";
             }
-           */
-            String consulta = "select * from Pessoa";
-            if(where.length() >0 )
+                      
+            String consulta = "select * from Cliente";
+            if(where.length() > 0 )
                 consulta += " where " + where;
             PreparedStatement sql = this.getConexao()
                     .prepareStatement(consulta);
@@ -151,12 +157,13 @@ public class ClienteRepositorio extends PessoaRepositorio {
             List<Cliente> clientes = new ArrayList<>();
             while(resultado.next()) {
                Cliente cliente = new Cliente();
-               try{
-                    cliente.setId( resultado.getInt("id"));
-                    cliente.setNome( resultado.getString("nome"));
-                    cliente.setCpf( resultado.getString("cpf"));
-                    cliente.setSexo( Sexo.valueOf(resultado.getString("sexo")));                              
-                    //cliente.setStatus(Status.valueOf(resultado.getString("status")));
+               try{                            
+                    cliente.setId(Integer.parseInt(resultado.getString("pessoa_fk")));
+                    cliente.setRua( resultado.getString("rua"));
+                    cliente.setnCasa( resultado.getString("nCasa"));
+                    cliente.setBairro( resultado.getString("bairro"));
+                    cliente.setCidade(resultado.getString("cidade"));  
+                    cliente.setStatus(Status.valueOf(resultado.getString("status")));
                }catch(Exception ex){
                     cliente = null;
                 }

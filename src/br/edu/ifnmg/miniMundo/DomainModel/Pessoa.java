@@ -47,12 +47,7 @@ public class Pessoa {
     }
     
     public void setId(int id) {
-        try{
-            if(id > 0)
-                this.id = id;
-        }catch(Exception ex){
-            System.out.println("Erro!" + ex.getMessage());
-        }
+        this.id = id;
     }
 
     public String getNome() {

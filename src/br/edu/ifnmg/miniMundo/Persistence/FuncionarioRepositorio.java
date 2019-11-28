@@ -105,18 +105,10 @@ public class FuncionarioRepositorio extends PessoaRepositorio{
     public List<Funcionario> Buscar(Funcionario filtro) throws ErroValidacaoException{
         try {
             String where = "";
+            if(filtro.getId() !=  0)
+                where += "pessoa_fk = '"+filtro.getId() + "'";
             if(filtro.getNome() != null && !filtro.getNome().isEmpty())
                 where += "nome like '%"+filtro.getNome() + "%'";            
-            if(filtro.getCpf() != null && !filtro.getCpf().isEmpty()){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "cpf = '"+filtro.getCpf().replace(".", "").replace("-", "") + "'";
-            }          
-            if(filtro.getSexo() != null ){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "sexo = '"+filtro.getSexo().name() +"'";
-            }
             if(filtro.getUser() != null && !filtro.getUser().isEmpty()){
                 if(where.length() > 0)
                     where += " and ";
@@ -138,9 +130,6 @@ public class FuncionarioRepositorio extends PessoaRepositorio{
             while(resultado.next()) {
                Funcionario funcionario = new Funcionario();
                funcionario.setId( resultado.getInt("pessoa_fk"));
-               funcionario.setNome( resultado.getString("nome"));
-               funcionario.setCpf( resultado.getString("cpf"));
-               funcionario.setSexo( Sexo.valueOf(resultado.getString("sexo")));
                funcionario.setUser(resultado.getString("user"));
                funcionario.setSenha(resultado.getString("senha"));
                funcionario.setStatus(Status.valueOf(resultado.getString("status")));               

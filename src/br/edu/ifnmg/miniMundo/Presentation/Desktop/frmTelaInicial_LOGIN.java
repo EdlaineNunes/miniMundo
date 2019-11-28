@@ -29,6 +29,7 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         btnLoginEntrar = new javax.swing.JButton();
         txtSenha = new javax.swing.JTextField();
         txtUser = new javax.swing.JTextField();
@@ -41,6 +42,11 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         mnuCadastro = new javax.swing.JMenu();
         mnuCadCliente = new javax.swing.JMenuItem();
         mnuBuscarCliente = new javax.swing.JMenuItem();
+        mnuFunc = new javax.swing.JMenu();
+        mnuCadFUNC = new javax.swing.JMenuItem();
+        mnuBuscarFunc = new javax.swing.JMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -83,7 +89,7 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuSistema);
 
-        mnuCadastro.setText("Cadastrar");
+        mnuCadastro.setText("Cliente");
         mnuCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuCadastroActionPerformed(evt);
@@ -107,6 +113,26 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         mnuCadastro.add(mnuBuscarCliente);
 
         jMenuBar1.add(mnuCadastro);
+
+        mnuFunc.setText("Func");
+
+        mnuCadFUNC.setText("Cad Func");
+        mnuCadFUNC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCadFUNCActionPerformed(evt);
+            }
+        });
+        mnuFunc.add(mnuCadFUNC);
+
+        mnuBuscarFunc.setText("Buscar Func");
+        mnuBuscarFunc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuBuscarFuncActionPerformed(evt);
+            }
+        });
+        mnuFunc.add(mnuBuscarFunc);
+
+        jMenuBar1.add(mnuFunc);
 
         setJMenuBar(jMenuBar1);
 
@@ -148,7 +174,7 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
                 .addComponent(lblSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(btnLoginEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
@@ -192,6 +218,23 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         // TODO add your handling code here:       
     }//GEN-LAST:event_mnuSairMouseClicked
 
+    private void mnuCadFUNCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadFUNCActionPerformed
+        // TODO add your handling code here:
+        CadastrarFuncionario tela = new CadastrarFuncionario();
+        
+        this.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_mnuCadFUNCActionPerformed
+
+    private void mnuBuscarFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuBuscarFuncActionPerformed
+        // TODO add your handling code here:
+        BuscarFuncionario tela = new BuscarFuncionario();
+        
+        this.add(tela);
+        tela.setVisible(true);
+        
+    }//GEN-LAST:event_mnuBuscarFuncActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -231,12 +274,16 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoginEntrar;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel lblMiniMundo;
     private javax.swing.JLabel lblSenha;
     private javax.swing.JLabel lblUser;
     private javax.swing.JMenuItem mnuBuscarCliente;
+    private javax.swing.JMenuItem mnuBuscarFunc;
     private javax.swing.JMenuItem mnuCadCliente;
+    private javax.swing.JMenuItem mnuCadFUNC;
     private javax.swing.JMenu mnuCadastro;
+    private javax.swing.JMenu mnuFunc;
     private javax.swing.JMenuItem mnuSair;
     private javax.swing.JMenu mnuSistema;
     private javax.swing.JTextField txtSenha;

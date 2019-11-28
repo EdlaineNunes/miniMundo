@@ -100,15 +100,20 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Status", "Nome", "CPF", "Sexo", "Rua", "nº ", "Bairro", "Cidade"
+                "ID", "Nome", "CPF", "Sexo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true
+                false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tabResultado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabResultadoMouseClicked(evt);
             }
         });
         JScrollPane.setViewportView(tabResultado);
@@ -191,9 +196,10 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
-        BuscarCliente tela = new BuscarCliente(
+        CadastrarCliente tela = new CadastrarCliente(
             new Cliente(),
             this.repo
+            //new ClienteRepositorio()
         );
 
         this.getParent().add(tela);
@@ -221,20 +227,37 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         preencherTabela(clientes);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void tabResultadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabResultadoMouseClicked
+        // TODO add your handling code here:
+        int linha = this.tabResultado.getSelectedRow();
+        //pega a string e interpreta como inteiro
+        int id = Integer.parseInt(this.tabResultado.getValueAt(linha,0).toString());
+        //abro o aluno daquele id
+        Cliente cliente = null;
+        try {
+            cliente = (Cliente) repo.Abrir(id);
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+              
+        CadastrarCliente tela = new CadastrarCliente (cliente, repo);
+        
+        this.getParent().add(tela);
+        tela.show();
+        
+    }//GEN-LAST:event_tabResultadoMouseClicked
+
     //para preencher a tabela
     public void preencherTabela(List<Cliente> lista){
         //cria uma tabela vazia
         DefaultTableModel modelo = new DefaultTableModel();
         //adiciona coluna por coluna
         modelo.addColumn("ID");
-        modelo.addColumn("Status");
+       // modelo.addColumn("Status");
         modelo.addColumn("Nome");
         modelo.addColumn("Cpf");
         modelo.addColumn("Sexo");
-        modelo.addColumn("Rua");
-        modelo.addColumn("nº");
-        modelo.addColumn("Bairro");
-        modelo.addColumn("Cidade");
+        
         
         //para cada aluno da lista 
         for (Cliente c: lista){
@@ -242,14 +265,11 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
             Vector linha = new Vector();
             //adiciona linha por linha
             linha.add(c.getId());
-            linha.add(c.getStatus());
+          //  linha.add(c.getStatus());
             linha.add(c.getNome());
             linha.add(c.getCpf());
             linha.add(c.getSexo());
-            linha.add(c.getRua());
-            linha.add(c.getnCasa());
-            linha.add(c.getBairro());
-            linha.add(c.getCidade());
+            
             //adiciona cada linha na tabela
             modelo.addRow(linha);
         }        

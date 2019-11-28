@@ -110,7 +110,7 @@ public class PessoaRepositorio extends BancoDados {
                 pessoa.setNome( resultado.getString("nome"));
                 pessoa.setCpf( resultado.getString("cpf"));
                 pessoa.setSexo( Sexo.valueOf(resultado.getString("sexo")));
-                //abrirTelefones(pessoa);
+                abrirTelefones(pessoa);
              }catch(SQLException ex) {
                 pessoa = null;
              }
@@ -156,7 +156,8 @@ public class PessoaRepositorio extends BancoDados {
             String where = "";
             if(filtro.getNome() != null && !filtro.getNome().isEmpty())
                 where += "nome like '%"+filtro.getNome() + "%'";            
-            if(filtro.getCpf() != null && !filtro.getCpf().isEmpty()){
+            if(filtro.getCpf() != null && !filtro.getCpf().isEmpty()&& 
+                        !"000.000.000-00".equals(filtro.getCpf())){
                 if(where.length() > 0)
                     where += " and ";
                 where += "cpf = '"+filtro.getCpf().replace(".", "").replace("-", "") + "'";
@@ -179,11 +180,14 @@ public class PessoaRepositorio extends BancoDados {
             List<Pessoa> pessoas = new ArrayList<>();
             while(resultado.next()) {
                Pessoa pessoa = new Pessoa();
-               pessoa.setId( resultado.getInt("id"));
-               pessoa.setNome( resultado.getString("nome"));
-               pessoa.setCpf( resultado.getString("cpf"));
-               pessoa.setSexo( Sexo.valueOf(resultado.getString("sexo")));
- 
+               try{
+                    pessoa.setId( resultado.getInt("id"));
+                    pessoa.setNome( resultado.getString("nome"));
+                    pessoa.setCpf( resultado.getString("cpf"));
+                    pessoa.setSexo( Sexo.valueOf(resultado.getString("sexo")));
+               }catch(Exception ex){
+                    pessoa = null;
+                }
                pessoas.add(pessoa);
             }
             return pessoas;

@@ -11,6 +11,7 @@ import br.edu.ifnmg.miniMundo.DomainModel.Cliente;
 import br.edu.ifnmg.miniMundo.DomainModel.Pessoa;
 import br.edu.ifnmg.miniMundo.DomainModel.Status;
 import br.edu.ifnmg.miniMundo.DomainModel.Sexo;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,19 +69,22 @@ public class ClienteRepositorio extends PessoaRepositorio {
     }
 
     public Cliente Abrir(Cliente obj) throws ErroValidacaoException{
+        super.Abrir(obj.getId());
         try {    
             PreparedStatement sql = this.getConexao()
-                    .prepareStatement("select * from Cliente where id = ?");   
+                    .prepareStatement("select * from Cliente where pessoa_fk = ?");  
+            //select * from Pessoa where id = ?
             sql.setInt(1, obj.getId());
             ResultSet resultado = sql.executeQuery();
             resultado.next();
-            Cliente cliente = new Cliente();   
+            //Pessoa cliente = new Pessoa();  
+            Cliente cliente = new Cliente();
             try{
-               cliente.setId( resultado.getInt("id"));
+               /*cliente.setId( resultado.getInt("id"));
                cliente.setNome( resultado.getString("nome"));
                cliente.setCpf( resultado.getString("cpf"));
                cliente.setSexo( Sexo.valueOf(resultado.getString("sexo")));
-               cliente.setRua(resultado.getString("rua"));
+               */cliente.setRua(resultado.getString("rua"));
                cliente.setnCasa(resultado.getString("nCasa"));
                cliente.setBairro(resultado.getString("bairro"));
                cliente.setCidade(resultado.getString("cidade"));
@@ -89,7 +93,7 @@ public class ClienteRepositorio extends PessoaRepositorio {
             }catch(SQLException ex) {
                cliente = null;
             }
-            return cliente;         
+            return (Cliente) cliente;         
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -112,12 +116,13 @@ public class ClienteRepositorio extends PessoaRepositorio {
     }
 
     public List<Cliente> Buscar(Cliente filtro) throws ErroValidacaoException{
+        //super.Buscar(filtro);
         try {
             String where = "";
             if(filtro.getNome() != null && !filtro.getNome().isEmpty())
                 where += "nome like '%"+filtro.getNome() + "%'";            
             
-            if(filtro.getCpf() != null && !filtro.getCpf().isEmpty() && 
+            if(filtro.getCpf() != null && !filtro.getCpf().isEmpty() &&
                         !"000.000.000-00".equals(filtro.getCpf())){
                     if(where.length() > 0)
                         where += " and ";
@@ -129,14 +134,14 @@ public class ClienteRepositorio extends PessoaRepositorio {
                     where += " and ";
                 where += "sexo = '"+filtro.getSexo().name() +"'";
             }
-            
+            /*
             if(filtro.getStatus() != null ){
                 if(where.length() > 0)
                     where += " and ";
                 where += "status = '"+filtro.getStatus().name() +"'";
             }
-            
-            String consulta = "select * from Cliente";
+           */
+            String consulta = "select * from Pessoa";
             if(where.length() >0 )
                 consulta += " where " + where;
             PreparedStatement sql = this.getConexao()
@@ -150,9 +155,8 @@ public class ClienteRepositorio extends PessoaRepositorio {
                     cliente.setId( resultado.getInt("id"));
                     cliente.setNome( resultado.getString("nome"));
                     cliente.setCpf( resultado.getString("cpf"));
-                    cliente.setSexo( Sexo.valueOf(resultado.getString("sexo")));
-                    cliente.setStatus(Status.valueOf(resultado.getString("status")));
-                    abrirTelefones(cliente);
+                    cliente.setSexo( Sexo.valueOf(resultado.getString("sexo")));                              
+                    //cliente.setStatus(Status.valueOf(resultado.getString("status")));
                }catch(Exception ex){
                     cliente = null;
                 }
@@ -165,4 +169,5 @@ public class ClienteRepositorio extends PessoaRepositorio {
         }
         return null;
     }
+
 }

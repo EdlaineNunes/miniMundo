@@ -144,6 +144,37 @@ public class FornecedorRepositorio extends BancoDados{
         return null;
     }
     
+    public List<Fornecedor> AbrirLista(Fornecedor obj) throws ErroValidacaoException{
+        try {     
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("select * from Fornecedor where id = ?");   
+            sql.setInt(1, obj.getId());
+            ResultSet resultado = sql.executeQuery();
+            List<Fornecedor> fornecedores = new ArrayList<>();
+            
+            while(resultado.next()){
+                Fornecedor fornecedor = new Fornecedor();   
+                try{
+                   fornecedor.setId( resultado.getInt("id"));
+                   fornecedor.setRazaoSocial( resultado.getString("razaoSocial"));
+                   fornecedor.setCnpj( resultado.getString("cnpj"));
+                   fornecedor.setEndCompleto(resultado.getString("endCompleto"));
+                   fornecedor.setStatus(Status.valueOf(resultado.getString("status")));
+                   abrirTelefones(fornecedor);
+                   abrirEmails(fornecedor);
+
+                }catch(SQLException ex) {
+                   fornecedor = null;
+                }
+                fornecedores.add(fornecedor);
+            }
+            return fornecedores;         
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+    
     public void abrirTelefones(Fornecedor obj){
         try {
             PreparedStatement sql = this.getConexao()

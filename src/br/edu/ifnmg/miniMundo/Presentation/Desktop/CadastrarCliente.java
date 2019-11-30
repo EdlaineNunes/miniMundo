@@ -454,11 +454,14 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
         //mostra msg de confirmação
         if (JOptionPane.showConfirmDialog(null, "Deseja realmente salvar o registro?",
             "Confirmar", JOptionPane.YES_NO_OPTION) == 0){
-        //clicou sim
-        if (this.repo.Salvar(cliente))
-            JOptionPane.showMessageDialog(null, "Dados salvos com sucesso!");
-        else
-            JOptionPane.showMessageDialog(null, "Falha ao salvar os dados! Consulte o administrador do banco de dados");
+            //clicou sim
+            if (this.repo.Salvar(cliente)){
+                JOptionPane.showMessageDialog(null, "Dados salvos com sucesso!");
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Falha ao salvar os dados! Consulte o administrador do banco de dados");
+                dispose();
+            }
         }
         //clicou em não
         else{

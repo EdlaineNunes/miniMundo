@@ -123,7 +123,7 @@ public class ClienteRepositorio extends PessoaRepositorio {
                 }
                 clientes.add(cliente);
             }
-            return null; 
+            return clientes; 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

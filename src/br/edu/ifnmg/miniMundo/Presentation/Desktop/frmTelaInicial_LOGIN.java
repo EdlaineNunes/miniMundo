@@ -47,6 +47,7 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         mnuBuscarFunc = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         mnuCadFornecedor = new javax.swing.JMenuItem();
+        mnuBuscarFornec = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -145,6 +146,14 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
             }
         });
         jMenu1.add(mnuCadFornecedor);
+
+        mnuBuscarFornec.setText("Buscar Fornecedor");
+        mnuBuscarFornec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuBuscarFornecActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuBuscarFornec);
 
         jMenuBar1.add(jMenu1);
 
@@ -258,6 +267,15 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         
     }//GEN-LAST:event_mnuCadFornecedorActionPerformed
 
+    private void mnuBuscarFornecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuBuscarFornecActionPerformed
+        // TODO add your handling code here:
+        BuscarFornecedor tela = new BuscarFornecedor();
+        
+        this.add(tela);
+        tela.setVisible(true);
+        
+    }//GEN-LAST:event_mnuBuscarFornecActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -303,6 +321,7 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
     private javax.swing.JLabel lblSenha;
     private javax.swing.JLabel lblUser;
     private javax.swing.JMenuItem mnuBuscarCliente;
+    private javax.swing.JMenuItem mnuBuscarFornec;
     private javax.swing.JMenuItem mnuBuscarFunc;
     private javax.swing.JMenuItem mnuCadCliente;
     private javax.swing.JMenuItem mnuCadFUNC;

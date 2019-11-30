@@ -93,7 +93,7 @@ public class Cliente extends Pessoa {
     }
 
     public void addEmail(String email){
-        if(email != null && email.length() == 11) // o método length retorna o tamanho da string
+        if(email != null) // o método length retorna o tamanho da string
             this.emails.add(email);
     }
     public void removeEmail(String email){

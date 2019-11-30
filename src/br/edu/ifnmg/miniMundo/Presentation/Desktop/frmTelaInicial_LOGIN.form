@@ -58,7 +58,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnuFunc">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Func"/>
+            <Property name="text" type="java.lang.String" value="Funcion&#xe1;rio"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mnuCadFUNC">
@@ -75,6 +75,21 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuBuscarFuncActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Fornecedor"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="mnuCadFornecedor">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cad Fornecedor"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuCadFornecedorActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

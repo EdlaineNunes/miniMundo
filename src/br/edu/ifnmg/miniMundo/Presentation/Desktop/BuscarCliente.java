@@ -18,6 +18,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -101,9 +102,16 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         btnBuscarTelefone = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabResultadoTelefone = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        lblId_emailBuscar = new javax.swing.JLabel();
+        txtId_emailBuscar = new javax.swing.JTextField();
+        lblEmailBuscar = new javax.swing.JLabel();
+        txtEmailBuscar = new javax.swing.JTextField();
+        btnBuscarEmail = new javax.swing.JButton();
+        jscroll = new javax.swing.JScrollPane();
+        tabResultadoEmail = new javax.swing.JTable();
 
         setClosable(true);
-        setMaximizable(true);
         setResizable(true);
         setTitle("Mini Mundo Supermecados - Buscar Clientes");
 
@@ -335,6 +343,11 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabResultadoTelefone.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabResultadoTelefoneMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabResultadoTelefone);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -374,6 +387,83 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Telefones Cliente", jPanel2);
 
+        lblId_emailBuscar.setText("ID:");
+
+        lblEmailBuscar.setText("Email:");
+
+        btnBuscarEmail.setText("BUSCAR");
+        btnBuscarEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarEmailActionPerformed(evt);
+            }
+        });
+
+        jscroll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jscrollMouseClicked(evt);
+            }
+        });
+
+        tabResultadoEmail.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Email"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabResultadoEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabResultadoEmailMouseClicked(evt);
+            }
+        });
+        jscroll.setViewportView(tabResultadoEmail);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jscroll, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(lblId_emailBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtId_emailBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblEmailBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtEmailBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBuscarEmail)))
+                .addGap(37, 37, 37))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblId_emailBuscar)
+                    .addComponent(txtId_emailBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEmailBuscar)
+                    .addComponent(txtEmailBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarEmail))
+                .addGap(34, 34, 34)
+                .addComponent(jscroll, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Email Cliente", jPanel4);
+
         tblGerenciarCliente.addTab("Buscar", jTabbedPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -404,12 +494,12 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         //abro o aluno daquele id
         Cliente cliente = null;
         try {
-            cliente = (Cliente) repo_cliente.Abrir(id);
+            cliente = (Cliente) repo_cliente.AbrirId(id);
         } catch (ErroValidacaoException ex) {
             Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        CadastrarCliente tela = new CadastrarCliente (cliente, repo_cliente);
+        BuscarCliente tela = new BuscarCliente ();
 
         this.getParent().add(tela);
         tela.show();
@@ -482,13 +572,99 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
             pessoa.setId(Integer.parseInt(txtId_telefoneBuscar.getText()));
         if(txtTelefoneBuscar.getText().length() > 0)
             pessoa.setTelefones( Arrays.asList(txtTelefoneBuscar.getText()) );
-        
-        //List<Pessoa> pessoa = null;
-        //pessoa = repo_pessoa.Abrir(WIDTH);
-       // preencherTabelaTelefones((List<Pessoa>) pessoa);
+
+        List<Pessoa> filtro = null;
+        try {
+            filtro = repo_pessoa.AbrirPessoa(pessoa);
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(BuscarFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        preencherTabelaTelefones(filtro);
         
     }//GEN-LAST:event_btnBuscarTelefoneActionPerformed
 
+    private void tabResultadoTelefoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabResultadoTelefoneMouseClicked
+        // TODO add your handling code here:
+        int linha = this.tabResultado.getSelectedRow();
+        //pega a string e interpreta como inteiro
+        int id = Integer.parseInt(this.tabResultado.getValueAt(linha,0).toString());
+        //abro o aluno daquele id
+        Cliente cliente = null;
+        try {
+            cliente = (Cliente) repo_cliente.AbrirId(id);
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        BuscarCliente tela = new BuscarCliente ();
+
+        this.getParent().add(tela);
+        tela.show();        
+    }//GEN-LAST:event_tabResultadoTelefoneMouseClicked
+
+    private void btnBuscarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEmailActionPerformed
+        // TODO add your handling code here:
+        filtro = new Cliente();
+        if(txtId_emailBuscar.getText().length() > 0)
+            filtro.setId(Integer.parseInt(txtId_emailBuscar.getText()));
+        if(txtEmailBuscar.getText().length() > 0)
+            filtro.setEmails( Arrays.asList(txtEmailBuscar.getText()) );
+
+        List <Cliente> email = null;
+        try {
+            email = repo_cliente.Abrir(filtro);
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        preencherTabelaEmails(email);
+        
+    }//GEN-LAST:event_btnBuscarEmailActionPerformed
+
+    private void jscrollMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jscrollMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jscrollMouseClicked
+
+    private void tabResultadoEmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabResultadoEmailMouseClicked
+        // TODO add your handling code here:
+        int linha = this.tabResultado.getSelectedRow();
+        //pega a string e interpreta como inteiro
+        int id = Integer.parseInt(this.tabResultado.getValueAt(linha,0).toString());
+        //abro o aluno daquele id
+        Cliente cliente = null;
+        try {
+            cliente = (Cliente) repo_cliente.AbrirId(id);
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        BuscarCliente tela = new BuscarCliente ();
+
+        this.getParent().add(tela);
+        tela.show(); 
+    }//GEN-LAST:event_tabResultadoEmailMouseClicked
+
+     private void preencherTabelaEmails(List<Cliente> lista) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        //adiciona coluna por coluna
+        modelo.addColumn("ID");
+        modelo.addColumn("Email");
+          
+        //para cada aluno da lista 
+        for (Cliente cliente: lista){
+            //cria um vetor de linha
+            Vector linha = new Vector();
+            //adiciona linha por linha
+            linha.add(cliente.getId());
+            linha.add(cliente.getEmails());
+                        
+            //adiciona cada linha na tabela
+            modelo.addRow(linha);
+        }        
+        //adiciona o modelo que é a minha tabela na tabela da interface
+        tabResultadoEmail.setModel(modelo);  
+    }
+
+    
     private void preencherTabelaTelefones(List<Pessoa> lista) {
         DefaultTableModel modelo = new DefaultTableModel();
         //adiciona coluna por coluna
@@ -570,6 +746,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnBuscarCliente;
+    private javax.swing.JButton btnBuscarEmail;
     private javax.swing.JButton btnBuscarTelefone;
     private javax.swing.JButton btnNovoCliente;
     private javax.swing.JComboBox<String> cbxSexo;
@@ -583,9 +760,13 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JScrollPane jscroll;
     private javax.swing.JLabel lblCPFBusca;
+    private javax.swing.JLabel lblEmailBuscar;
+    private javax.swing.JLabel lblId_emailBuscar;
     private javax.swing.JLabel lblId_telefoneBusca;
     private javax.swing.JLabel lblNomeBusca;
     private javax.swing.JLabel lblNome_clienteBusca;
@@ -595,12 +776,15 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane pessoaScrollPane;
     private javax.swing.JTable tabResultado;
     private javax.swing.JTable tabResultadoCliente;
+    private javax.swing.JTable tabResultadoEmail;
     private javax.swing.JTable tabResultadoTelefone;
     private javax.swing.JTabbedPane tblGerenciarCliente;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCPF;
     private javax.swing.JTextField txtCidade;
+    private javax.swing.JTextField txtEmailBuscar;
     private javax.swing.JTextField txtId_clienteBusca;
+    private javax.swing.JTextField txtId_emailBuscar;
     private javax.swing.JTextField txtId_pessoaBusca;
     private javax.swing.JTextField txtId_telefoneBuscar;
     private javax.swing.JTextField txtNome;
@@ -609,6 +793,5 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtnCasa;
     // End of variables declaration//GEN-END:variables
 
-    
 
 }

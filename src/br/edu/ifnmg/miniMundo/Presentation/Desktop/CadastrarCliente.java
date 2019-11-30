@@ -58,6 +58,7 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
          cbxStatus.setSelectedItem(cliente.getStatus().name());
          
          atualizarTelefones();
+         atualizarEmail();
          
      }
     
@@ -82,6 +83,12 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
         listTelefone.setModel(telefones);
      }
      
+     private void atualizarEmail(){
+        String[] email = new String[cliente.getEmails().size()];
+        email = cliente.getEmails().toArray(email);
+        ListModel<String> emails = new DefaultComboBoxModel<>(email) ;
+        listEmail.setModel(emails);
+     }
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,13 +127,19 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
         txtTelefone = new javax.swing.JTextField();
         btnAdicionar = new javax.swing.JButton();
         btnRemoverTelefone = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        lblEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        btnAddEmail = new javax.swing.JButton();
+        btnRemoveEmail = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        listEmail = new javax.swing.JList<>();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setClosable(true);
-        setMaximizable(true);
         setTitle("Mini Mundo Supermecados - Cadastrar Clientes");
 
         lblNomeCompleto.setText("Nome completo:");
@@ -303,6 +316,63 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
 
         tblDadosPessoais.addTab("Telefone", jPanel2);
 
+        lblEmail.setText("Email:");
+
+        btnAddEmail.setText("Adicionar");
+        btnAddEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddEmailActionPerformed(evt);
+            }
+        });
+
+        btnRemoveEmail.setText("Remover");
+        btnRemoveEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveEmailActionPerformed(evt);
+            }
+        });
+
+        listEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listEmailMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(listEmail);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblEmail)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnAddEmail)
+                        .addGap(28, 28, 28)
+                        .addComponent(btnRemoveEmail)))
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEmail)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddEmail)
+                    .addComponent(btnRemoveEmail))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
+        );
+
+        tblDadosPessoais.addTab("Emails", jPanel3);
+
         tblGerenciarCliente.addTab("Cadastrar", tblDadosPessoais);
 
         btnSalvar.setText("SALVAR");
@@ -338,7 +408,7 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(tblGerenciarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addComponent(tblGerenciarCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
@@ -402,20 +472,39 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
         if (JOptionPane.showConfirmDialog(null, "Deseja realmente CANCELAR?",
             "Confirmar", JOptionPane.YES_NO_OPTION) == 0){
             dispose();
-        }
-       
-        
+        }       
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCidadeActionPerformed
 
+    private void btnAddEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmailActionPerformed
+        // TODO add your handling code here:
+        this.cliente.addEmail(txtEmail.getText());
+        txtEmail.setText("");
+        atualizarEmail();
+    }//GEN-LAST:event_btnAddEmailActionPerformed
+
+    private void btnRemoveEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveEmailActionPerformed
+        // TODO add your handling code here:
+        this.cliente.removeEmail(txtEmail.getText());
+        txtEmail.setText("");
+        atualizarEmail();
+    }//GEN-LAST:event_btnRemoveEmailActionPerformed
+
+    private void listEmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listEmailMouseClicked
+        // TODO add your handling code here:
+        txtEmail.setText( listEmail.getSelectedValue() );
+    }//GEN-LAST:event_listEmailMouseClicked
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddEmail;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnRemoveEmail;
     private javax.swing.JButton btnRemoverTelefone;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbxSexo;
@@ -423,10 +512,13 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblBairro;
     private javax.swing.JLabel lblCPF;
     private javax.swing.JLabel lblCidade;
+    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblInformações;
     private javax.swing.JLabel lblNResid;
     private javax.swing.JLabel lblNomeCompleto;
@@ -434,12 +526,14 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblSexo;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblTelefone;
+    private javax.swing.JList<String> listEmail;
     private javax.swing.JList<String> listTelefone;
     private javax.swing.JTabbedPane tblDadosPessoais;
     private javax.swing.JTabbedPane tblGerenciarCliente;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCPF;
     private javax.swing.JTextField txtCidade;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtRua;
     private javax.swing.JTextField txtTelefone;

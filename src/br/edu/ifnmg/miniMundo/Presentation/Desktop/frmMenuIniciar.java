@@ -35,8 +35,6 @@ public class frmMenuIniciar extends javax.swing.JInternalFrame {
         btnEfetuarVendas = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
 
-        setIconifiable(true);
-        setMaximizable(true);
         setTitle("Mini Mundo Supermecados");
         setVisible(true);
 

@@ -18,6 +18,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,8 +47,11 @@ public class ClienteRepositorio extends PessoaRepositorio {
                 sql.setString(5, obj.getCidade());
                 sql.setString(6, obj.getStatus().name());
                 
-                sql.executeUpdate();
-                return true;
+                
+                if(sql.executeUpdate() > 0){
+                    atualizarEmail(obj);
+                    return true;
+                }
                 
             } else {
                 PreparedStatement sql = this.getConexao()
@@ -59,7 +64,12 @@ public class ClienteRepositorio extends PessoaRepositorio {
                 sql.setString(5, obj.getStatus().name());
                 sql.setInt(6, obj.getId());
                 
-                sql.executeUpdate();
+                
+                if(sql.executeUpdate() > 0){ 
+                    atualizarEmail(obj);
+                    return true;
+                }
+                
                 return true;
             }                   
         } catch (SQLException ex) {
@@ -67,33 +77,93 @@ public class ClienteRepositorio extends PessoaRepositorio {
         }      
         return false;     
     }
+    
+    public void atualizarEmail(Cliente cliente) throws SQLException{
+        try {
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("delete from emailCliente where cliente_pessoa_fk = ?");
+       
+            sql.setInt(1, cliente.getId());     
+            String values = "";
 
-    public Cliente Abrir(Cliente obj) throws ErroValidacaoException{
-        super.Abrir(obj.getId());
+            for(String email : cliente.getEmails()){
+                if(values.length() > 0) 
+                    values += ", ";             
+                values += "("+cliente.getId()+",'"+email+"')";
+            }
+            
+            Statement sql2 = this.getConexao().createStatement();
+            sql2.executeUpdate("insert into emailCliente(cliente_pessoa_fk, email) VALUES " + values);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public List<Cliente> Abrir(Cliente obj) throws ErroValidacaoException{
         try {    
             PreparedStatement sql = this.getConexao()
                     .prepareStatement("select * from Cliente where pessoa_fk = ?");  
-            //select * from Pessoa where id = ?
+
             sql.setInt(1, obj.getId());
             ResultSet resultado = sql.executeQuery();
+            List<Cliente> clientes = new ArrayList<>();
+             
+            while(resultado.next()) {
+                Cliente cliente = new Cliente();
+                try{
+                   cliente.setRua(resultado.getString("rua"));
+                   cliente.setnCasa(resultado.getString("nCasa"));
+                   cliente.setBairro(resultado.getString("bairro"));
+                   cliente.setCidade(resultado.getString("cidade"));
+                   cliente.setStatus(Status.valueOf(resultado.getString("status")));
+                   
+                }catch(SQLException ex) {
+                   cliente = null;
+                }
+                clientes.add(cliente);
+            }
+            return null; 
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+    
+   public void abrirEmails(Cliente obj){
+       try {
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("select * from emailCliente where cliente_pessoa_fk = ?");
+            sql.setInt(1, obj.getId());
+            ResultSet resultado = sql.executeQuery();
+            while(resultado.next()){
+                obj.addEmail(resultado.getString("email"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public Cliente AbrirId(int id) throws ErroValidacaoException{
+        try {    
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("select * from Cliente where pessoa_fk = ?");  
+
+            sql.setInt(1, id);
+            ResultSet resultado = sql.executeQuery();
             resultado.next();
-            //Pessoa cliente = new Pessoa();  
             Cliente cliente = new Cliente();
             try{
-               /*cliente.setId( resultado.getInt("id"));
-               cliente.setNome( resultado.getString("nome"));
-               cliente.setCpf( resultado.getString("cpf"));
-               cliente.setSexo( Sexo.valueOf(resultado.getString("sexo")));
-               */cliente.setRua(resultado.getString("rua"));
-               cliente.setnCasa(resultado.getString("nCasa"));
-               cliente.setBairro(resultado.getString("bairro"));
-               cliente.setCidade(resultado.getString("cidade"));
-               cliente.setStatus(Status.valueOf(resultado.getString("status")));
-               
+                cliente.setRua(resultado.getString("rua"));
+                cliente.setnCasa(resultado.getString("nCasa"));
+                cliente.setBairro(resultado.getString("bairro"));
+                cliente.setCidade(resultado.getString("cidade"));
+                cliente.setStatus(Status.valueOf(resultado.getString("status")));
+                
             }catch(SQLException ex) {
-               cliente = null;
-            }
-            return (Cliente) cliente;         
+                cliente = null;
+            }   
+            return cliente; 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

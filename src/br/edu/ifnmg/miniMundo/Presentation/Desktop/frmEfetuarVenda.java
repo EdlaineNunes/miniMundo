@@ -43,8 +43,7 @@ public class frmEfetuarVenda extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         btnInserirQtd = new javax.swing.JButton();
 
-        setIconifiable(true);
-        setMaximizable(true);
+        setClosable(true);
         setTitle("Mini Mundo Supermecados - Efetuar Vendas");
 
         lblIdentificacaoCliente.setText("Insira a identificação do Cliente:");

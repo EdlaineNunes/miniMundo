@@ -141,4 +141,8 @@ public class FuncionarioRepositorio extends PessoaRepositorio{
         }
         return null;
     }
+
+    public List<Funcionario> Abrir(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

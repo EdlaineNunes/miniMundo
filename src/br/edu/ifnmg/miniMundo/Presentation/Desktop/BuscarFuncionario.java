@@ -95,6 +95,9 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabResultadoTelefone = new javax.swing.JTable();
 
+        setClosable(true);
+        setTitle("Mini Mundo Supermecados - Buscar Funcionário");
+
         lblNomeBusca.setText("Nome:");
 
         lblSexoBusca.setText("Sexo:");
@@ -389,11 +392,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         int id = Integer.parseInt(this.tabResultado.getValueAt(linha,0).toString());
         //abro o aluno daquele id
         Funcionario func = null;
-        try {
-            func = (Funcionario) repo_func.Abrir(id);
-        } catch (ErroValidacaoException ex) {
-            Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        func = (Funcionario) repo_func.Abrir(id);
 
         CadastrarFuncionario tela = new CadastrarFuncionario (func, repo_func);
 
@@ -435,16 +434,43 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         pessoa = new Pessoa();
         if(txtId_telefoneBuscar.getText().length() > 0)
-        pessoa.setId(Integer.parseInt(txtId_telefoneBuscar.getText()));
+            pessoa.setId(Integer.parseInt(txtId_telefoneBuscar.getText()));
         if(txtTelefoneBuscar.getText().length() > 0)
-        pessoa.setTelefones( Arrays.asList(txtTelefoneBuscar.getText()) );
+            pessoa.setTelefones( Arrays.asList(txtTelefoneBuscar.getText()) );
 
-        //List<Pessoa> pessoa = null;
-        //pessoa = repo_pessoa.Abrir(WIDTH);
-        // preencherTabelaTelefones((List<Pessoa>) pessoa);
-
+        List<Pessoa> filtro = null;
+        try {
+            filtro = repo_pessoa.AbrirPessoa(pessoa);
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(BuscarFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        preencherTabelaTelefones(filtro);
+        
     }//GEN-LAST:event_btnBuscarTelefoneActionPerformed
 
+    private void preencherTabelaTelefones(List<Pessoa> lista) {
+        //cria uma tabela vazia
+        DefaultTableModel modelo = new DefaultTableModel();
+        //adiciona coluna por coluna
+        modelo.addColumn("ID");
+        modelo.addColumn("Telefone");
+        
+        
+        //para cada aluno da lista 
+        for (Pessoa pessoa: lista){
+            //cria um vetor de linha
+            Vector linha = new Vector();
+            //adiciona linha por linha
+            linha.add(pessoa.getId());
+            linha.add(pessoa.getTelefones());
+            
+            //adiciona cada linha na tabela
+            modelo.addRow(linha);
+        }        
+        //adiciona o modelo que é a minha tabela na tabela da interface
+        tabResultadoTelefone.setModel(modelo);  
+    }
+    
     public void preencherTabela(List<Pessoa> lista){
         //cria uma tabela vazia
         DefaultTableModel modelo = new DefaultTableModel();

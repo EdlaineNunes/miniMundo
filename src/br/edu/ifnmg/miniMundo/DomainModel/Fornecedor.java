@@ -22,6 +22,7 @@ public class Fornecedor {
     private String endCompleto;
     private List<String> email;
     private Status status;
+    private List<String> telefones;
 
     //formato CNPJ 39.113.709/0001-39
     private Pattern regex_cnpj = Pattern.compile("\\d{2}\\.?\\d{3}\\.?\\d{3}\\/?\\d{4}\\-?\\d{2}");
@@ -33,15 +34,18 @@ public class Fornecedor {
         this.endCompleto = "";
         this.email = new ArrayList<>();
         this.status = Status.Ativo;
+        this.telefones = new ArrayList<>();
     }
 
-    public Fornecedor(int id, String cnpj, String razaoSocial, String endCompleto, List<String> email, Status status) {
+    public Fornecedor(int id, String cnpj, String razaoSocial, String endCompleto, 
+            List<String> email, Status status,List<String> telefones) {
         this.id = id;
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
         this.endCompleto = endCompleto;
         this.email = new ArrayList<>();
         this.status = status;
+        this.telefones = new ArrayList<>();
     }
 
    
@@ -121,6 +125,25 @@ public class Fornecedor {
         this.status = status;
     }
 
+    public void addTelefone(String telefone){
+        //038 9 9999 9999 
+        if(telefone != null )//&& telefone.length() == 11) // o método length retorna o tamanho da string
+        //if(!this.telefones.contains(telefone))    
+            this.telefones.add(telefone);
+    }
+
+    public void removeTelefone(String telefone){
+        if(this.telefones.contains(telefone))// o cantais faz um for e compara com tds os dados da lista
+            this.telefones.remove(telefone);
+    }    
+
+    public List<String> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(List<String> telefones) {
+        this.telefones = telefones;
+    }
     
     @Override
     public int hashCode() {

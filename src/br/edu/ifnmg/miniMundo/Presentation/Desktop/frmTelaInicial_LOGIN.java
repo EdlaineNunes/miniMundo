@@ -45,6 +45,8 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         mnuFunc = new javax.swing.JMenu();
         mnuCadFUNC = new javax.swing.JMenuItem();
         mnuBuscarFunc = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        mnuCadFornecedor = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -114,7 +116,7 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuCadastro);
 
-        mnuFunc.setText("Func");
+        mnuFunc.setText("Funcionário");
 
         mnuCadFUNC.setText("Cad Func");
         mnuCadFUNC.addActionListener(new java.awt.event.ActionListener() {
@@ -133,6 +135,18 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         mnuFunc.add(mnuBuscarFunc);
 
         jMenuBar1.add(mnuFunc);
+
+        jMenu1.setText("Fornecedor");
+
+        mnuCadFornecedor.setText("Cad Fornecedor");
+        mnuCadFornecedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCadFornecedorActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuCadFornecedor);
+
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -235,6 +249,15 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         
     }//GEN-LAST:event_mnuBuscarFuncActionPerformed
 
+    private void mnuCadFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadFornecedorActionPerformed
+        // TODO add your handling code here:
+        CadastrarFornecedor tela = new CadastrarFornecedor();
+        
+        this.add(tela);
+        tela.setVisible(true);
+        
+    }//GEN-LAST:event_mnuCadFornecedorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -273,6 +296,7 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoginEntrar;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel lblMiniMundo;
@@ -282,6 +306,7 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuBuscarFunc;
     private javax.swing.JMenuItem mnuCadCliente;
     private javax.swing.JMenuItem mnuCadFUNC;
+    private javax.swing.JMenuItem mnuCadFornecedor;
     private javax.swing.JMenu mnuCadastro;
     private javax.swing.JMenu mnuFunc;
     private javax.swing.JMenuItem mnuSair;

@@ -109,8 +109,6 @@ public class CadastrarFuncionario extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
 
         setClosable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Mini Mundo Supermecados - Cadastrar Funcionários");
 
         lblNomeCompleto.setText("Nome completo:");

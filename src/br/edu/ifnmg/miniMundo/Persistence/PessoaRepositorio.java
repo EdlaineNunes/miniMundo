@@ -96,25 +96,30 @@ public class PessoaRepositorio extends BancoDados {
     }
     
 
-    public Pessoa Abrir(int id) throws ErroValidacaoException{
+    public List<Pessoa> AbrirPessoa(Pessoa obj) throws ErroValidacaoException{
         try {     
              PreparedStatement sql = this.getConexao()
                      .prepareStatement("select * from Pessoa where id = ?");   
-
-             sql.setInt(1, id);
+ 
+             sql.setInt(1, obj.getId());
              ResultSet resultado = sql.executeQuery();
-             resultado.next();
-             Pessoa pessoa = new Pessoa();   
-             try{
-                pessoa.setId( resultado.getInt("id"));
-                pessoa.setNome( resultado.getString("nome"));
-                pessoa.setCpf( resultado.getString("cpf"));
-                pessoa.setSexo( Sexo.valueOf(resultado.getString("sexo")));
-                abrirTelefones(pessoa);
-             }catch(SQLException ex) {
-                pessoa = null;
-             }
-             return pessoa;         
+             List<Pessoa> pessoas = new ArrayList<>();
+             
+            while(resultado.next()) {
+                Pessoa pessoa = new Pessoa();   
+                try{
+                   pessoa.setId( resultado.getInt("id"));
+                   pessoa.setNome( resultado.getString("nome"));
+                   pessoa.setCpf( resultado.getString("cpf"));
+                   pessoa.setSexo( Sexo.valueOf(resultado.getString("sexo")));
+                   abrirTelefones(pessoa);
+
+                }catch(SQLException ex) {
+                   pessoa = null;
+                }
+                pessoas.add(pessoa);
+            }
+             return pessoas;         
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -130,6 +135,7 @@ public class PessoaRepositorio extends BancoDados {
             while(resultado.next()){
                 obj.addTelefone(resultado.getString("telefone"));
             }
+            
         } catch (SQLException ex) {
             Logger.getLogger(PessoaRepositorio.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -86,7 +86,7 @@ public class ClienteRepositorio extends PessoaRepositorio {
             sql.setInt(1, cliente.getId());     
             String values = "";
 
-            for(String email : cliente.getEmails()){
+            for(String email : cliente.getEmail()){
                 if(values.length() > 0) 
                     values += ", ";             
                 values += "("+cliente.getId()+",'"+email+"')";
@@ -112,12 +112,13 @@ public class ClienteRepositorio extends PessoaRepositorio {
             while(resultado.next()) {
                 Cliente cliente = new Cliente();
                 try{
+                   cliente.setId(resultado.getInt("pessoa_fk"));
                    cliente.setRua(resultado.getString("rua"));
                    cliente.setnCasa(resultado.getString("nCasa"));
                    cliente.setBairro(resultado.getString("bairro"));
                    cliente.setCidade(resultado.getString("cidade"));
                    cliente.setStatus(Status.valueOf(resultado.getString("status")));
-                   
+                   abrirEmails(cliente);
                 }catch(SQLException ex) {
                    cliente = null;
                 }

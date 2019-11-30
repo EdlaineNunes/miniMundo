@@ -608,7 +608,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         if(txtId_emailBuscar.getText().length() > 0)
             filtro.setId(Integer.parseInt(txtId_emailBuscar.getText()));
         if(txtEmailBuscar.getText().length() > 0)
-            filtro.setEmails( Arrays.asList(txtEmailBuscar.getText()) );
+            filtro.setEmail( Arrays.asList(txtEmailBuscar.getText()) );
 
         List <Cliente> email = null;
         try {
@@ -655,7 +655,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
             Vector linha = new Vector();
             //adiciona linha por linha
             linha.add(cliente.getId());
-            linha.add(cliente.getEmails());
+            linha.add(cliente.getEmail());
                         
             //adiciona cada linha na tabela
             modelo.addRow(linha);

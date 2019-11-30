@@ -12,7 +12,9 @@ import javax.swing.JOptionPane;
  * @author Edlâine
  */
 public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
-
+ 
+    //skip-grant-tables
+    
     /**
      * Creates new form frmTelaInicial
      */

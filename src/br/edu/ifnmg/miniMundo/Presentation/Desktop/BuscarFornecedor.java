@@ -332,7 +332,7 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Email Cliente", jPanel4);
+        jTabbedPane1.addTab("Email Fornecedor", jPanel4);
 
         tblGerenciarCliente.addTab("Buscar", jTabbedPane1);
 

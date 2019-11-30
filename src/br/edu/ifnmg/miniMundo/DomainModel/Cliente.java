@@ -20,7 +20,7 @@ public class Cliente extends Pessoa {
     private String bairro;
     private String nCasa;
     private String cidade;
-    private List<String> emails;
+    private List<String> email;
     private Status status;
     
     private Pattern regex_cpf = Pattern.compile("\\d{3}\\.?\\d{3}\\.?\\d{3}\\-?\\d{2}"); //formatar cpf
@@ -32,7 +32,7 @@ public class Cliente extends Pessoa {
         this.nCasa = "";
         this.nCasa = "";
         this.cidade = "";
-        this.emails = new ArrayList<>();
+        this.email = new ArrayList<>();
         this.status = Status.Ativo;
     }
 
@@ -48,7 +48,7 @@ public class Cliente extends Pessoa {
         this.bairro = bairro;
         this.nCasa = nCasa;
         this.cidade = cidade;
-        this.emails = new ArrayList<>();
+        this.email = new ArrayList<>();
         this.status = status;
     }
     
@@ -93,20 +93,20 @@ public class Cliente extends Pessoa {
     }
 
     public void addEmail(String email){
-        if(email != null) // o método length retorna o tamanho da string
-            this.emails.add(email);
+        if(email != null && email.length() <50) // o método length retorna o tamanho da string
+            this.email.add(email);
     }
     public void removeEmail(String email){
-        if(this.emails.contains(email))// o contais faz um for e compara com tds os dados da lista
-            this.emails.remove(email);
+        if(this.email.contains(email))// o contais faz um for e compara com tds os dados da lista
+            this.email.remove(email);
     }    
     
-    public List<String> getEmails() {
-        return emails;
+    public List<String> getEmail() {
+        return email;
     }
 
-    public void setEmails(List<String> emails) {
-        this.emails = emails;
+    public void setEmail(List<String> email) {
+        this.email = email;
     }
 
     public Status getStatus() {
@@ -152,7 +152,7 @@ public class Cliente extends Pessoa {
 
     @Override
     public String toString() {
-        return "Cliente{" + "rua=" + rua + ", bairro=" + bairro + ", nCasa=" + nCasa + ", cidade=" + cidade + ", emails=" + emails + ", status=" + status + ", regex_cpf=" + regex_cpf + '}';
+        return "Cliente{" + "rua=" + rua + ", bairro=" + bairro + ", nCasa=" + nCasa + ", cidade=" + cidade + ", emails=" + email + ", status=" + status + ", regex_cpf=" + regex_cpf + '}';
     }
 
     

@@ -29,7 +29,7 @@ public class Fornecedor {
          
     public Fornecedor() {
         this.id = 0;
-        this.cnpj = "";
+        this.cnpj = "00000000000000";
         this.razaoSocial = "";
         this.endCompleto = "";
         this.email = new ArrayList<>();

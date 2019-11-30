@@ -84,8 +84,8 @@ public class CadastrarCliente extends javax.swing.JInternalFrame {
      }
      
      private void atualizarEmail(){
-        String[] email = new String[cliente.getEmails().size()];
-        email = cliente.getEmails().toArray(email);
+        String[] email = new String[cliente.getEmail().size()];
+        email = cliente.getEmail().toArray(email);
         ListModel<String> emails = new DefaultComboBoxModel<>(email) ;
         listEmail.setModel(emails);
      }

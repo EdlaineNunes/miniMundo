@@ -192,7 +192,7 @@ public class FornecedorRepositorio extends BancoDados{
     public void abrirEmails(Fornecedor obj){
         try {
             PreparedStatement sql = this.getConexao()
-                    .prepareStatement("select email from emailFornecedor where fornecedor_fk = ?");
+                    .prepareStatement("select * from emailFornecedor where fornecedor_fk = ?");
             sql.setInt(1, obj.getId());       
             ResultSet resultado = sql.executeQuery();         
             while(resultado.next()){
@@ -221,9 +221,16 @@ public class FornecedorRepositorio extends BancoDados{
     public List<Fornecedor> Buscar(Fornecedor filtro) throws ErroValidacaoException{
         try {
             String where = "";
-            if(filtro.getRazaoSocial() != null && !filtro.getRazaoSocial().isEmpty())
-                where += "razaoSocial like '%"+filtro.getRazaoSocial() + "%'";            
-            if(filtro.getCnpj() != null && !filtro.getCnpj().isEmpty()){
+            if(filtro.getId() !=  0)
+                where += "id = '"+filtro.getId() + "'";
+            if(filtro.getRazaoSocial() != null && !filtro.getRazaoSocial().isEmpty()){
+                if(where.length() > 0)
+                        where += " and ";
+                where += "razaoSocial like '%"+filtro.getRazaoSocial() + "%'";
+            }
+            //39.113.709/0001-39
+            if(filtro.getCnpj() != null && !filtro.getCnpj().isEmpty()&& 
+                        !"00.000.000/0000-00".equals(filtro.getCnpj())){
                 if(where.length() > 0)
                     where += " and ";
                 where += "cnpj = '"+filtro.getCnpj().replace(".", "").replace("/","").replace("-", "") + "'";
@@ -250,10 +257,10 @@ public class FornecedorRepositorio extends BancoDados{
             while(resultado.next()) {
                Fornecedor fornecedor = new Fornecedor();
                fornecedor.setId( resultado.getInt("id"));
+               fornecedor.setStatus(Status.valueOf(resultado.getString("status"))); 
                fornecedor.setRazaoSocial( resultado.getString("razaoSocial"));
                fornecedor.setCnpj( resultado.getString("cnpj"));
-               fornecedor.setEndCompleto( resultado.getString("endCompleto"));
-               fornecedor.setStatus(Status.valueOf(resultado.getString("status")));               
+               fornecedor.setEndCompleto( resultado.getString("endCompleto"));              
                fornecedores.add(fornecedor);
             }
             return fornecedores;

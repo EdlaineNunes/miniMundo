@@ -60,6 +60,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         tblGerenciarFunc = new javax.swing.JTabbedPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -97,6 +98,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Mini Mundo Supermecados - Buscar Funcionário");
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         lblNomeBusca.setText("Nome:");
 
@@ -342,22 +344,14 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
 
         tblGerenciarFunc.addTab("Buscar", jTabbedPane1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(tblGerenciarFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(tblGerenciarFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 12;
+        gridBagConstraints.ipady = 11;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(31, 20, 15, 10);
+        getContentPane().add(tblGerenciarFunc, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -424,7 +418,8 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
 
     private void btnNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoClienteActionPerformed
         // TODO add your handling code here:
-        CadastrarFuncionario novatela = new CadastrarFuncionario(new Funcionario(),this.repo_func);
+        CadastrarFuncionario novatela = 
+                new CadastrarFuncionario(new Funcionario(),this.repo_func);
         this.getParent().add(novatela);
         dispose();
         novatela.show();

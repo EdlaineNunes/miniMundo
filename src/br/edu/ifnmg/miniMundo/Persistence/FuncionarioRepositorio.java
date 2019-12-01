@@ -145,4 +145,31 @@ public class FuncionarioRepositorio extends PessoaRepositorio{
     public List<Funcionario> Abrir(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public Funcionario ValidarUsuario(Funcionario obj) throws ErroValidacaoException {      
+        Funcionario func = new Funcionario();
+        try{
+            PreparedStatement sql = this.getConexao()
+                        .prepareStatement("select * from funcionario where "
+                                + "user = ? and senha = ? ");          
+                sql.setString(1, obj.getUser());
+                sql.setString(2, obj.getSenha());
+
+                ResultSet resultado = sql.executeQuery();
+
+                if(resultado.next() == true){
+                    func.setId(resultado.getInt("pessoa_fk"));
+                    func.setUser(resultado.getString("user"));
+                    func.setSenha(resultado.getString("senha"));
+                    return func;       
+                }else{
+                    func = null;
+                    return func;
+                }
+
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return func;
+    }
 }

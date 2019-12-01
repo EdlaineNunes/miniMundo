@@ -5,20 +5,23 @@
  */
 package br.edu.ifnmg.miniMundo.Presentation.Desktop;
 
+import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Edlâine
  */
-public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
+public class MenuGerenciamento extends javax.swing.JFrame {
  
     //skip-grant-tables
     
     /**
      * Creates new form frmTelaInicial
      */
-    public frmTelaInicial_LOGIN() {
+    public MenuGerenciamento() {
         initComponents();
     }
 
@@ -30,50 +33,63 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jMenuItem1 = new javax.swing.JMenuItem();
-        btnLoginEntrar = new javax.swing.JButton();
-        txtSenha = new javax.swing.JTextField();
-        txtUser = new javax.swing.JTextField();
-        lblUser = new javax.swing.JLabel();
-        lblSenha = new javax.swing.JLabel();
         lblMiniMundo = new javax.swing.JLabel();
+        lblMiniMundo1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuSistema = new javax.swing.JMenu();
         mnuSair = new javax.swing.JMenuItem();
         mnuCadastro = new javax.swing.JMenu();
         mnuCadCliente = new javax.swing.JMenuItem();
         mnuBuscarCliente = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         mnuFunc = new javax.swing.JMenu();
         mnuCadFUNC = new javax.swing.JMenuItem();
         mnuBuscarFunc = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         mnuCadFornecedor = new javax.swing.JMenuItem();
         mnuBuscarFornec = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        mnuCadProduto = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
+        setTitle("Mini Mundo - Gerenciamento de Opções");
         setBackground(new java.awt.Color(255, 255, 255));
-
-        btnLoginEntrar.setText("Entrar");
-        btnLoginEntrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginEntrarActionPerformed(evt);
-            }
-        });
-
-        txtUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserActionPerformed(evt);
-            }
-        });
-
-        lblUser.setText("Usuário:");
-
-        lblSenha.setText("Senha:");
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         lblMiniMundo.setFont(new java.awt.Font("Monotype Corsiva", 1, 36)); // NOI18N
-        lblMiniMundo.setText("MiniMundo");
+        lblMiniMundo.setText("Supermecados");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipady = 22;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 77, 93, 59);
+        getContentPane().add(lblMiniMundo, gridBagConstraints);
+
+        lblMiniMundo1.setFont(new java.awt.Font("Monotype Corsiva", 1, 36)); // NOI18N
+        lblMiniMundo1.setText("Mini Mundo ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 77, 0, 0);
+        getContentPane().add(lblMiniMundo1, gridBagConstraints);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("Seja Bem Vindo!");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(54, 105, 0, 0);
+        getContentPane().add(jLabel1, gridBagConstraints);
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -117,6 +133,14 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         });
         mnuCadastro.add(mnuBuscarCliente);
 
+        jMenuItem2.setText("Editar Cliente");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        mnuCadastro.add(jMenuItem2);
+
         jMenuBar1.add(mnuCadastro);
 
         mnuFunc.setText("Funcionário");
@@ -159,65 +183,32 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setText("Produto");
+
+        mnuCadProduto.setText("Cad Produto");
+        mnuCadProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCadProdutoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnuCadProduto);
+
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(lblMiniMundo, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(lblUser))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
-                        .addComponent(lblSenha))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(btnLoginEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(79, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(lblMiniMundo)
-                .addGap(28, 28, 28)
-                .addComponent(lblUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblSenha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(btnLoginEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
-        );
+        getAccessibleContext().setAccessibleName("Menu Principal");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUserActionPerformed
-
     private void mnuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSairActionPerformed
         // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(null, "Deseja realmente SAIR?",
+            "Confirmar", JOptionPane.YES_NO_OPTION) == 0){
+            dispose();
+        }
     }//GEN-LAST:event_mnuSairActionPerformed
-
-    private void btnLoginEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginEntrarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLoginEntrarActionPerformed
 
     private void mnuCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroActionPerformed
         // TODO add your handling code here:
@@ -278,6 +269,21 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
         
     }//GEN-LAST:event_mnuBuscarFornecActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        ValidarEdicaoCliente tela = new ValidarEdicaoCliente();
+        
+        this.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void mnuCadProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadProdutoActionPerformed
+        // TODO add your handling code here:
+        CadastrarProduto tela = new CadastrarProduto();
+        this.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_mnuCadProdutoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -295,44 +301,46 @@ public class frmTelaInicial_LOGIN extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmTelaInicial_LOGIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuGerenciamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmTelaInicial_LOGIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuGerenciamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmTelaInicial_LOGIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuGerenciamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmTelaInicial_LOGIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuGerenciamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>   
         //</editor-fold>
         //</editor-fold>   
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmTelaInicial_LOGIN().setVisible(true);
+                new MenuGerenciamento().setVisible(true);
             }
         });       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLoginEntrar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JLabel lblMiniMundo;
-    private javax.swing.JLabel lblSenha;
-    private javax.swing.JLabel lblUser;
+    private javax.swing.JLabel lblMiniMundo1;
     private javax.swing.JMenuItem mnuBuscarCliente;
     private javax.swing.JMenuItem mnuBuscarFornec;
     private javax.swing.JMenuItem mnuBuscarFunc;
     private javax.swing.JMenuItem mnuCadCliente;
     private javax.swing.JMenuItem mnuCadFUNC;
     private javax.swing.JMenuItem mnuCadFornecedor;
+    private javax.swing.JMenuItem mnuCadProduto;
     private javax.swing.JMenu mnuCadastro;
     private javax.swing.JMenu mnuFunc;
     private javax.swing.JMenuItem mnuSair;
     private javax.swing.JMenu mnuSistema;
-    private javax.swing.JTextField txtSenha;
-    private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

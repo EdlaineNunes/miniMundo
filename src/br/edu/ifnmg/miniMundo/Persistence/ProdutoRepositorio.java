@@ -31,18 +31,18 @@ public class ProdutoRepositorio extends BancoDados{
         try {  
             if(obj.getId() == 0){
                 PreparedStatement sql = this.getConexao()
-                        .prepareStatement("insert into Produto(descricao, fornecedor_fk,unidCompra, unidVenda, "
-                                + "precoCompra, precoVenda, status, unidComprada)"
+                        .prepareStatement("insert into Produto(descricao, fornecedor_fk, unidCompra, unidVenda, "
+                                + "precoVenda, precoCompra, unidComprada,status)"
                                 + " values(?,?,?,?,?,?,?,?)",
                                 Statement.RETURN_GENERATED_KEYS);
                 sql.setString(1, obj.getDescricao());
                 sql.setInt(2, obj.getFornecedor().getId());
                 sql.setString(3, obj.getUnidCompra());
                 sql.setString(4, obj.getUnidVenda());
-                sql.setFloat(5, obj.getPrecoCompra().floatValue());
-                sql.setFloat(6, obj.getPrecoVenda().floatValue());
-                sql.setString(7, obj.getStatus().name());
-                sql.setInt(8, obj.getUnidComprada());
+                sql.setFloat(5, obj.getPrecoVenda().floatValue());
+                sql.setFloat(6, obj.getPrecoCompra().floatValue());
+                sql.setInt(7, obj.getUnidComprada());
+                sql.setString(8, obj.getStatus().name());
                 
                 if(sql.executeUpdate() > 0){ 
                     ResultSet chave = sql.getGeneratedKeys();
@@ -55,16 +55,16 @@ public class ProdutoRepositorio extends BancoDados{
             } else {
                 PreparedStatement sql = this.getConexao()
                         .prepareStatement("update Produto set descricao = ?, fornecedor_fk = ?, unidCompra = ?,"
-                                + "unidVenda = ?, precoCompra = ?, precoVenda = ?, status = ?,"
-                                + " unidComprada = ? where id = ?");
+                                + "unidVenda = ?, precoVenda = ?, precoCompra = ?,unidComprada = ?, "
+                                + " status = ? where id = ?");
                 sql.setString(1, obj.getDescricao());
                 sql.setInt(2, obj.getFornecedor().getId());
                 sql.setString(3, obj.getUnidCompra());
                 sql.setString(4, obj.getUnidVenda());
-                sql.setFloat(5, obj.getPrecoCompra().floatValue());
-                sql.setFloat(6, obj.getPrecoVenda().floatValue());
-                sql.setString(7, obj.getStatus().name());
-                sql.setInt(8, obj.getUnidComprada());
+                sql.setFloat(5, obj.getPrecoVenda().floatValue());
+                sql.setFloat(6, obj.getPrecoCompra().floatValue());
+                sql.setInt(7, obj.getUnidComprada());
+                sql.setString(8, obj.getStatus().name());
                 sql.setInt(9, obj.getId());
                 
                 if(sql.executeUpdate() > 0) 
@@ -96,10 +96,10 @@ public class ProdutoRepositorio extends BancoDados{
                
                produto.setUnidCompra( resultado.getString("unidCompra"));
                produto.setUnidVenda(resultado.getString("unidVenda"));
-               produto.setPrecoCompra(resultado.getBigDecimal("precoCompra"));
                produto.setPrecoVenda(resultado.getBigDecimal("precoVenda"));
-               produto.setStatus(Status.valueOf(resultado.getString("status")));
+               produto.setPrecoCompra(resultado.getBigDecimal("precoCompra"));
                produto.setUnidComprada(resultado.getInt("unidComprada"));
+               produto.setStatus(Status.valueOf(resultado.getString("status")));
                
             }catch(SQLException ex) {
                produto = null;
@@ -186,9 +186,10 @@ public class ProdutoRepositorio extends BancoDados{
                     produto.setFornecedor(fornecedor_repo.Abrir(resultado.getInt("fornecedor_fk")));
                     produto.setUnidCompra( resultado.getString("unidCompra"));
                     produto.setUnidVenda( resultado.getString("unidVenda"));
-                    produto.setPrecoCompra( resultado.getBigDecimal("precoCompra"));
                     produto.setPrecoVenda( resultado.getBigDecimal("precoVenda"));
+                    produto.setPrecoCompra( resultado.getBigDecimal("precoCompra"));
                     produto.setUnidComprada( resultado.getInt("unidComprada"));
+                    produto.setStatus(Status.valueOf(resultado.getString("status")));
                     produtos.add(produto);
             }
             return produtos;

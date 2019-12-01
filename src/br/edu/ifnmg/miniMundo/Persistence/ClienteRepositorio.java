@@ -78,6 +78,37 @@ public class ClienteRepositorio extends PessoaRepositorio {
         return false;     
     }
     
+    public boolean Editar(Cliente obj){
+        super.Salvar((Pessoa) obj);
+        try {  
+          
+            if(obj.getId() != 0){
+                PreparedStatement sql = this.getConexao()
+                        .prepareStatement("update Cliente set rua = ?, nCasa =?,"
+                                + " bairro =?, cidade = ?, status = ? where pessoa_fk = ?");
+                sql.setString(1, obj.getRua());
+                sql.setString(2, obj.getnCasa());
+                sql.setString(3, obj.getBairro());
+                sql.setString(4, obj.getCidade());
+                sql.setString(5, obj.getStatus().name());
+                sql.setInt(6, obj.getId());
+                
+                
+                if(sql.executeUpdate() > 0){ 
+                    atualizarEmail(obj);
+                    return true;
+                }
+                
+                return true;
+            }   
+            else
+                return false;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }      
+        return false;     
+    }    
+    
     public void atualizarEmail(Cliente cliente) throws SQLException{
         try {
             PreparedStatement sql = this.getConexao()
@@ -248,4 +279,32 @@ public class ClienteRepositorio extends PessoaRepositorio {
         return null;
     }
 
+    public Cliente Validar(Cliente filtro) throws ErroValidacaoException{
+        super.Buscar(filtro);
+        try{
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("select * from cliente where pessoa_fk = ?");
+            ResultSet resultado = sql.executeQuery();
+            Cliente cliente = new Cliente();
+            if(resultado.next() == false) {
+               cliente = null;
+               return cliente;
+            }else{                         
+                try {
+                    cliente.setId(Integer.parseInt(resultado.getString("pessoa_fk")));
+                    cliente.setRua( resultado.getString("rua"));
+                    cliente.setnCasa( resultado.getString("nCasa"));
+                    cliente.setBairro( resultado.getString("bairro"));
+                    cliente.setCidade(resultado.getString("cidade"));  
+                    cliente.setStatus(Status.valueOf(resultado.getString("status")));
+                    return cliente;
+                } catch (ErroValidacaoException ex) {
+                    Logger.getLogger(ClienteRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+       return null;    
+    }
 }

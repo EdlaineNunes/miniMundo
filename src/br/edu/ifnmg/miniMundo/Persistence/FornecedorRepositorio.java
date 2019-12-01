@@ -218,38 +218,42 @@ public class FornecedorRepositorio extends BancoDados{
         return false;
     }
 
-    public List<Fornecedor> Buscar(Fornecedor filtro) throws ErroValidacaoException{
+    public List<Fornecedor> Buscar(Fornecedor filtro){
         try {
             String where = "";
-            if(filtro.getId() !=  0)
-                where += "id = '"+filtro.getId() + "'";
-            if(filtro.getRazaoSocial() != null && !filtro.getRazaoSocial().isEmpty()){
-                if(where.length() > 0)
+            if (filtro != null){
+                if(filtro.getId() != 0)
+                    where += "id = '"+filtro.getId() + "'";
+                if(filtro.getRazaoSocial() != null && !filtro.getRazaoSocial().isEmpty()){
+                    if(where.length() > 0)
+                            where += " and ";
+                    where += "razaoSocial like '%"+filtro.getRazaoSocial() + "%'";
+                }
+                //39.113.709/0001-39
+                if(filtro.getCnpj() != null && !filtro.getCnpj().isEmpty()&& 
+                            !"00.000.000/0000-00".equals(filtro.getCnpj())){
+                    if(where.length() > 0)
                         where += " and ";
-                where += "razaoSocial like '%"+filtro.getRazaoSocial() + "%'";
-            }
-            //39.113.709/0001-39
-            if(filtro.getCnpj() != null && !filtro.getCnpj().isEmpty()&& 
-                        !"00.000.000/0000-00".equals(filtro.getCnpj())){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "cnpj = '"+filtro.getCnpj().replace(".", "").replace("/","").replace("-", "") + "'";
-            }          
-            if(filtro.getStatus() != null ){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "status = '"+filtro.getStatus().name() +"'";
-            }
-            if(filtro.getEndCompleto() != null && !filtro.getEndCompleto().isEmpty()){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "endCompleto like '%"+filtro.getEndCompleto() + "%'";
-            }
+                    where += "cnpj = '"+filtro.getCnpj().replace(".", "").replace("/","").replace("-", "") + "'";
+                }          
+                if(filtro.getStatus() != null ){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "status = '"+filtro.getStatus().name() +"'";
+                }
+                if(filtro.getEndCompleto() != null && !filtro.getEndCompleto().isEmpty()){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "endCompleto like '%"+filtro.getEndCompleto() + "%'";
+                }
+            }           
             
-            
-            String consulta = "select * from Fornecedor";
+            String consulta = "select * from Fornecedor ";
             if(where.length() >0 )
                 consulta += " where " + where;
+            
+            consulta += "order by razaoSocial";
+            
             PreparedStatement sql = this.getConexao()
                     .prepareStatement(consulta);
             ResultSet resultado = sql.executeQuery();
@@ -266,6 +270,8 @@ public class FornecedorRepositorio extends BancoDados{
             return fornecedores;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(FornecedorRepositorio.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

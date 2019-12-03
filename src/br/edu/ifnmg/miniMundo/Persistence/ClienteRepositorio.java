@@ -166,7 +166,7 @@ public class ClienteRepositorio extends PessoaRepositorio {
    public void abrirEmails(Cliente obj){
        try {
             PreparedStatement sql = this.getConexao()
-                    .prepareStatement("select * from emailCliente where cliente_pessoa_fk = ?");
+                    .prepareStatement("select * from emailCliente where cliente_pessoa_fk = ? ");
             sql.setInt(1, obj.getId());
             ResultSet resultado = sql.executeQuery();
             while(resultado.next()){

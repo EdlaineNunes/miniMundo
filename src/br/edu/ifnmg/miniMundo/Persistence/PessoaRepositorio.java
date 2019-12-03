@@ -182,7 +182,9 @@ public class PessoaRepositorio extends BancoDados {
             String consulta = "select * from Pessoa";
 
             if(where.length() >0 )
-                consulta += " where " + where;
+                consulta += " where " + where + " ;";
+            else
+                consulta += ';';
             
             PreparedStatement sql = this.getConexao()
                     .prepareStatement(consulta);

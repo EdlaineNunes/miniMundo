@@ -41,7 +41,7 @@ public class Pessoa {
         this.nome = nome;
         this.cpf = cpf;
         this.telefones = new ArrayList<>();
-        this.sexo = sexo;
+        this.sexo = Sexo.F;
     }
 
     public int getId() {

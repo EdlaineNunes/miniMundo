@@ -396,7 +396,7 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         List<Produto> list_produto = null;
-        list_produto = repo_produto.Buscar(produto);
+        list_produto = repo_produto.BuscarTodos(produto);
         preencherTabelaTodos(list_produto);
         
     }//GEN-LAST:event_btnBuscarTodosActionPerformed

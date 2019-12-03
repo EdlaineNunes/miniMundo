@@ -5,77 +5,60 @@
  */
 package br.edu.ifnmg.miniMundo.Presentation.Desktop;
 
-import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
-import br.edu.ifnmg.miniMundo.DomainModel.Fornecedor;
-import br.edu.ifnmg.miniMundo.DomainModel.Produto;
-import br.edu.ifnmg.miniMundo.DomainModel.Status;
-import br.edu.ifnmg.miniMundo.DomainModel.UnidadesCompra;
-import br.edu.ifnmg.miniMundo.DomainModel.UnidadesVenda;
-import br.edu.ifnmg.miniMundo.Persistence.FornecedorRepositorio;
-import br.edu.ifnmg.miniMundo.Persistence.ProdutoRepositorio;
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ComboBoxModel;
+import br.edu.ifnmg.miniMundo.DomainModel.AquisicaoProduto;
+import br.edu.ifnmg.miniMundo.DomainModel.ListaItens;
+import br.edu.ifnmg.miniMundo.Persistence.AquisicaoRepositorio;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
 /**
  *
  * @author Edlâine
  */
-public class CadastrarProduto extends javax.swing.JInternalFrame {
+public class CompraProdutos extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form CadastrarProduto
+     * Creates new form CompraProdutos
      */
     
-    Produto produto = new Produto();
-    ProdutoRepositorio repo_produto = new ProdutoRepositorio();
-    
-    FornecedorRepositorio repo_fornec = new FornecedorRepositorio();
-    
-    public CadastrarProduto(){
-        repo_fornec = new FornecedorRepositorio();
-        repo_produto = new ProdutoRepositorio();
+    AquisicaoProduto aquisicao;
+    ListaItens lista;
+    AquisicaoRepositorio repo_aquisicao;
+        
+    public CompraProdutos() {
+        aquisicao = new AquisicaoProduto();
+        lista = new ListaItens();
+        repo_aquisicao = new AquisicaoRepositorio();
         initComponents();
-        
-        List<Fornecedor> fornecedores;
-        fornecedores = repo_fornec.Buscar(null);
-        
-        ComboBoxModel<Fornecedor> model_fornec = 
-            new DefaultComboBoxModel<>(new Vector (fornecedores));
-        cbxFornecedor.setModel(model_fornec);
-    }    
+    }
     
-    public Produto getProduto() throws ErroValidacaoException{
-        this.produto = produto;
-        this.produto.setDescricao(txtDescricao.getText());
-        this.produto.setFornecedor((Fornecedor)cbxFornecedor.getSelectedItem());
-        this.produto.setUnidCompra(UnidadesCompra.valueOf( cbxUnidCompra.getSelectedItem().toString() ));
-        this.produto.setUnidVenda(UnidadesVenda.valueOf( cbxUnidVenda.getSelectedItem().toString() ));
-        this.produto.setPrecoVenda( new BigDecimal(txtprecoVenda.getText()));
-        this.produto.setPrecoCompra( new BigDecimal(txtprecoCompra.getText()));
-        this.produto.setUnidComprada(Integer.parseInt(txtUnidComprada.getText()));
-        this.produto.setStatus(Status.valueOf(cbxStatus.getSelectedItem().toString()));
-        return this.produto;
+    public CompraProdutos(AquisicaoProduto aquisicao, ListaItens lista, 
+            AquisicaoRepositorio repo_aquisicao){
+        this.aquisicao = aquisicao;
+        this.lista = lista;
+        this.repo_aquisicao = repo_aquisicao;
+        initComponents();    
     }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto; 
-        txtDescricao.setText(produto.getDescricao());
-        cbxFornecedor.setSelectedItem(produto.getFornecedor());
-        cbxUnidCompra.setSelectedItem(produto.getUnidCompra().name());
-        cbxUnidVenda.setSelectedItem(produto.getUnidVenda().name());
-        txtprecoVenda.setText(produto.getPrecoVenda().toString());
-        txtprecoCompra.setText(produto.getPrecoCompra().toString());
-        txtUnidComprada.setText(String.valueOf(produto.getUnidComprada()));
-        cbxStatus.setSelectedItem(produto.getStatus().name());       
+    
+    public void setCompraProduto(AquisicaoProduto aquisicao){
+        this.aquisicao = aquisicao;
+           
+        atualizarItens();
     }
+    
+    public AquisicaoProduto getCompraProduto(){
+        this.aquisicao.setId();
+    
+        
+        return this.aquisicao;   
+    }
+    
+    private void atualizarItens(){
+        String[] item = new String[aquisicao.getItens().size()];
+        item = aquisicao.getItens().toArray(item);
+        ListModel<String> itens = new DefaultComboBoxModel<>(item) ;
+        lista_itens.setModel(itens);
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,11 +89,12 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         txtUnidComprada = new javax.swing.JTextField();
         cbxUnidCompra = new javax.swing.JComboBox<>();
         cbxUnidVenda = new javax.swing.JComboBox<>();
+        btnAdicionarItem = new javax.swing.JButton();
+        btnRemoverItem = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lista_itens = new javax.swing.JList<>();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-
-        setClosable(true);
-        setTitle("Mini Mundo Supermecados - Cadastrar Produtos");
 
         lblDescricao.setText("Descrição:");
 
@@ -136,6 +120,17 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
 
         cbxUnidVenda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidade", "Caixa ", "Fardo ", "Outro" }));
 
+        btnAdicionarItem.setText("Adicionar Item");
+        btnAdicionarItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarItemActionPerformed(evt);
+            }
+        });
+
+        btnRemoverItem.setText("Remover Item");
+
+        jScrollPane2.setViewportView(lista_itens);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -143,49 +138,58 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lblUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(cbxUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(44, 44, 44))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(cbxUnidCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblUnidComprada)
+                                .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtUnidComprada)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cbxUnidCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblPrecoCompra)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtprecoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblUnidComprada)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtUnidComprada))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblFornecedor)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxFornecedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblDescricao)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtDescricao)))
+                        .addGap(14, 14, 14))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(284, 284, 284)
+                                .addComponent(btnAdicionarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRemoverItem, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblPrecoCompra)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(79, 79, 79)
+                                        .addComponent(cbxUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(lblprecoVenda))
-                                .addGap(1, 1, 1)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtprecoCompra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtprecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtprecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblStatus)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(15, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblFornecedor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxFornecedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(231, 231, 231)
-                        .addComponent(lblInformações)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblDescricao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDescricao)))
-                .addGap(14, 14, 14))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(231, 231, 231)
+                                .addComponent(lblInformações))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,20 +209,24 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(lblPrecoCompra)
                     .addComponent(txtprecoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxUnidCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblUnidVenda)
-                    .addComponent(lblprecoVenda)
-                    .addComponent(txtprecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblStatus)
-                    .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxUnidCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblUnidComprada)
                     .addComponent(txtUnidComprada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblprecoVenda)
+                    .addComponent(txtprecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUnidVenda)
+                    .addComponent(lblStatus)
+                    .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdicionarItem)
+                    .addComponent(btnRemoverItem))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tblDadosPessoais.addTab("Compra de Produto", jPanel1);
@@ -246,24 +254,24 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(tblGerenciarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalvar)
-                .addGap(56, 56, 56)
+                .addGap(29, 29, 29)
                 .addComponent(btnCancelar)
-                .addGap(104, 104, 104))
+                .addGap(45, 45, 45))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(tblGerenciarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addContainerGap()
+                .addComponent(tblGerenciarFuncionario)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnSalvar))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(btnSalvar)
+                    .addComponent(btnCancelar))
+                .addContainerGap())
         );
 
         pack();
@@ -281,14 +289,14 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         //mostra msg de confirmação
         if (JOptionPane.showConfirmDialog(null, "Deseja realmente salvar o registro?",
             "Confirmar", JOptionPane.YES_NO_OPTION) == 0){
-            //clicou sim
-            if (this.repo_produto.Salvar(produto)){
-                JOptionPane.showMessageDialog(null, "Dados salvos com sucesso!");
-                dispose();
-            }else{
-                JOptionPane.showMessageDialog(null, "Falha ao salvar os dados! Consulte o administrador do banco de dados");
-                dispose();
-            }
+        //clicou sim
+        if (this.repo_produto.Salvar(produto)){
+            JOptionPane.showMessageDialog(null, "Dados salvos com sucesso!");
+            dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Falha ao salvar os dados! Consulte o administrador do banco de dados");
+            dispose();
+        }
         }
         //clicou em não
         else{
@@ -305,9 +313,18 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnAdicionarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarItemActionPerformed
+        // TODO add your handling code here:
+        this.aquisicao.addProduto(txtDescricao.getText());
+        txtDescricao.setText("");
+        
+    }//GEN-LAST:event_btnAdicionarItemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdicionarItem;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnRemoverItem;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<Fornecedor> cbxFornecedor;
     private javax.swing.JComboBox<String> cbxStatus;
@@ -315,6 +332,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbxUnidVenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblDescricao;
     private javax.swing.JLabel lblFornecedor;
     private javax.swing.JLabel lblInformações;
@@ -323,6 +341,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblUnidComprada;
     private javax.swing.JLabel lblUnidVenda;
     private javax.swing.JLabel lblprecoVenda;
+    private javax.swing.JList<String> lista_itens;
     private javax.swing.JTabbedPane tblDadosPessoais;
     private javax.swing.JTabbedPane tblGerenciarFuncionario;
     private javax.swing.JTextField txtDescricao;

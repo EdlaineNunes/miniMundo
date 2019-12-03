@@ -8,6 +8,7 @@ package br.edu.ifnmg.miniMundo.Persistence;
 import br.edu.ifnmg.miniMundo.DomainModel.AquisicaoProduto;
 import br.edu.ifnmg.miniMundo.DomainModel.Produto;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -24,8 +25,8 @@ public class AquisicaoRepositorio extends BancoDados{
         try {  
             if(obj.getId() == 0){
                 PreparedStatement sql = this.getConexao()
-                        .prepareStatement("insert into Aquisicao(id, lista_itens,"
-                                + " funcionario_fk, fornecedor_fk, preco_final, data)"
+                        .prepareStatement("insert into Aquisicao(id, funcionario_fk, "
+                                + "fornecedor_fk, preco_final, data)"
                                 + " values(?,?,?,?,?,?)",
                                 Statement.RETURN_GENERATED_KEYS);
 
@@ -43,18 +44,20 @@ public class AquisicaoRepositorio extends BancoDados{
                 
             } else {
                 PreparedStatement sql = this.getConexao()
-                        .prepareStatement("update Cliente set rua = ?, nCasa =?,"
-                                + " bairro =?, cidade = ?, status = ? where pessoa_fk = ?");
-                sql.setString(1, obj.getRua());
-                sql.setString(2, obj.getnCasa());
-                sql.setString(3, obj.getBairro());
-                sql.setString(4, obj.getCidade());
-                sql.setString(5, obj.getStatus().name());
+                        .prepareStatement("update Cliente set funcionario_fk = ?,"
+                                + "fornecedor_fk = ?, preco_final = ?, data = ? "
+                                + "where id = ?");
+                
+                sql.setString(1, obj.getList_produtos().toString());
+                sql.setString(2, obj.getFuncionario().getUser());
+                sql.setString(3, obj.getFornecedor().getRazaoSocial());
+                sql.setFloat(4, obj.getPrecoFinal().floatValue());
+                sql.setDate(5, new java.sql.Date(obj.getData().getTime()));
                 sql.setInt(6, obj.getId());
                 
                 
                 if(sql.executeUpdate() > 0){ 
-                    atualizarEmail(obj);
+                    
                     return true;
                 }
                 

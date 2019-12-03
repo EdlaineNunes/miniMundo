@@ -15,7 +15,7 @@ import java.util.Objects;
 public class Produto {
     private int id;
     private String descricao;
-    Fornecedor fornecedor; //classe já existente
+    private Fornecedor fornecedor; //classe já existente
     private UnidadesCompra unidCompra;
     private UnidadesVenda unidVenda;
     private BigDecimal precoCompra;
@@ -32,14 +32,14 @@ public class Produto {
         this.fornecedor = new Fornecedor();
         this.unidCompra = UnidadesCompra.Caixa;
         this.unidVenda = UnidadesVenda.Unidade;
-        this.precoCompra =  new BigDecimal("0,0");
-        this.precoVenda = new BigDecimal("0,0");
+        this.precoCompra =  new BigDecimal("0.0");
+        this.precoVenda = new BigDecimal("0.0");
         this.unidComprada = 0;
         this.status = Status.Ativo;
     }
 
-    public Produto(int id, String descricao, Fornecedor forncedor, UnidadesCompra unidCompra, 
-            UnidadesVenda unidVenda, BigDecimal precoCompra, BigDecimal precoVenda, int unidEstoque) {
+    public Produto(int id, String descricao, Fornecedor fornecedor, UnidadesCompra unidCompra, 
+            UnidadesVenda unidVenda, BigDecimal precoCompra, BigDecimal precoVenda, int unidComprada) {
         this.id = id;
         this.descricao = descricao;
         this.fornecedor = new Fornecedor();
@@ -47,7 +47,7 @@ public class Produto {
         this.unidVenda = unidVenda;
         this.precoCompra = new BigDecimal("precoCompra");
         this.precoVenda = new BigDecimal("precoVenda");
-        this.unidComprada = unidEstoque;
+        this.unidComprada = unidComprada;
         this.status = status;
     }
 

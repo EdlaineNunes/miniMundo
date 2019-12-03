@@ -13,7 +13,7 @@ import java.util.Objects;
  *
  * @author Edlâine
  */
-class Estoque extends Produto{  
+public class Estoque extends Produto{  
     
     private Date data;
 
@@ -22,7 +22,7 @@ class Estoque extends Produto{
         this.data = new Date();
     }
 
-    public Estoque(Date data, int id, String descricao, Fornecedor forncedor,
+    public Estoque(Date data, int id, String descricao, Fornecedor fornecedor,
             UnidadesCompra unidCompra, UnidadesVenda unidVenda, 
             BigDecimal precoCompra, BigDecimal precoVenda, int unidComprada)
             throws ErroValidacaoException {
@@ -43,14 +43,6 @@ class Estoque extends Produto{
 
     public void setData(Date data) {
         this.data = data;
-    }
-
-    public Fornecedor getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(Fornecedor fornecedor) {
-        this.fornecedor = fornecedor;
     }
 
     @Override

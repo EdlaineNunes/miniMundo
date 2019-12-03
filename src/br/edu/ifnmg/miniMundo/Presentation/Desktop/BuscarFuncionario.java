@@ -60,7 +60,6 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         tblGerenciarFunc = new javax.swing.JTabbedPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -69,7 +68,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         lblSexoBusca = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        cbxSexo = new javax.swing.JComboBox<>();
+        cbxSexoFunc = new javax.swing.JComboBox<>();
         lblCPFBusca = new javax.swing.JLabel();
         txtCPF = new javax.swing.JTextField();
         pessoaScrollPane = new javax.swing.JScrollPane();
@@ -82,7 +81,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         lblUser = new javax.swing.JLabel();
         txtUser = new javax.swing.JTextField();
         lblStatus = new javax.swing.JLabel();
-        cbxStatusBusca = new javax.swing.JComboBox<>();
+        cbxStatusBuscaFunc = new javax.swing.JComboBox<>();
         btnBuscarFunc = new javax.swing.JButton();
         btnNovoCliente = new javax.swing.JButton();
         funcScrollPane = new javax.swing.JScrollPane();
@@ -98,7 +97,6 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Mini Mundo Supermecados - Buscar Funcionário");
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         lblNomeBusca.setText("Nome:");
 
@@ -111,7 +109,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
             }
         });
 
-        cbxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
+        cbxSexoFunc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
 
         lblCPFBusca.setText("CPF:");
 
@@ -166,7 +164,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
                                 .addComponent(lblSexoBusca)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxSexo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxSexoFunc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
@@ -178,7 +176,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
                     .addComponent(lblNomeBusca)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSexoBusca)
-                    .addComponent(cbxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxSexoFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscar)
@@ -199,7 +197,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
 
         lblStatus.setText("Status:");
 
-        cbxStatusBusca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
+        cbxStatusBuscaFunc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
 
         btnBuscarFunc.setText("BUSCAR");
         btnBuscarFunc.addActionListener(new java.awt.event.ActionListener() {
@@ -247,7 +245,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblStatus)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxStatusBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxStatusBuscaFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnBuscarFunc, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
@@ -268,7 +266,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovoCliente)
                     .addComponent(lblStatus)
-                    .addComponent(cbxStatusBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxStatusBuscaFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(funcScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
                 .addContainerGap())
@@ -344,14 +342,20 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
 
         tblGerenciarFunc.addTab("Buscar", jTabbedPane1);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 12;
-        gridBagConstraints.ipady = 11;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(31, 20, 15, 10);
-        getContentPane().add(tblGerenciarFunc, gridBagConstraints);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(tblGerenciarFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(tblGerenciarFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -360,13 +364,13 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         pessoa = new Pessoa();
         try {
-            if(txtNome.getText().length() > 0)
-                pessoa.setNome( txtNome.getText() );
-            pessoa.setSexo(Sexo.valueOf(cbxSexo.getSelectedItem().toString()));
-            if(!txtCPF.getText().isEmpty())
-                pessoa.setCpf(txtCPF.getText());
             if(!txtId_pessoaBusca.getText().isEmpty())
                 pessoa.setId(Integer.parseInt(txtId_pessoaBusca.getText()));
+            if(txtNome.getText().length() > 0)
+                pessoa.setNome( txtNome.getText() );
+            if(!txtCPF.getText().isEmpty())
+                pessoa.setCpf(txtCPF.getText());
+            pessoa.setSexo(Sexo.valueOf(cbxSexoFunc.getSelectedItem().toString()));
         }catch(ErroValidacaoException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -386,7 +390,11 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         int id = Integer.parseInt(this.tabResultado.getValueAt(linha,0).toString());
         //abro o aluno daquele id
         Funcionario func = null;
-        func = (Funcionario) repo_func.Abrir(id);
+        try {
+            func = (Funcionario) repo_func.Abrir(id);
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(BuscarFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         CadastrarFuncionario tela = new CadastrarFuncionario (func, repo_func);
 
@@ -400,7 +408,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         try {
             if(txtId_funcBusca.getText().length() > 0)
                 filtro.setId(Integer.parseInt(txtId_funcBusca.getText()));
-            filtro.setStatus(Status.valueOf(cbxStatusBusca.getSelectedItem().toString()));
+            filtro.setStatus(Status.valueOf(cbxStatusBuscaFunc.getSelectedItem().toString()));
            
             if(txtUser.getText().length() > 0)
                 filtro.setUser( txtUser.getText() );
@@ -430,7 +438,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         pessoa = new Pessoa();
         if(txtId_telefoneBuscar.getText().length() > 0)
             pessoa.setId(Integer.parseInt(txtId_telefoneBuscar.getText()));
-        if(txtTelefoneBuscar.getText().length() > 0)
+         if(txtTelefoneBuscar.getText().length() > 0)
             pessoa.setTelefones( Arrays.asList(txtTelefoneBuscar.getText()) );
 
         List<Pessoa> filtro = null;
@@ -484,7 +492,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
             linha.add(pessoa.getId());
             linha.add(pessoa.getNome());
             linha.add(pessoa.getCpf());
-            linha.add(pessoa.getSexo());
+            linha.add(pessoa.getSexo().name());
             
             //adiciona cada linha na tabela
             modelo.addRow(linha);
@@ -523,8 +531,8 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscarFunc;
     private javax.swing.JButton btnBuscarTelefone;
     private javax.swing.JButton btnNovoCliente;
-    private javax.swing.JComboBox<String> cbxSexo;
-    private javax.swing.JComboBox<String> cbxStatusBusca;
+    private javax.swing.JComboBox<String> cbxSexoFunc;
+    private javax.swing.JComboBox<String> cbxStatusBuscaFunc;
     private javax.swing.JScrollPane funcScrollPane;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;

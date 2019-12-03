@@ -35,7 +35,6 @@ public class MenuGerenciamento extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jMenuItem1 = new javax.swing.JMenuItem();
         lblMiniMundo = new javax.swing.JLabel();
         lblMiniMundo1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -54,8 +53,7 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         mnuBuscarFornec = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         mnuCadProduto = new javax.swing.JMenuItem();
-
-        jMenuItem1.setText("jMenuItem1");
+        mnuBuscarProduto = new javax.swing.JMenuItem();
 
         setTitle("Mini Mundo - Gerenciamento de Opções");
         setBackground(new java.awt.Color(255, 255, 255));
@@ -69,7 +67,7 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.ipady = 22;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 77, 93, 59);
+        gridBagConstraints.insets = new java.awt.Insets(18, 109, 78, 91);
         getContentPane().add(lblMiniMundo, gridBagConstraints);
 
         lblMiniMundo1.setFont(new java.awt.Font("Monotype Corsiva", 1, 36)); // NOI18N
@@ -79,7 +77,7 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 77, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(18, 109, 0, 0);
         getContentPane().add(lblMiniMundo1, gridBagConstraints);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -88,7 +86,7 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(54, 105, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(39, 137, 0, 0);
         getContentPane().add(jLabel1, gridBagConstraints);
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -193,6 +191,14 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         });
         jMenu2.add(mnuCadProduto);
 
+        mnuBuscarProduto.setText("Buscar Produto");
+        mnuBuscarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuBuscarProdutoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnuBuscarProduto);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -280,9 +286,18 @@ public class MenuGerenciamento extends javax.swing.JFrame {
     private void mnuCadProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadProdutoActionPerformed
         // TODO add your handling code here:
         CadastrarProduto tela = new CadastrarProduto();
+        
         this.add(tela);
         tela.setVisible(true);
     }//GEN-LAST:event_mnuCadProdutoActionPerformed
+
+    private void mnuBuscarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuBuscarProdutoActionPerformed
+        // TODO add your handling code here:
+        BuscarProduto tela = new BuscarProduto();
+        
+        this.add(tela);
+        tela.setVisible(true);        
+    }//GEN-LAST:event_mnuBuscarProdutoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,13 +342,13 @@ public class MenuGerenciamento extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JLabel lblMiniMundo;
     private javax.swing.JLabel lblMiniMundo1;
     private javax.swing.JMenuItem mnuBuscarCliente;
     private javax.swing.JMenuItem mnuBuscarFornec;
     private javax.swing.JMenuItem mnuBuscarFunc;
+    private javax.swing.JMenuItem mnuBuscarProduto;
     private javax.swing.JMenuItem mnuCadCliente;
     private javax.swing.JMenuItem mnuCadFUNC;
     private javax.swing.JMenuItem mnuCadFornecedor;

@@ -37,7 +37,7 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
     }
 
     public BuscarFornecedor(Fornecedor fornecedor, 
-            FornecedorRepositorio repo_fornecedor) {
+        FornecedorRepositorio repo_fornecedor) {
         this.fornecedor = fornecedor;
         this.repo_fornecedor = repo_fornecedor;
         initComponents();
@@ -52,7 +52,6 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         tblGerenciarCliente = new javax.swing.JTabbedPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -88,7 +87,6 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Mini Mundo Supermecados - Buscar Fornecedores");
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         lblRazaoSocial.setText("Razão Social:");
 
@@ -347,14 +345,20 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
 
         tblGerenciarCliente.addTab("Buscar", jTabbedPane1);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 48;
-        gridBagConstraints.ipady = 11;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(31, 20, 15, 10);
-        getContentPane().add(tblGerenciarCliente, gridBagConstraints);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(tblGerenciarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(tblGerenciarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

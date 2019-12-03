@@ -15,9 +15,9 @@ import java.util.Objects;
 public class Produto {
     private int id;
     private String descricao;
-    private Fornecedor fornecedor; //classe já existente
-    private String unidCompra;
-    private String unidVenda;
+    Fornecedor fornecedor; //classe já existente
+    private UnidadesCompra unidCompra;
+    private UnidadesVenda unidVenda;
     private BigDecimal precoCompra;
     private BigDecimal precoVenda;
     private int unidComprada;
@@ -30,15 +30,16 @@ public class Produto {
         this.id = 0;
         this.descricao = "";
         this.fornecedor = new Fornecedor();
-        this.unidCompra = "";
-        this.unidVenda = "";
-        this.precoCompra =  new BigDecimal("0");
-        this.precoVenda = new BigDecimal("0");
+        this.unidCompra = UnidadesCompra.Caixa;
+        this.unidVenda = UnidadesVenda.Unidade;
+        this.precoCompra =  new BigDecimal("0,0");
+        this.precoVenda = new BigDecimal("0,0");
         this.unidComprada = 0;
         this.status = Status.Ativo;
     }
 
-    public Produto(int id, String descricao, Fornecedor forncedor, String unidCompra, String unidVenda, BigDecimal precoCompra, BigDecimal precoVenda, int unidEstoque) {
+    public Produto(int id, String descricao, Fornecedor forncedor, UnidadesCompra unidCompra, 
+            UnidadesVenda unidVenda, BigDecimal precoCompra, BigDecimal precoVenda, int unidEstoque) {
         this.id = id;
         this.descricao = descricao;
         this.fornecedor = new Fornecedor();
@@ -82,23 +83,19 @@ public class Produto {
         this.fornecedor = fornecedor;
     }
 
-    public String getUnidCompra() {
+    public UnidadesCompra getUnidCompra() {
         return unidCompra;
     }
 
-    public void setUnidCompra(String unidCompra) throws ErroValidacaoException {
-        if (unidCompra.length() < 5)
-            throw new ErroValidacaoException("Unidade de compra inválida!");
+    public void setUnidCompra(UnidadesCompra unidCompra) {
         this.unidCompra = unidCompra;
     }
 
-    public String getUnidVenda() {
+    public UnidadesVenda getUnidVenda() {
         return unidVenda;
     }
 
-    public void setUnidVenda(String unidVenda) throws ErroValidacaoException {
-        if (unidCompra.length() < 5)
-            throw new ErroValidacaoException("Unidade de venda inválida!");
+    public void setUnidVenda(UnidadesVenda unidVenda) {
         this.unidVenda = unidVenda;
     }
 
@@ -144,11 +141,12 @@ public class Produto {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + this.id;
-        hash = 97 * hash + Objects.hashCode(this.descricao);
-        hash = 97 * hash + Objects.hashCode(this.unidCompra);
-        hash = 97 * hash + Objects.hashCode(this.unidVenda);
-        hash = 97 * hash + Objects.hashCode(this.status);
+        hash = 79 * hash + this.id;
+        hash = 79 * hash + Objects.hashCode(this.descricao);
+        hash = 79 * hash + Objects.hashCode(this.fornecedor);
+        hash = 79 * hash + Objects.hashCode(this.unidCompra);
+        hash = 79 * hash + Objects.hashCode(this.unidVenda);
+        hash = 79 * hash + Objects.hashCode(this.status);
         return hash;
     }
 
@@ -170,6 +168,15 @@ public class Produto {
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
+        if (!Objects.equals(this.fornecedor, other.fornecedor)) {
+            return false;
+        }
+        if (this.unidCompra != other.unidCompra) {
+            return false;
+        }
+        if (this.unidVenda != other.unidVenda) {
+            return false;
+        }
         if (!Objects.equals(this.precoCompra, other.precoCompra)) {
             return false;
         }
@@ -184,7 +191,10 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto{" + "id=" + id + ", descricao=" + descricao + ", fornecedor=" + fornecedor + ", unidCompra=" + unidCompra + ", unidVenda=" + unidVenda + ", precoCompra=" + precoCompra + ", precoVenda=" + precoVenda + ", unidComprada=" + unidComprada + ", status=" + status + '}';
+        return "Produto{" + "id=" + id + ", descricao=" + descricao + ", fornecedor="
+                + fornecedor + ", unidCompra=" + unidCompra + ", unidVenda=" + 
+                unidVenda + ", precoCompra=" + precoCompra + ", precoVenda=" + 
+                precoVenda + ", unidComprada=" + unidComprada + ", status=" + status + '}';
     }
- 
+    
 }

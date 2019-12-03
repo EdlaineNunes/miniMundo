@@ -9,6 +9,8 @@ package br.edu.ifnmg.miniMundo.DomainModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +33,7 @@ public class Pessoa {
         this.nome = "";
         this.cpf = "00000000000";
         this.telefones = new ArrayList<>();
-        this.sexo = Sexo.M;
+        this.sexo = Sexo.F;
     }
 
     public Pessoa(int id, String nome, String cpf, List<String> telefones, Sexo sexo) {
@@ -82,6 +84,12 @@ public class Pessoa {
         if(telefone != null )//&& telefone.length() == 11) // o método length retorna o tamanho da string
         //if(!this.telefones.contains(telefone))    
             this.telefones.add(telefone);
+        else
+           try {
+               throw new ErroValidacaoException("Telefone Inválido!");
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void removeTelefone(String telefone){

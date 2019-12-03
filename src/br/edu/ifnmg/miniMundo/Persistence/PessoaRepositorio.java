@@ -160,24 +160,24 @@ public class PessoaRepositorio extends BancoDados {
     public List<Pessoa> Buscar(Pessoa filtro) throws ErroValidacaoException{
         try {
             String where = "";
-            if(filtro.getNome() != null && !filtro.getNome().isEmpty())
-                where += "nome like '%"+filtro.getNome() + "%'";            
-            if(filtro.getCpf() != null && !filtro.getCpf().isEmpty()&& 
-                        !"000.000.000-00".equals(filtro.getCpf())){
+            if(filtro.getId() > 0 )
+                where += "id = '"+filtro.getId()+"'";
+            if(filtro.getNome() != null && !filtro.getNome().isEmpty()){
                 if(where.length() > 0)
                     where += " and ";
-                where += "cpf = '"+filtro.getCpf().replace(".", "").replace("-", "") + "'";
-            }          
+                where += "nome like '%"+filtro.getNome() + "%'";   
+            }
             if(filtro.getSexo() != null ){
                 if(where.length() > 0)
                     where += " and ";
                 where += "sexo = '"+filtro.getSexo().name() +"'";
             }
-            if(filtro.getId() > 0 ){
+            if(filtro.getCpf() != null && !filtro.getCpf().isEmpty()&& 
+                        !"000.000.000-00".equals(filtro.getCpf())){
                 if(where.length() > 0)
                     where += " and ";
-                where += "id = '"+filtro.getId()+"'";
-            }
+                where += "cpf = '"+filtro.getCpf().replace(".", "").replace("-", "") + "'";
+            }         
                      
             String consulta = "select * from Pessoa";
 

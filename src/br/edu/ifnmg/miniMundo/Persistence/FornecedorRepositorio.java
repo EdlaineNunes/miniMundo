@@ -252,7 +252,7 @@ public class FornecedorRepositorio extends BancoDados{
             if(where.length() >0 )
                 consulta += " where " + where;
             
-            consulta += "order by razaoSocial";
+            consulta += " order by razaoSocial ";
             
             PreparedStatement sql = this.getConexao()
                     .prepareStatement(consulta);
@@ -275,5 +275,29 @@ public class FornecedorRepositorio extends BancoDados{
         }
         return null;
     }
+    
+    public List<Fornecedor> Listar(Fornecedor filtro){
+        try {         
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("select * from Fornecedor order by razaoSocial");
+            ResultSet resultado = sql.executeQuery();
+            List<Fornecedor> fornecedores = new ArrayList<>();
+            while(resultado.next()) {
+               Fornecedor fornecedor = new Fornecedor();
+               fornecedor.setId( resultado.getInt("id"));
+               fornecedor.setStatus(Status.valueOf(resultado.getString("status"))); 
+               fornecedor.setRazaoSocial( resultado.getString("razaoSocial"));
+               fornecedor.setCnpj( resultado.getString("cnpj"));
+               fornecedor.setEndCompleto( resultado.getString("endCompleto"));              
+               fornecedores.add(fornecedor);
+            }
+            return fornecedores;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(FornecedorRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+        return null;
+    }    
     
 }

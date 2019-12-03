@@ -9,9 +9,13 @@ import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
 import br.edu.ifnmg.miniMundo.DomainModel.Fornecedor;
 import br.edu.ifnmg.miniMundo.DomainModel.Produto;
 import br.edu.ifnmg.miniMundo.DomainModel.Status;
+import br.edu.ifnmg.miniMundo.DomainModel.UnidadesCompra;
+import br.edu.ifnmg.miniMundo.DomainModel.UnidadesVenda;
 import br.edu.ifnmg.miniMundo.Persistence.FornecedorRepositorio;
 import br.edu.ifnmg.miniMundo.Persistence.ProdutoRepositorio;
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -42,17 +46,18 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         
         List<Fornecedor> fornecedores;
         fornecedores = repo_fornec.Buscar(null);
+        
         ComboBoxModel<Fornecedor> model_fornec = 
             new DefaultComboBoxModel<>(new Vector (fornecedores));
         cbxFornecedor.setModel(model_fornec);
-    }
+    }    
     
     public Produto getProduto() throws ErroValidacaoException{
         this.produto = produto;
         this.produto.setDescricao(txtDescricao.getText());
         this.produto.setFornecedor((Fornecedor)cbxFornecedor.getSelectedItem());
-        this.produto.setUnidCompra(txtUnidCompra.getText());
-        this.produto.setUnidVenda(txtUnidVenda.getText());
+        this.produto.setUnidCompra(UnidadesCompra.valueOf( cbxUnidCompra.getSelectedItem().toString() ));
+        this.produto.setUnidVenda(UnidadesVenda.valueOf( cbxUnidVenda.getSelectedItem().toString() ));
         this.produto.setPrecoVenda( new BigDecimal(txtprecoVenda.getText()));
         this.produto.setPrecoCompra( new BigDecimal(txtprecoCompra.getText()));
         this.produto.setUnidComprada(Integer.parseInt(txtUnidComprada.getText()));
@@ -64,8 +69,8 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         this.produto = produto; 
         txtDescricao.setText(produto.getDescricao());
         cbxFornecedor.setSelectedItem(produto.getFornecedor());
-        txtUnidCompra.setText(produto.getUnidCompra());
-        txtUnidVenda.setText(produto.getUnidVenda());
+        cbxUnidCompra.setSelectedItem(produto.getUnidCompra().name());
+        cbxUnidVenda.setSelectedItem(produto.getUnidVenda().name());
         txtprecoVenda.setText(produto.getPrecoVenda().toString());
         txtprecoCompra.setText(produto.getPrecoCompra().toString());
         txtUnidComprada.setText(String.valueOf(produto.getUnidComprada()));
@@ -92,15 +97,15 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         lblFornecedor = new javax.swing.JLabel();
         cbxFornecedor = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        txtUnidCompra = new javax.swing.JTextField();
         lblPrecoCompra = new javax.swing.JLabel();
         txtprecoCompra = new javax.swing.JTextField();
         lblUnidVenda = new javax.swing.JLabel();
-        txtUnidVenda = new javax.swing.JTextField();
         lblprecoVenda = new javax.swing.JLabel();
         txtprecoVenda = new javax.swing.JTextField();
         lblUnidComprada = new javax.swing.JLabel();
         txtUnidComprada = new javax.swing.JTextField();
+        cbxUnidCompra = new javax.swing.JComboBox<>();
+        cbxUnidVenda = new javax.swing.JComboBox<>();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -127,54 +132,56 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
 
         lblUnidComprada.setText("Unid. Comprada:");
 
+        cbxUnidCompra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidade", "Caixa", "Fardo ", "Outro" }));
+
+        cbxUnidVenda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidade", "Caixa ", "Fardo ", "Outro" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(lblUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(cbxUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(44, 44, 44))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(cbxUnidCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblUnidComprada)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtUnidComprada)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(lblUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(txtUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel1)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(txtUnidCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(lblUnidComprada)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtUnidComprada)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblPrecoCompra)
-                                            .addComponent(lblprecoVenda))
-                                        .addGap(1, 1, 1)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtprecoCompra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtprecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(lblStatus)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(lblPrecoCompra)
+                                    .addComponent(lblprecoVenda))
+                                .addGap(1, 1, 1)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtprecoCompra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtprecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblFornecedor)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxFornecedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(lblStatus)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(198, 198, 198)
+                        .addComponent(lblFornecedor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxFornecedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(231, 231, 231)
                         .addComponent(lblInformações)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(lblDescricao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtDescricao)))
@@ -196,15 +203,15 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtUnidCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPrecoCompra)
-                    .addComponent(txtprecoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtprecoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxUnidCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUnidVenda)
-                    .addComponent(txtUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblprecoVenda)
-                    .addComponent(txtprecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtprecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxUnidVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStatus)
@@ -304,6 +311,8 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<Fornecedor> cbxFornecedor;
     private javax.swing.JComboBox<String> cbxStatus;
+    private javax.swing.JComboBox<String> cbxUnidCompra;
+    private javax.swing.JComboBox<String> cbxUnidVenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblDescricao;
@@ -317,9 +326,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     private javax.swing.JTabbedPane tblDadosPessoais;
     private javax.swing.JTabbedPane tblGerenciarFuncionario;
     private javax.swing.JTextField txtDescricao;
-    private javax.swing.JTextField txtUnidCompra;
     private javax.swing.JTextField txtUnidComprada;
-    private javax.swing.JTextField txtUnidVenda;
     private javax.swing.JTextField txtprecoCompra;
     private javax.swing.JTextField txtprecoVenda;
     // End of variables declaration//GEN-END:variables

@@ -60,11 +60,11 @@ public class FuncionarioRepositorio extends PessoaRepositorio{
         return false;     
     }
 
-    public Funcionario Abrir(Funcionario obj) throws ErroValidacaoException{
+    public Funcionario Abrir(int id) throws ErroValidacaoException{
         try {     
             PreparedStatement sql = this.getConexao()
                     .prepareStatement("select * from Funcionario where pessoa_fk = ?");   
-            sql.setInt(1, obj.getId());
+            sql.setInt(1, id);
             ResultSet resultado = sql.executeQuery();
             resultado.next();
             Funcionario funcionario = new Funcionario();   
@@ -105,19 +105,19 @@ public class FuncionarioRepositorio extends PessoaRepositorio{
     public List<Funcionario> Buscar(Funcionario filtro) throws ErroValidacaoException{
         try {
             String where = "";
-            if(filtro.getId() !=  0)
-                where += "pessoa_fk = '"+filtro.getId() + "'";
-            if(filtro.getNome() != null && !filtro.getNome().isEmpty())
-                where += "nome like '%"+filtro.getNome() + "%'";            
-            if(filtro.getUser() != null && !filtro.getUser().isEmpty()){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "bairro like '%"+filtro.getUser() + "%'";
-            }                 
-            if(filtro.getStatus() != null ){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "status = '"+filtro.getStatus().name() +"'";
+            if(filtro != null){
+                if(filtro.getId() !=  0)
+                    where += "pessoa_fk = '"+filtro.getId() + "'";      
+                if(filtro.getUser() != null && !filtro.getUser().isEmpty()){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "user = '" +filtro.getUser() + "'";
+                }                 
+                if(filtro.getStatus() != null ){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "status = '"+filtro.getStatus().name() +"'";
+                }
             }
             
             String consulta = "select * from Funcionario";
@@ -140,10 +140,6 @@ public class FuncionarioRepositorio extends PessoaRepositorio{
             System.out.println(ex.getMessage());
         }
         return null;
-    }
-
-    public List<Funcionario> Abrir(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public Funcionario ValidarUsuario(Funcionario obj) throws ErroValidacaoException {      

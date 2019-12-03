@@ -5,51 +5,39 @@
  */
 package br.edu.ifnmg.miniMundo.Persistence;
 
-import br.edu.ifnmg.miniMundo.DomainModel.Cliente;
-import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
-import br.edu.ifnmg.miniMundo.DomainModel.Cliente;
-import br.edu.ifnmg.miniMundo.DomainModel.Pessoa;
-import br.edu.ifnmg.miniMundo.DomainModel.Status;
-import br.edu.ifnmg.miniMundo.DomainModel.Sexo;
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+import br.edu.ifnmg.miniMundo.DomainModel.AquisicaoProduto;
+import br.edu.ifnmg.miniMundo.DomainModel.Produto;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Edlâine
  */
-public class ClienteRepositorio extends PessoaRepositorio {
+public class AquisicaoRepositorio extends BancoDados{
     
-    public ClienteRepositorio() {
+    public AquisicaoRepositorio(){
         super();
     }
     
-    public boolean Salvar(Cliente obj){
-        super.Salvar((Pessoa) obj);
+    public boolean Salvar(AquisicaoProduto obj){ 
         try {  
-          
-            if(obj.getId() != 0){
+            if(obj.getId() == 0){
                 PreparedStatement sql = this.getConexao()
-                        .prepareStatement("insert into Cliente(pessoa_fk, rua, nCasa, bairro, cidade, status)"
-                                + " values(?,?,?,?,?,?) ");
+                        .prepareStatement("insert into Aquisicao(id, lista_itens,"
+                                + " funcionario_fk, fornecedor_fk, preco_final, data)"
+                                + " values(?,?,?,?,?,?)",
+                                Statement.RETURN_GENERATED_KEYS);
 
                 sql.setInt(1, obj.getId());
-                sql.setString(2, obj.getRua());
-                sql.setString(3, obj.getnCasa());
-                sql.setString(4, obj.getBairro());
-                sql.setString(5, obj.getCidade());
-                sql.setString(6, obj.getStatus().name());
+                sql.setString(2, obj.getList_produtos().toString());
+                sql.setString(3, obj.getFuncionario().getUser());
+                sql.setString(4, obj.getFornecedor().getRazaoSocial());
+                sql.setFloat(5, obj.getPrecoFinal().floatValue());
+                sql.setDate(6, new java.sql.Date(obj.getData().getTime()));
                 
                 
                 if(sql.executeUpdate() > 0){
-                    atualizarEmail(obj);
                     return true;
                 }
                 
@@ -77,7 +65,7 @@ public class ClienteRepositorio extends PessoaRepositorio {
         }      
         return false;     
     }
-    
+  /*  
     public boolean Editar(Cliente obj){
         super.Salvar((Pessoa) obj);
         try {  
@@ -309,4 +297,8 @@ public class ClienteRepositorio extends PessoaRepositorio {
         }
        return null;    
     }
+    */
+    
+    
+    
 }

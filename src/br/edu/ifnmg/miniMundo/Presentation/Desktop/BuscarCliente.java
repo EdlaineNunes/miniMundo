@@ -62,7 +62,6 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         tblGerenciarCliente = new javax.swing.JTabbedPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -115,7 +114,6 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         setClosable(true);
         setResizable(true);
         setTitle("Mini Mundo Supermecados - Buscar Clientes");
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         lblNomeBusca.setText("Nome:");
 
@@ -468,14 +466,20 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
 
         tblGerenciarCliente.addTab("Buscar", jTabbedPane1);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 15;
-        gridBagConstraints.ipady = 11;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(31, 20, 15, 10);
-        getContentPane().add(tblGerenciarCliente, gridBagConstraints);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(tblGerenciarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(tblGerenciarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -725,7 +729,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
             Vector linha = new Vector();
             //adiciona linha por linha
             linha.add(cliente.getId());
-            linha.add(cliente.getStatus());
+            linha.add(cliente.getStatus().name());
             linha.add(cliente.getRua());
             linha.add(cliente.getnCasa());
             linha.add(cliente.getBairro());

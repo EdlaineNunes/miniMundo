@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.miniMundo.DomainModel;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,20 +13,29 @@ import java.util.Objects;
  *
  * @author Edlâine
  */
-class Estoque extends CompraProduto{  
+class Estoque extends Produto{  
+    
     private Date data;
 
     public Estoque() {
         super();
-        this.data = data;
+        this.data = new Date();
     }
 
-    public Estoque(int id, Produto produto, Funcionario pessoaFunc, Fornecedor fornecedor, float precoFinal) {
-        super(id, produto, pessoaFunc, fornecedor, precoFinal);
-        this.data = data;
+    public Estoque(Date data, int id, String descricao, Fornecedor forncedor,
+            UnidadesCompra unidCompra, UnidadesVenda unidVenda, 
+            BigDecimal precoCompra, BigDecimal precoVenda, int unidComprada)
+            throws ErroValidacaoException {
+        setId(id);
+        setDescricao(descricao);
+        setFornecedor(fornecedor);
+        setUnidCompra(unidCompra);
+        setUnidVenda(unidVenda);
+        setPrecoCompra(precoCompra);
+        setPrecoVenda(precoVenda);
+        setUnidComprada(unidComprada); 
+        this.data = new Date();
     }
-
-    
 
     public Date getData() {
         return data;
@@ -35,9 +45,17 @@ class Estoque extends CompraProduto{
         this.data = data;
     }
 
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         hash = 67 * hash + Objects.hashCode(this.data);
         return hash;
     }
@@ -64,6 +82,5 @@ class Estoque extends CompraProduto{
     public String toString() {
         return "Estoque{" + "data=" + data + '}';
     }
-
-   
+        
 }

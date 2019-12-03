@@ -9,6 +9,8 @@ import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
 import br.edu.ifnmg.miniMundo.DomainModel.Fornecedor;
 import br.edu.ifnmg.miniMundo.DomainModel.Produto;
 import br.edu.ifnmg.miniMundo.DomainModel.Status;
+import br.edu.ifnmg.miniMundo.DomainModel.UnidadesCompra;
+import br.edu.ifnmg.miniMundo.DomainModel.UnidadesVenda;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,8 +39,8 @@ public class ProdutoRepositorio extends BancoDados{
                                 Statement.RETURN_GENERATED_KEYS);
                 sql.setString(1, obj.getDescricao());
                 sql.setInt(2, obj.getFornecedor().getId());
-                sql.setString(3, obj.getUnidCompra());
-                sql.setString(4, obj.getUnidVenda());
+                sql.setString(3, obj.getUnidCompra().name());
+                sql.setString(4, obj.getUnidVenda().name());
                 sql.setFloat(5, obj.getPrecoVenda().floatValue());
                 sql.setFloat(6, obj.getPrecoCompra().floatValue());
                 sql.setInt(7, obj.getUnidComprada());
@@ -59,8 +61,8 @@ public class ProdutoRepositorio extends BancoDados{
                                 + " status = ? where id = ?");
                 sql.setString(1, obj.getDescricao());
                 sql.setInt(2, obj.getFornecedor().getId());
-                sql.setString(3, obj.getUnidCompra());
-                sql.setString(4, obj.getUnidVenda());
+                sql.setString(3, obj.getUnidCompra().name());
+                sql.setString(4, obj.getUnidVenda().name());
                 sql.setFloat(5, obj.getPrecoVenda().floatValue());
                 sql.setFloat(6, obj.getPrecoCompra().floatValue());
                 sql.setInt(7, obj.getUnidComprada());
@@ -91,11 +93,11 @@ public class ProdutoRepositorio extends BancoDados{
                produto.setDescricao( resultado.getString("descricao"));
                
                FornecedorRepositorio fornecedor_repo = new FornecedorRepositorio();
-               Fornecedor fornecedor = fornecedor_repo.Abrir(resultado.getInt("fornecedor_id"));
+               Fornecedor fornecedor = fornecedor_repo.Abrir(resultado.getInt("fornecedor_fk"));
                produto.setFornecedor(fornecedor);
                
-               produto.setUnidCompra( resultado.getString("unidCompra"));
-               produto.setUnidVenda(resultado.getString("unidVenda"));
+               produto.setUnidCompra(UnidadesCompra.valueOf(resultado.getString("unidCompra")));
+               produto.setUnidVenda(UnidadesVenda.valueOf(resultado.getString("unidVenda")));
                produto.setPrecoVenda(resultado.getBigDecimal("precoVenda"));
                produto.setPrecoCompra(resultado.getBigDecimal("precoCompra"));
                produto.setUnidComprada(resultado.getInt("unidComprada"));
@@ -130,47 +132,36 @@ public class ProdutoRepositorio extends BancoDados{
 
         try {
             String where = "";
-            if(filtro.getDescricao() != null && !filtro.getDescricao().isEmpty())
-                where += "descrição like '%"+filtro.getDescricao() + "'%";
-            if(filtro.getFornecedor() != null){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "fornecedor_id = " + filtro.getFornecedor().getId();
-            }
-            if(filtro.getUnidCompra() != null && !filtro.getUnidCompra().isEmpty()){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "unidCompra = '"+filtro.getUnidCompra() + "'";
-            }
-            if(filtro.getUnidVenda() != null && !filtro.getUnidVenda().isEmpty()){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "unidVenda = '"+filtro.getUnidCompra() + "'";   
-            }
-            if(filtro.getPrecoCompra().compareTo(BigDecimal.ONE) > 0){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "precoCompra = '"+filtro.getPrecoCompra() + "'";
-            }
-            if(filtro.getPrecoVenda().compareTo(BigDecimal.ONE) > 0){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "precoVenda = '"+filtro.getPrecoVenda() + "'";   
-            }
-            if(filtro.getStatus() != null ){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "status = '"+filtro.getStatus().name() +"'";
-            }
-            if(filtro.getUnidComprada() > 0){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "unidComprada = '"+filtro.getUnidCompra() + "'";   
+            if(filtro != null){
+                if(filtro.getDescricao() != null && !filtro.getDescricao().isEmpty())
+                    where += "descrição like '%"+filtro.getDescricao() + "'%";
+                if(filtro.getFornecedor() != null){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "fornecedor_fk = " + filtro.getFornecedor().getId();
+                }
+                if(filtro.getUnidCompra() != null){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "unidCompra = '"+filtro.getUnidCompra() + "'";
+                }
+                if(filtro.getUnidVenda() != null){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "unidVenda = '"+filtro.getUnidCompra() + "'";   
+                }
+                if(filtro.getStatus() != null ){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "status = '"+filtro.getStatus().name() +"'";
+                }
             }
                              
             String consulta = "select * from Produto";
-            if(where.length() >0 )
+            if(where.length() > 0 )
                consulta += " where " + where;
+            else
+                consulta += "order by descricao";
             PreparedStatement sql = this.getConexao()
                     .prepareStatement(consulta);
             ResultSet resultado = sql.executeQuery();
@@ -184,8 +175,8 @@ public class ProdutoRepositorio extends BancoDados{
                     produto.setId( resultado.getInt("id"));
                     produto.setDescricao( resultado.getString("descricao"));
                     produto.setFornecedor(fornecedor_repo.Abrir(resultado.getInt("fornecedor_fk")));
-                    produto.setUnidCompra( resultado.getString("unidCompra"));
-                    produto.setUnidVenda( resultado.getString("unidVenda"));
+                    produto.setUnidCompra(UnidadesCompra.valueOf( resultado.getString("unidCompra") ));
+                    produto.setUnidVenda(UnidadesVenda.valueOf( resultado.getString("unidVenda") ));
                     produto.setPrecoVenda( resultado.getBigDecimal("precoVenda"));
                     produto.setPrecoCompra( resultado.getBigDecimal("precoCompra"));
                     produto.setUnidComprada( resultado.getInt("unidComprada"));

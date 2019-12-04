@@ -68,6 +68,9 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
         lblId = new javax.swing.JLabel();
         txtIdBusca = new javax.swing.JTextField();
         btnNovo = new javax.swing.JButton();
+        btnAtivar = new javax.swing.JButton();
+        btnDesativar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblId_telefoneBusca = new javax.swing.JLabel();
         txtId_telefoneBuscar = new javax.swing.JTextField();
@@ -135,6 +138,22 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAtivar.setText("ATIVAR");
+        btnAtivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtivarActionPerformed(evt);
+            }
+        });
+
+        btnDesativar.setText("DESATIVAR");
+        btnDesativar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesativarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Para Ativar/Desativar insira o ID do Fornecedor!");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -151,18 +170,32 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
                         .addComponent(lblStatus)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblCnpj)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblCnpj)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblId))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblId)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnAtivar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtIdBusca))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtIdBusca)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addComponent(btnNovo)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)
+                                .addComponent(btnNovo))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnDesativar)
+                                .addGap(26, 26, 26)))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -182,8 +215,13 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
                     .addComponent(lblId)
                     .addComponent(txtIdBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNovo))
-                .addGap(26, 26, 26)
-                .addComponent(pessoaScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAtivar)
+                    .addComponent(btnDesativar)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pessoaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -261,7 +299,7 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
                     .addComponent(btnBuscarTelefone))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Telefones Fornecedor", jPanel2);
@@ -338,7 +376,7 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
                     .addComponent(btnBuscarEmail))
                 .addGap(34, 34, 34)
                 .addComponent(jscroll, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Email Fornecedor", jPanel4);
@@ -357,7 +395,8 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(tblGerenciarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(tblGerenciarCliente)
+                .addContainerGap())
         );
 
         pack();
@@ -563,13 +602,35 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
         novatela.show();
     }//GEN-LAST:event_btnNovoActionPerformed
 
+    private void btnAtivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtivarActionPerformed
+        // TODO add your handling code here:
+        fornecedor = new Fornecedor();
+        if(Integer.parseInt(txtIdBusca.getText()) > 0 ){
+            fornecedor.setId(Integer.parseInt(txtIdBusca.getText()));
+            repo_fornecedor.Ativar(fornecedor.getId());
+        }  
+        
+    }//GEN-LAST:event_btnAtivarActionPerformed
+
+    private void btnDesativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesativarActionPerformed
+        // TODO add your handling code here:
+        fornecedor = new Fornecedor();
+        if(Integer.parseInt(txtIdBusca.getText()) > 0 ){
+            fornecedor.setId(Integer.parseInt(txtIdBusca.getText()));
+            repo_fornecedor.Desativar(fornecedor.getId());
+        } 
+    }//GEN-LAST:event_btnDesativarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtivar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnBuscarEmail;
     private javax.swing.JButton btnBuscarTelefone;
+    private javax.swing.JButton btnDesativar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JComboBox<String> cbxStatus;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

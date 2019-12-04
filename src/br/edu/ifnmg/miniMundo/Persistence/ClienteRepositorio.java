@@ -204,15 +204,31 @@ public class ClienteRepositorio extends PessoaRepositorio {
         return null;
     }
 
-    public boolean Desativar(Cliente obj){
+    public boolean Desativar(int id){
         try {
             PreparedStatement sql = this.getConexao()
-                    .prepareStatement("update Cliente set status = 'Inativo' where id = ?");          
-            sql.setInt(1, obj.getId());          
+                    .prepareStatement("update Cliente set status = 'Inativo'"
+                            + " where pessoa_fk = ?");
+            
+            sql.setInt(1, id);          
             if(sql.executeUpdate() > 0)
                 return true;
-            else
-                return false;
+            return false;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+    
+    public boolean Ativar(int id){
+        try {
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("update Cliente set status = 'Ativo' where pessoa_fk = ?");
+            
+            sql.setInt(1, id);          
+            if(sql.executeUpdate() > 0)
+                return true;
+            return false;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

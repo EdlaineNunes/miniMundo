@@ -33,18 +33,17 @@ public class MenuGerenciamento extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
-        lblMiniMundo = new javax.swing.JLabel();
-        lblMiniMundo1 = new javax.swing.JLabel();
+        Desktop = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
+        lblMiniMundo1 = new javax.swing.JLabel();
+        lblMiniMundo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuSistema = new javax.swing.JMenu();
         mnuSair = new javax.swing.JMenuItem();
         mnuCadastro = new javax.swing.JMenu();
         mnuCadCliente = new javax.swing.JMenuItem();
         mnuBuscarCliente = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         mnuFunc = new javax.swing.JMenu();
         mnuCadFUNC = new javax.swing.JMenuItem();
         mnuBuscarFunc = new javax.swing.JMenuItem();
@@ -54,40 +53,32 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         mnuCadProduto = new javax.swing.JMenuItem();
         mnuBuscarProduto = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        mnuAquisicao = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        mnuVendas = new javax.swing.JMenuItem();
 
         setTitle("Mini Mundo - Gerenciamento de Opções");
         setBackground(new java.awt.Color(255, 255, 255));
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        lblMiniMundo.setFont(new java.awt.Font("Monotype Corsiva", 1, 36)); // NOI18N
-        lblMiniMundo.setText("Supermecados");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipady = 22;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 109, 78, 91);
-        getContentPane().add(lblMiniMundo, gridBagConstraints);
-
-        lblMiniMundo1.setFont(new java.awt.Font("Monotype Corsiva", 1, 36)); // NOI18N
-        lblMiniMundo1.setText("Mini Mundo ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 109, 0, 0);
-        getContentPane().add(lblMiniMundo1, gridBagConstraints);
+        Desktop.setBackground(new java.awt.Color(240, 240, 240));
+        Desktop.setForeground(new java.awt.Color(240, 240, 240));
+        Desktop.setPreferredSize(new java.awt.Dimension(1024, 780));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Seja Bem Vindo!");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(39, 137, 0, 0);
-        getContentPane().add(jLabel1, gridBagConstraints);
+        Desktop.add(jLabel1);
+        jLabel1.setBounds(540, 200, 131, 22);
+
+        lblMiniMundo1.setFont(new java.awt.Font("Monotype Corsiva", 1, 36)); // NOI18N
+        lblMiniMundo1.setText("Mini Mundo ");
+        Desktop.add(lblMiniMundo1);
+        lblMiniMundo1.setBounds(510, 260, 197, 41);
+
+        lblMiniMundo.setFont(new java.awt.Font("Monotype Corsiva", 1, 36)); // NOI18N
+        lblMiniMundo.setText("Supermecados");
+        Desktop.add(lblMiniMundo);
+        lblMiniMundo.setBounds(500, 310, 200, 63);
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -130,14 +121,6 @@ public class MenuGerenciamento extends javax.swing.JFrame {
             }
         });
         mnuCadastro.add(mnuBuscarCliente);
-
-        jMenuItem2.setText("Editar Cliente");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        mnuCadastro.add(jMenuItem2);
 
         jMenuBar1.add(mnuCadastro);
 
@@ -201,7 +184,42 @@ public class MenuGerenciamento extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Compra");
+
+        mnuAquisicao.setText("Aquisicao de Produtos");
+        mnuAquisicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuAquisicaoActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnuAquisicao);
+
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Vendas");
+
+        mnuVendas.setText("Efetuar Vendas");
+        mnuVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuVendasActionPerformed(evt);
+            }
+        });
+        jMenu4.add(mnuVendas);
+
+        jMenuBar1.add(jMenu4);
+
         setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Desktop, javax.swing.GroupLayout.DEFAULT_SIZE, 1335, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Desktop, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         getAccessibleContext().setAccessibleName("Menu Principal");
 
@@ -224,7 +242,7 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         // TODO add your handling code here:
         CadastrarCliente tela = new CadastrarCliente();
         
-        this.add(tela);
+        Desktop.add(tela);
         tela.setVisible(true);
     }//GEN-LAST:event_mnuCadClienteActionPerformed
 
@@ -232,7 +250,7 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         // TODO add your handling code here:
         BuscarCliente tela = new BuscarCliente();
         
-        this.add(tela);
+        Desktop.add(tela);
         tela.setVisible(true);
     }//GEN-LAST:event_mnuBuscarClienteActionPerformed
 
@@ -244,7 +262,7 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         // TODO add your handling code here:
         CadastrarFuncionario tela = new CadastrarFuncionario();
         
-        this.add(tela);
+        Desktop.add(tela);
         tela.setVisible(true);
     }//GEN-LAST:event_mnuCadFUNCActionPerformed
 
@@ -252,7 +270,7 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         // TODO add your handling code here:
         BuscarFuncionario tela = new BuscarFuncionario();
         
-        this.add(tela);
+        Desktop.add(tela);
         tela.setVisible(true);
         
     }//GEN-LAST:event_mnuBuscarFuncActionPerformed
@@ -261,7 +279,7 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         // TODO add your handling code here:
         CadastrarFornecedor tela = new CadastrarFornecedor();
         
-        this.add(tela);
+        Desktop.add(tela);
         tela.setVisible(true);
         
     }//GEN-LAST:event_mnuCadFornecedorActionPerformed
@@ -270,24 +288,16 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         // TODO add your handling code here:
         BuscarFornecedor tela = new BuscarFornecedor();
         
-        this.add(tela);
+        Desktop.add(tela);
         tela.setVisible(true);
         
     }//GEN-LAST:event_mnuBuscarFornecActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        ValidarEdicaoCliente tela = new ValidarEdicaoCliente();
-        
-        this.add(tela);
-        tela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void mnuCadProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadProdutoActionPerformed
         // TODO add your handling code here:
         CadastrarProduto tela = new CadastrarProduto();
         
-        this.add(tela);
+        Desktop.add(tela);
         tela.setVisible(true);
     }//GEN-LAST:event_mnuCadProdutoActionPerformed
 
@@ -295,9 +305,26 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         // TODO add your handling code here:
         BuscarProduto tela = new BuscarProduto();
         
-        this.add(tela);
+        Desktop.add(tela);
         tela.setVisible(true);        
     }//GEN-LAST:event_mnuBuscarProdutoActionPerformed
+
+    private void mnuAquisicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAquisicaoActionPerformed
+        // TODO add your handling code here:
+        ValidacaoParaCompra tela = new ValidacaoParaCompra();
+        
+        Desktop.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_mnuAquisicaoActionPerformed
+
+    private void mnuVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVendasActionPerformed
+        // TODO add your handling code here:
+        ValidarParaVendas tela = new ValidarParaVendas();
+        
+        Desktop.add(tela);
+        tela.setVisible(true);
+        
+    }//GEN-LAST:event_mnuVendasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,13 +365,16 @@ public class MenuGerenciamento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JDesktopPane Desktop;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JLabel lblMiniMundo;
     private javax.swing.JLabel lblMiniMundo1;
+    private javax.swing.JMenuItem mnuAquisicao;
     private javax.swing.JMenuItem mnuBuscarCliente;
     private javax.swing.JMenuItem mnuBuscarFornec;
     private javax.swing.JMenuItem mnuBuscarFunc;
@@ -357,5 +387,6 @@ public class MenuGerenciamento extends javax.swing.JFrame {
     private javax.swing.JMenu mnuFunc;
     private javax.swing.JMenuItem mnuSair;
     private javax.swing.JMenu mnuSistema;
+    private javax.swing.JMenuItem mnuVendas;
     // End of variables declaration//GEN-END:variables
 }

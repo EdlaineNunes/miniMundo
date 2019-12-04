@@ -54,6 +54,7 @@ public class ProdutoRepositorio extends BancoDados{
                     obj.setId(chave.getInt(1));
                     EstoqueRepositorio repo_estoque = new EstoqueRepositorio();
                     repo_estoque.SalvarEstoque(obj.getId(),obj.getFornecedor().getId());
+                    
                     return true;
                 }
                 else
@@ -117,15 +118,30 @@ public class ProdutoRepositorio extends BancoDados{
         return null;
     }
 
-    public boolean Desativar(Produto obj){
+    public boolean Desativar(int id){
         try {
             PreparedStatement sql = this.getConexao()
-                    .prepareStatement("update Produto set status = 'Inativo' where id = ?");          
-            sql.setInt(1, obj.getId());          
+                    .prepareStatement("update Produto set status = 'Inativo' where id = ?");
+            
+            sql.setInt(1, id);          
             if(sql.executeUpdate() > 0)
                 return true;
-            else
-                return false;
+            return false;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+    
+    public boolean Ativar(int id){
+        try {
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("update Produto set status = 'Ativo' where id = ?");
+            
+            sql.setInt(1, id);          
+            if(sql.executeUpdate() > 0)
+                return true;
+            return false;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -202,11 +218,7 @@ public class ProdutoRepositorio extends BancoDados{
         try {
             String where = "";
             if(filtro != null){
-                if(filtro.getDescricao() != null && !filtro.getDescricao().isEmpty())
-                    where += "descrição like '%"+filtro.getDescricao() + "'%";
                 if(filtro.getStatus() != null ){
-                    if(where.length() > 0)
-                        where += " and ";
                     where += "status = '"+filtro.getStatus().name() +"'";
                 }
             }
@@ -214,7 +226,7 @@ public class ProdutoRepositorio extends BancoDados{
             String consulta = "select * from Produto";
             if(where.length() > 0 )
                consulta += " where " + where;
-            consulta += "order by descricao";
+            
             PreparedStatement sql = this.getConexao()
                     .prepareStatement(consulta);
             ResultSet resultado = sql.executeQuery();

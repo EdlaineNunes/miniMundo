@@ -119,7 +119,8 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(SenhaOcultada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnEntrar))
+                .addComponent(btnEntrar)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();

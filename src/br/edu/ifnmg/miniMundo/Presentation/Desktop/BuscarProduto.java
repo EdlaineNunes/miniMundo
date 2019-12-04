@@ -94,14 +94,16 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
         cbxUnidVenda = new javax.swing.JComboBox<>();
         cbxlistFornec = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
-        lblDescTodos = new javax.swing.JLabel();
-        txtDescTodos = new javax.swing.JTextField();
         lblStatusTodos = new javax.swing.JLabel();
         btnBuscarTodos = new javax.swing.JButton();
         cbxStatusTodos = new javax.swing.JComboBox<>();
         btnNovoTodos = new javax.swing.JButton();
         ScrollPane1 = new javax.swing.JScrollPane();
         tabResultadoTodos = new javax.swing.JTable();
+        txtBusca = new javax.swing.JTextField();
+        btnDesativar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        btnAtivar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Mini Mundo Supermecados - Buscar Produto");
@@ -223,8 +225,6 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Buscar Produto", jPanel3);
 
-        lblDescTodos.setText("Descrição:");
-
         lblStatusTodos.setText("Status:");
 
         btnBuscarTodos.setText("BUSCAR");
@@ -235,6 +235,11 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
         });
 
         cbxStatusTodos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
+        cbxStatusTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxStatusTodosActionPerformed(evt);
+            }
+        });
 
         btnNovoTodos.setText("NOVO");
         btnNovoTodos.addActionListener(new java.awt.event.ActionListener() {
@@ -266,42 +271,74 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
         });
         ScrollPane1.setViewportView(tabResultadoTodos);
 
+        btnDesativar.setText("DESATIVAR");
+        btnDesativar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesativarActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Id do Produto:");
+
+        btnAtivar.setText("ATIVAR");
+        btnAtivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtivarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ScrollPane1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblDescTodos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDescTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblStatusTodos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxStatusTodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscarTodos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnNovoTodos)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(ScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblStatusTodos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbxStatusTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtBusca)))
+                        .addGap(114, 114, 114)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnBuscarTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDesativar, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnNovoTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAtivar, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                        .addGap(24, 24, 24))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDescTodos)
-                    .addComponent(txtDescTodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblStatusTodos)
                     .addComponent(cbxStatusTodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarTodos)
                     .addComponent(btnNovoTodos))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDesativar)
+                            .addComponent(jLabel3))
+                        .addGap(14, 14, 14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAtivar)
+                        .addGap(18, 18, 18)))
                 .addComponent(ScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Exibir Todos ", jPanel1);
@@ -381,25 +418,38 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNovoTodosActionPerformed
 
     private void tabResultadoTodosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabResultadoTodosMouseClicked
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
     }//GEN-LAST:event_tabResultadoTodosMouseClicked
 
     private void btnBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTodosActionPerformed
         // TODO add your handling code here:
         produto = new Produto();
-        
-        try {
-            if(txtDescTodos.getText().length() > 0)
-                produto.setDescricao(txtDescTodos.getText() );       
-            produto.setStatus(Status.valueOf(cbxStatusTodos.getSelectedItem().toString()));
-        }catch(ErroValidacaoException ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
+        produto.setStatus(Status.valueOf(cbxStatusTodos.getSelectedItem().toString()));
         List<Produto> list_produto = null;
         list_produto = repo_produto.BuscarTodos(produto);
         preencherTabelaTodos(list_produto);
         
     }//GEN-LAST:event_btnBuscarTodosActionPerformed
+
+    private void btnDesativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesativarActionPerformed
+        // TODO add your handling code here:
+        produto = new Produto();
+        if(Integer.parseInt(txtBusca.getText()) > 0)
+           produto.setId(Integer.parseInt(txtBusca.getText()));
+        repo_produto.Desativar(produto.getId());
+    }//GEN-LAST:event_btnDesativarActionPerformed
+
+    private void cbxStatusTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxStatusTodosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxStatusTodosActionPerformed
+
+    private void btnAtivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtivarActionPerformed
+        // TODO add your handling code here:
+        produto = new Produto();
+        if(Integer.parseInt(txtBusca.getText()) > 0)
+           produto.setId(Integer.parseInt(txtBusca.getText()));
+        repo_produto.Ativar(produto.getId());
+    }//GEN-LAST:event_btnAtivarActionPerformed
 
     private void preencherTabela(List<Produto> lista) {
     //cria uma tabela vazia
@@ -478,8 +528,10 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollPane;
     private javax.swing.JScrollPane ScrollPane1;
+    private javax.swing.JButton btnAtivar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnBuscarTodos;
+    private javax.swing.JButton btnDesativar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnNovoTodos;
     private javax.swing.JComboBox<String> cbxStatus;
@@ -488,10 +540,10 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbxUnidVenda;
     private javax.swing.JComboBox<Fornecedor> cbxlistFornec;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JLabel lblDescTodos;
     private javax.swing.JLabel lblDescricao;
     private javax.swing.JLabel lblFornecedor;
     private javax.swing.JLabel lblStatus;
@@ -500,7 +552,7 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
     private javax.swing.JTable tabResultado;
     private javax.swing.JTable tabResultadoTodos;
     private javax.swing.JTabbedPane tblGerenciarProduto;
-    private javax.swing.JTextField txtDescTodos;
+    private javax.swing.JTextField txtBusca;
     private javax.swing.JTextField txtDescricao;
     // End of variables declaration//GEN-END:variables
 

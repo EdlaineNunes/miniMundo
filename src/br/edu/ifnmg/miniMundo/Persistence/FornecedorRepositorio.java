@@ -203,15 +203,32 @@ public class FornecedorRepositorio extends BancoDados{
         }
     }
 
-    public boolean Desativar(Fornecedor obj){
+    public boolean Desativar(int id){
         try {
             PreparedStatement sql = this.getConexao()
-                    .prepareStatement("update Fornecedor set status = 'Inativo' where id = ?");          
-            sql.setInt(1, obj.getId());          
+                    .prepareStatement("update Fornecedor set status = 'Inativo'"
+                            + " where id = ?");
+            
+            sql.setInt(1, id);          
             if(sql.executeUpdate() > 0)
                 return true;
-            else
-                return false;
+            return false;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+    
+    public boolean Ativar(int id){
+        try {
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("update Fornecedor set status = 'Ativo' "
+                            + "where id = ?");
+            
+            sql.setInt(1, id);          
+            if(sql.executeUpdate() > 0)
+                return true;
+            return false;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

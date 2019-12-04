@@ -86,6 +86,9 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         btnNovoCliente = new javax.swing.JButton();
         funcScrollPane = new javax.swing.JScrollPane();
         tabResultadoFunc = new javax.swing.JTable();
+        btnAtivar = new javax.swing.JButton();
+        btnDesativar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblId_telefoneBusca = new javax.swing.JLabel();
         txtId_telefoneBuscar = new javax.swing.JTextField();
@@ -145,7 +148,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pessoaScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                    .addComponent(pessoaScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -195,6 +198,12 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
 
         lblUser.setText("User");
 
+        txtUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserActionPerformed(evt);
+            }
+        });
+
         lblStatus.setText("Status:");
 
         cbxStatusBuscaFunc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
@@ -223,34 +232,61 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         ));
         funcScrollPane.setViewportView(tabResultadoFunc);
 
+        btnAtivar.setText("ATIVAR");
+        btnAtivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtivarActionPerformed(evt);
+            }
+        });
+
+        btnDesativar.setText("DESATIVAR");
+        btnDesativar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesativarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Para Ativar/Desativar insira o ID Funcionário!");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(funcScrollPane)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(funcScrollPane)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblNome_funcBusca)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtId_funcBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblUser)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblStatus)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxStatusBuscaFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnBuscarFunc, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .addComponent(btnNovoCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lblStatus)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbxStatusBuscaFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(69, 69, 69))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lblNome_funcBusca)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtId_funcBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lblUser)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnAtivar)
+                                        .addGap(40, 40, 40)
+                                        .addComponent(btnDesativar)))
+                                .addGap(43, 43, 43)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnBuscarFunc, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                    .addComponent(btnNovoCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,9 +302,13 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovoCliente)
                     .addComponent(lblStatus)
-                    .addComponent(cbxStatusBuscaFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(funcScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                    .addComponent(cbxStatusBuscaFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAtivar)
+                    .addComponent(btnDesativar))
+                .addGap(9, 9, 9)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(funcScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -315,7 +355,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
                         .addComponent(lblId_telefoneBusca)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtId_telefoneBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                         .addComponent(lblTelefoneBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtTelefoneBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -402,37 +442,6 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         tela.show();
     }//GEN-LAST:event_tabResultadoMouseClicked
 
-    private void btnBuscarFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFuncActionPerformed
-        // TODO add your handling code here:
-        filtro = new Funcionario();
-        try {
-            if(txtId_funcBusca.getText().length() > 0)
-                filtro.setId(Integer.parseInt(txtId_funcBusca.getText()));
-            filtro.setStatus(Status.valueOf(cbxStatusBuscaFunc.getSelectedItem().toString()));
-           
-            if(txtUser.getText().length() > 0)
-                filtro.setUser( txtUser.getText() );
-        }catch(ErroValidacaoException ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-        List<Funcionario> funcionarios = null;
-        try {
-            funcionarios = repo_func.Buscar(filtro);
-        } catch (ErroValidacaoException ex) {
-            Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        preencherTabelaFuncionario(funcionarios);
-    }//GEN-LAST:event_btnBuscarFuncActionPerformed
-
-    private void btnNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoClienteActionPerformed
-        // TODO add your handling code here:
-        CadastrarFuncionario novatela = 
-                new CadastrarFuncionario(new Funcionario(),this.repo_func);
-        this.getParent().add(novatela);
-        dispose();
-        novatela.show();
-    }//GEN-LAST:event_btnNovoClienteActionPerformed
-
     private void btnBuscarTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTelefoneActionPerformed
         // TODO add your handling code here:
         pessoa = new Pessoa();
@@ -450,6 +459,59 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         preencherTabelaTelefones(filtro);
         
     }//GEN-LAST:event_btnBuscarTelefoneActionPerformed
+
+    private void btnAtivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtivarActionPerformed
+        // TODO add your handling code here:
+        filtro = new Funcionario();
+        if(Integer.parseInt(txtId_funcBusca.getText()) > 0 && txtUser.getText().isEmpty()){
+            filtro.setId(Integer.parseInt(txtId_funcBusca.getText()));
+            repo_func.Ativar(filtro.getId());
+        }
+    }//GEN-LAST:event_btnAtivarActionPerformed
+
+    private void btnNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoClienteActionPerformed
+        // TODO add your handling code here:
+        CadastrarFuncionario novatela =
+        new CadastrarFuncionario(new Funcionario(),this.repo_func);
+        this.getParent().add(novatela);
+        dispose();
+        novatela.show();
+    }//GEN-LAST:event_btnNovoClienteActionPerformed
+
+    private void btnBuscarFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFuncActionPerformed
+        // TODO add your handling code here:
+        filtro = new Funcionario();
+        try {
+            if(txtId_funcBusca.getText().length() > 0)
+            filtro.setId(Integer.parseInt(txtId_funcBusca.getText()));
+            filtro.setStatus(Status.valueOf(cbxStatusBuscaFunc.getSelectedItem().toString()));
+
+            if(txtUser.getText().length() > 0)
+            filtro.setUser( txtUser.getText() );
+        }catch(ErroValidacaoException ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        List<Funcionario> funcionarios = null;
+        try {
+            funcionarios = repo_func.Buscar(filtro);
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(BuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        preencherTabelaFuncionario(funcionarios);
+    }//GEN-LAST:event_btnBuscarFuncActionPerformed
+
+    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserActionPerformed
+
+    private void btnDesativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesativarActionPerformed
+        // TODO add your handling code here:
+        filtro = new Funcionario();
+        if(Integer.parseInt(txtId_funcBusca.getText()) > 0 && txtUser.getText().isEmpty()){
+            filtro.setId(Integer.parseInt(txtId_funcBusca.getText()));
+            repo_func.Desativar(filtro.getId());
+        }
+    }//GEN-LAST:event_btnDesativarActionPerformed
 
     private void preencherTabelaTelefones(List<Pessoa> lista) {
         //cria uma tabela vazia
@@ -527,13 +589,16 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtivar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnBuscarFunc;
     private javax.swing.JButton btnBuscarTelefone;
+    private javax.swing.JButton btnDesativar;
     private javax.swing.JButton btnNovoCliente;
     private javax.swing.JComboBox<String> cbxSexoFunc;
     private javax.swing.JComboBox<String> cbxStatusBuscaFunc;
     private javax.swing.JScrollPane funcScrollPane;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

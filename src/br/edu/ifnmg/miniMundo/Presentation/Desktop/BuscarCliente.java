@@ -94,6 +94,9 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         btnNovoCliente = new javax.swing.JButton();
         clienteScrollPane = new javax.swing.JScrollPane();
         tabResultadoCliente = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        btnAtivar = new javax.swing.JButton();
+        btnDesativar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         lblId_telefoneBusca = new javax.swing.JLabel();
         txtId_telefoneBuscar = new javax.swing.JTextField();
@@ -202,7 +205,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5)
                     .addComponent(txtId_pessoaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(pessoaScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                .addComponent(pessoaScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -246,6 +249,22 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         ));
         clienteScrollPane.setViewportView(tabResultadoCliente);
 
+        jLabel6.setText("Para Ativar/Desativar insira o ID Cliente!");
+
+        btnAtivar.setText("ATIVAR");
+        btnAtivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtivarActionPerformed(evt);
+            }
+        });
+
+        btnDesativar.setText("DESATIVAR");
+        btnDesativar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesativarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -283,8 +302,15 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCidade)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtCidade))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(32, 32, 32)
+                                .addComponent(btnAtivar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(60, 60, 60)
+                                .addComponent(btnDesativar)
+                                .addGap(31, 31, 31)))))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,8 +335,13 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
                     .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(clienteScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDesativar)
+                    .addComponent(btnAtivar)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(clienteScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -382,7 +413,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
                     .addComponent(btnBuscarTelefone))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Telefones Cliente", jPanel2);
@@ -459,7 +490,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
                     .addComponent(btnBuscarEmail))
                 .addGap(34, 34, 34)
                 .addComponent(jscroll, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Email Cliente", jPanel4);
@@ -478,7 +509,8 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(tblGerenciarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(tblGerenciarCliente)
+                .addContainerGap())
         );
 
         pack();
@@ -641,6 +673,24 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         tela.show(); 
     }//GEN-LAST:event_tabResultadoEmailMouseClicked
 
+    private void btnAtivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtivarActionPerformed
+        // TODO add your handling code here:
+        filtro = new Cliente();
+        if(Integer.parseInt(txtId_clienteBusca.getText()) > 0 ){
+            filtro.setId(Integer.parseInt(txtId_clienteBusca.getText()));
+            repo_cliente.Ativar(filtro.getId());
+        }   
+    }//GEN-LAST:event_btnAtivarActionPerformed
+
+    private void btnDesativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesativarActionPerformed
+        // TODO add your handling code here:
+        filtro = new Cliente();
+        if(Integer.parseInt(txtId_clienteBusca.getText()) > 0 ){
+            filtro.setId(Integer.parseInt(txtId_clienteBusca.getText()));
+            repo_cliente.Desativar(filtro.getId());
+        }  
+    }//GEN-LAST:event_btnDesativarActionPerformed
+
      private void preencherTabelaEmails(List<Cliente> lista) {
         DefaultTableModel modelo = new DefaultTableModel();
         //adiciona coluna por coluna
@@ -742,10 +792,12 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtivar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnBuscarEmail;
     private javax.swing.JButton btnBuscarTelefone;
+    private javax.swing.JButton btnDesativar;
     private javax.swing.JButton btnNovoCliente;
     private javax.swing.JComboBox<String> cbxSexo;
     private javax.swing.JComboBox<String> cbxStatusBusca;
@@ -755,6 +807,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

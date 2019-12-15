@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -74,9 +76,11 @@ public class ProdutoRepositorio extends BancoDados{
                 sql.setString(8, obj.getStatus().name());
                 sql.setInt(9, obj.getId());
                 
-                if(sql.executeUpdate() > 0) 
+                if(sql.executeUpdate() > 0){
+                    EstoqueRepositorio repo_estoque = new EstoqueRepositorio();
+                    repo_estoque.Modificar(obj.getId(),obj.getFornecedor().getId());
                     return true;
-                else
+                }else
                     return false;
             }                   
         } catch (SQLException ex) {
@@ -117,6 +121,35 @@ public class ProdutoRepositorio extends BancoDados{
         }
         return null;
     }
+    
+    public Produto AbrirProduto(Produto filtro) throws ErroValidacaoException, SQLException{
+        PreparedStatement sql = this.getConexao()
+                .prepareStatement("select * from Produto where id = ?");
+        sql.setInt(1, filtro.getId());
+        
+        ResultSet resultado = sql.executeQuery();
+             
+        Produto produto = new Produto();
+        FornecedorRepositorio fornecedor_repo = new FornecedorRepositorio();
+       
+        if(resultado.next()){
+                    
+            produto.setId( resultado.getInt("id"));
+            produto.setDescricao( resultado.getString("descricao"));
+            produto.setFornecedor(fornecedor_repo.Abrir(resultado.getInt("fornecedor_fk")));
+            produto.setUnidCompra(UnidadesCompra.valueOf( resultado.getString("unidCompra") ));
+            produto.setUnidVenda(UnidadesVenda.valueOf( resultado.getString("unidVenda") ));
+            produto.setPrecoVenda( resultado.getBigDecimal("precoVenda"));
+            produto.setPrecoCompra( resultado.getBigDecimal("precoCompra"));
+            produto.setUnidComprada( resultado.getInt("unidComprada"));
+            produto.setStatus(Status.valueOf(resultado.getString("status")));
+            
+            return produto;
+        }
+        else
+            produto = null;
+        return produto;
+    }
 
     public boolean Desativar(int id){
         try {
@@ -154,7 +187,7 @@ public class ProdutoRepositorio extends BancoDados{
             String where = "";
             if(filtro != null){
                 if(filtro.getDescricao() != null && !filtro.getDescricao().isEmpty())
-                    where += "descrição like '%"+filtro.getDescricao() + "'%";
+                    where += "descricao like '%"+filtro.getDescricao() + "'%";
                 if(filtro.getFornecedor() != null){
                     if(where.length() > 0)
                         where += " and ";
@@ -180,8 +213,7 @@ public class ProdutoRepositorio extends BancoDados{
             String consulta = "select * from Produto";
             if(where.length() > 0 )
                consulta += " where " + where;
-            else
-                consulta += "order by descricao";
+            
             PreparedStatement sql = this.getConexao()
                     .prepareStatement(consulta);
             ResultSet resultado = sql.executeQuery();
@@ -258,4 +290,93 @@ public class ProdutoRepositorio extends BancoDados{
         return null;
     }
     
+    public boolean BuscarDesc(Produto filtro) throws SQLException{
+
+        try {
+            String where = "";
+            if(filtro != null){
+                if(filtro.getDescricao() != null && !filtro.getDescricao().isEmpty())
+                    where += "descricao like '%"+filtro.getDescricao() + "'%";
+                
+            }   
+                
+            String consulta = "select * from Produto";
+            if(where.length() > 0 )
+               consulta += " where " + where;
+            
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement(consulta);
+            ResultSet resultado = sql.executeQuery();
+            Produto produto = new Produto();
+            FornecedorRepositorio fornecedor_repo = new FornecedorRepositorio();
+            resultado.next();
+                    
+            try {
+                produto.setId( resultado.getInt("id"));
+                produto.setDescricao( resultado.getString("descricao"));
+                produto.setFornecedor(fornecedor_repo.Abrir(resultado.getInt("fornecedor_fk")));
+                produto.setUnidCompra(UnidadesCompra.valueOf( resultado.getString("unidCompra") ));
+                produto.setUnidVenda(UnidadesVenda.valueOf( resultado.getString("unidVenda") ));
+                produto.setPrecoVenda( resultado.getBigDecimal("precoVenda"));
+                produto.setPrecoCompra( resultado.getBigDecimal("precoCompra"));
+                produto.setUnidComprada( resultado.getInt("unidComprada"));
+                produto.setStatus(Status.valueOf(resultado.getString("status")));
+            
+                return true;
+            } catch (SQLException ex) {
+                Logger.getLogger(ProdutoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                    
+            } catch(ErroValidacaoException ex) {
+                System.out.println(ex.getMessage());
+            }
+        return false;
+    }
+    
+    public Produto PreencheProduto(Produto filtro) throws SQLException{
+
+        try {
+            String where = "";
+            if(filtro != null){
+                if(filtro.getId() > 0)
+                    where += "id = '"+filtro.getId()+"'";
+                if(filtro.getDescricao() != null && !filtro.getDescricao().isEmpty()){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "descricao like '%"+filtro.getDescricao() + "'%";
+                }
+            }   
+                
+            String consulta = "select * from Produto";
+            if(where.length() > 0 )
+               consulta += " where " + where;
+            
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement(consulta);
+            ResultSet resultado = sql.executeQuery();
+            Produto produto = new Produto();
+            FornecedorRepositorio fornecedor_repo = new FornecedorRepositorio();
+            resultado.next();
+                    
+            try {
+                produto.setId( resultado.getInt("id"));
+                produto.setDescricao( resultado.getString("descricao"));
+                produto.setFornecedor(fornecedor_repo.Abrir(resultado.getInt("fornecedor_fk")));
+                produto.setUnidCompra(UnidadesCompra.valueOf( resultado.getString("unidCompra") ));
+                produto.setUnidVenda(UnidadesVenda.valueOf( resultado.getString("unidVenda") ));
+                produto.setPrecoVenda( resultado.getBigDecimal("precoVenda"));
+                produto.setPrecoCompra( resultado.getBigDecimal("precoCompra"));
+                produto.setUnidComprada( resultado.getInt("unidComprada"));
+                produto.setStatus(Status.valueOf(resultado.getString("status")));
+            
+                return produto;
+            } catch (SQLException ex) {
+                Logger.getLogger(ProdutoRepositorio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                    
+            } catch(ErroValidacaoException ex) {
+                System.out.println(ex.getMessage());
+            }
+        return null;
+    }
 }

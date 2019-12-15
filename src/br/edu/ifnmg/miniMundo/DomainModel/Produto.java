@@ -39,7 +39,8 @@ public class Produto {
     }
 
     public Produto(int id, String descricao, Fornecedor fornecedor, UnidadesCompra unidCompra, 
-            UnidadesVenda unidVenda, BigDecimal precoCompra, BigDecimal precoVenda, int unidComprada) {
+            UnidadesVenda unidVenda, BigDecimal precoCompra, BigDecimal precoVenda, int unidComprada, 
+            Status status) {
         this.id = id;
         this.descricao = descricao;
         this.fornecedor = new Fornecedor();
@@ -191,10 +192,7 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto{" + "id=" + id + ", descricao=" + descricao + ", fornecedor="
-                + fornecedor + ", unidCompra=" + unidCompra + ", unidVenda=" + 
-                unidVenda + ", precoCompra=" + precoCompra + ", precoVenda=" + 
-                precoVenda + ", unidComprada=" + unidComprada + ", status=" + status + '}';
+        return this.descricao;
     }
     
 }

@@ -13,5 +13,6 @@ public enum UnidadesCompra {
     Unidade,
     Caixa,
     Fardo,
+    Pacote,
     Outro  
 }

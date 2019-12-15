@@ -41,23 +41,39 @@ public class FuncionarioRepositorio extends PessoaRepositorio{
                 
                 sql.executeUpdate();
                 return true;
-            } else {
-                PreparedStatement sql = this.getConexao()
-                        .prepareStatement("update Funcionario set user = ?, "
-                                + "senha = ?, status = ? where pessoa_fk = ?");
-                
-                sql.setString(1, obj.getUser());
-                sql.setString(2, obj.getSenha());
-                sql.setString(3, obj.getStatus().name());
-                sql.setInt(4, obj.getId());
-                
-                sql.executeUpdate();
-                return true;
             }                   
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }      
         return false;     
+    }
+    
+    public boolean Editar(Funcionario obj){
+   super.Salvar((Pessoa) obj);
+        try {  
+          
+            if(obj.getId() != 0){
+                PreparedStatement sql = this.getConexao()
+                        .prepareStatement("update Funcionario set user = ?, "
+                                + "senha = ?, status = ? where pessoa_fk = ?");
+                sql.setString(1, obj.getUser());
+                sql.setString(2, obj.getSenha());
+                sql.setString(3, obj.getStatus().name());
+                sql.setInt(4, obj.getId());
+                
+                
+                if(sql.executeUpdate() > 0){ 
+                    return true;
+                }
+                
+                return true;
+            }   
+            else
+                return false;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }      
+        return false;       
     }
 
     public Funcionario Abrir(int id) throws ErroValidacaoException{
@@ -184,7 +200,34 @@ public class FuncionarioRepositorio extends PessoaRepositorio{
         }
         return func;
     }
+    
     public Funcionario ValidarId(Funcionario obj) throws ErroValidacaoException {      
+        Funcionario func = new Funcionario();
+        try{
+            PreparedStatement sql = this.getConexao()
+                        .prepareStatement("select * from funcionario where "
+                                + "pessoa_fk = ?");          
+                sql.setInt(1, obj.getId());
+
+                ResultSet resultado = sql.executeQuery();
+
+                if(resultado.next()){
+                    func.setId(resultado.getInt("pessoa_fk"));
+                    func.setUser(resultado.getString("user"));
+                    func.setSenha(resultado.getString("senha"));
+                    return func;       
+                }else{
+                    func = null;
+                    return func;
+                }
+
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return func;
+    }
+    
+    public Funcionario ValidarUser(Funcionario obj) throws ErroValidacaoException {      
         Funcionario func = new Funcionario();
         try{
             PreparedStatement sql = this.getConexao()
@@ -209,4 +252,6 @@ public class FuncionarioRepositorio extends PessoaRepositorio{
         }
         return func;
     }
+    
+    
 }

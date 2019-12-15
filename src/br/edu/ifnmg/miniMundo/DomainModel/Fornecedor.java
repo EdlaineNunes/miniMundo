@@ -180,7 +180,7 @@ public class Fornecedor {
 
     @Override
     public String toString() {
-        return "Fornecedor{" + "id=" + id + ", cnpj=" + cnpj + ", razaoSocial=" + razaoSocial + ", endCompleto=" + endCompleto + ", email=" + email + ", status=" + status + '}';
+        return this.razaoSocial;
     }
 
 }

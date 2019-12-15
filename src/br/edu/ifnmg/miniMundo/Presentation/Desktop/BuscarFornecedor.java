@@ -608,6 +608,7 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
         if(Integer.parseInt(txtIdBusca.getText()) > 0 ){
             fornecedor.setId(Integer.parseInt(txtIdBusca.getText()));
             repo_fornecedor.Ativar(fornecedor.getId());
+            JOptionPane.showMessageDialog(null, "Ativado com Sucesso!");
         }  
         
     }//GEN-LAST:event_btnAtivarActionPerformed
@@ -618,6 +619,7 @@ public class BuscarFornecedor extends javax.swing.JInternalFrame {
         if(Integer.parseInt(txtIdBusca.getText()) > 0 ){
             fornecedor.setId(Integer.parseInt(txtIdBusca.getText()));
             repo_fornecedor.Desativar(fornecedor.getId());
+            JOptionPane.showMessageDialog(null,"Desativado com Sucesso!");
         } 
     }//GEN-LAST:event_btnDesativarActionPerformed
 

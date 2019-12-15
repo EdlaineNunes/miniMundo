@@ -56,6 +56,38 @@ public class EstoqueRepositorio extends ProdutoRepositorio {
         }      
         return false;     
     }
+    
+    public boolean Modificar(int id_produto, int id_fornecedor){
+    try {  
+            
+        Estoque obj = new Estoque();
+            PreparedStatement sql0 = this.getConexao()
+                    .prepareStatement("delete from Estoque where produto_fk = ? ");
+       
+            sql0.setInt(1, id_produto);   
+            
+                PreparedStatement sql = this.getConexao()
+                        .prepareStatement("insert into Estoque (produto_fk, "
+                                + "produto_fornecedor_fk, data) VALUES (?,?,?)",
+                                Statement.RETURN_GENERATED_KEYS);
+               
+                sql.setInt(1, id_produto);
+                sql.setInt(2, id_fornecedor);
+                sql.setDate(3, new java.sql.Date(obj.getData().getTime()));
+                
+                if(sql.executeUpdate() > 0){
+                    ResultSet chave = sql.getGeneratedKeys();
+                    chave.next();
+                    obj.setId(chave.getInt(1));
+                    return true;
+                }
+                else
+                    return false;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }      
+        return false; 
+    }
 
     public Estoque Abrir(int id) throws ErroValidacaoException{
         try {     
@@ -89,6 +121,21 @@ public class EstoqueRepositorio extends ProdutoRepositorio {
         try {
             PreparedStatement sql = this.getConexao()
                     .prepareStatement("update Produto set status = 'Inativo' where id = ?");          
+            sql.setInt(1, produto_fk);          
+            if(sql.executeUpdate() > 0)
+                return true;
+            else
+                return false;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+    
+    public boolean Ativar(int produto_fk){
+        try {
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("update Produto set status = 'Ativo' where id = ?");          
             sql.setInt(1, produto_fk);          
             if(sql.executeUpdate() > 0)
                 return true;

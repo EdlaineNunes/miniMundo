@@ -51,27 +51,8 @@ public class ClienteRepositorio extends PessoaRepositorio {
                 if(sql.executeUpdate() > 0){
                     atualizarEmail(obj);
                     return true;
-                }
-                
-            } else {
-                PreparedStatement sql = this.getConexao()
-                        .prepareStatement("update Cliente set rua = ?, nCasa =?,"
-                                + " bairro =?, cidade = ?, status = ? where pessoa_fk = ?");
-                sql.setString(1, obj.getRua());
-                sql.setString(2, obj.getnCasa());
-                sql.setString(3, obj.getBairro());
-                sql.setString(4, obj.getCidade());
-                sql.setString(5, obj.getStatus().name());
-                sql.setInt(6, obj.getId());
-                
-                
-                if(sql.executeUpdate() > 0){ 
-                    atualizarEmail(obj);
-                    return true;
-                }
-                
-                return true;
-            }                   
+                }                
+            } 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }      
@@ -117,7 +98,7 @@ public class ClienteRepositorio extends PessoaRepositorio {
             sql.setInt(1, cliente.getId());     
             String values = "";
 
-            for(String email : cliente.getEmail()){
+            for(String email : cliente.getEmails()){
                 if(values.length() > 0) 
                     values += ", ";             
                 values += "("+cliente.getId()+",'"+email+"')";
@@ -151,6 +132,7 @@ public class ClienteRepositorio extends PessoaRepositorio {
                    cliente.setCidade(resultado.getString("cidade"));
                    cliente.setStatus(Status.valueOf(resultado.getString("status")));
                    abrirEmails(cliente);
+                   
                 }catch(SQLException ex) {
                    cliente = null;
                 }
@@ -239,32 +221,34 @@ public class ClienteRepositorio extends PessoaRepositorio {
         super.Buscar(filtro);
         try {
             String where = "";
-            if(filtro.getId() !=  0)
-                where += "pessoa_fk = '"+filtro.getId() + "'";
-            if(filtro.getRua() != null && !filtro.getRua().isEmpty()){
-                if(where.length() > 0)
-                        where += " and ";
-                where += "rua like '%"+filtro.getRua() + "%'";            
-            }
-            if(filtro.getnCasa() != null && !filtro.getnCasa().isEmpty()){
+            if(filtro != null){
+                if(filtro.getId() !=  0)
+                    where += "pessoa_fk = '"+filtro.getId() + "'";
+                if(filtro.getRua() != null && !filtro.getRua().isEmpty()){
+                    if(where.length() > 0)
+                            where += " and ";
+                    where += "rua like '%"+filtro.getRua() + "%'";            
+                }
+                if(filtro.getnCasa() != null && !filtro.getnCasa().isEmpty()){
+                        if(where.length() > 0)
+                            where += " and ";
+                        where += "nCasa = '"+filtro.getnCasa() + "'";
+                    }
+                if(filtro.getBairro() != null && !filtro.getBairro().isEmpty() ){
                     if(where.length() > 0)
                         where += " and ";
-                    where += "nCasa = '"+filtro.getnCasa() + "'";
+                    where += "bairro = '"+filtro.getBairro() +"'";
+                }   
+                if(filtro.getCidade() != null && !filtro.getCidade().isEmpty() ){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "cidade = '"+filtro.getCidade() +"'";
+                } 
+                if(filtro.getStatus() != null ){
+                    if(where.length() > 0)
+                        where += " and ";
+                    where += "status = '"+filtro.getStatus().name() +"'";
                 }
-            if(filtro.getBairro() != null && !filtro.getBairro().isEmpty() ){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "bairro = '"+filtro.getBairro() +"'";
-            }   
-            if(filtro.getCidade() != null && !filtro.getCidade().isEmpty() ){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "cidade = '"+filtro.getCidade() +"'";
-            } 
-            if(filtro.getStatus() != null ){
-                if(where.length() > 0)
-                    where += " and ";
-                where += "status = '"+filtro.getStatus().name() +"'";
             }
                       
             String consulta = "select * from Cliente";
@@ -325,4 +309,35 @@ public class ClienteRepositorio extends PessoaRepositorio {
         }
        return null;    
     }
+    
+    public Cliente ValidarId(Cliente obj) throws ErroValidacaoException {      
+        Cliente cliente = new Cliente();
+        try{
+            PreparedStatement sql = this.getConexao()
+                        .prepareStatement("select * from cliente where "
+                                + "pessoa_fk = ? ");          
+                sql.setInt(1, obj.getId());
+                
+                ResultSet resultado = sql.executeQuery();
+
+                if(resultado.next()){
+                    cliente.setId(Integer.parseInt(resultado.getString("pessoa_fk")));
+                    cliente.setRua( resultado.getString("rua"));
+                    cliente.setnCasa( resultado.getString("nCasa"));
+                    cliente.setBairro( resultado.getString("bairro"));
+                    cliente.setCidade(resultado.getString("cidade"));  
+                    cliente.setStatus(Status.valueOf(resultado.getString("status")));
+                    abrirEmails(obj);
+                    return cliente;       
+                }else{
+                    cliente = null;
+                    return cliente;
+                }
+
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return cliente;
+    }
+    
 }

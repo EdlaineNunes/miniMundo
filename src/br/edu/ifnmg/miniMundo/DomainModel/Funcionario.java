@@ -29,11 +29,13 @@ public class Funcionario extends Pessoa{
         this.status = Status.Ativo;
     }
 
-    public Funcionario(int id, String nome, String cpf, Sexo sexo, String senha, String user,Status status) throws ErroValidacaoException {
+    public Funcionario(int id, String nome, String cpf, List<String> telefones,
+            Sexo sexo, String senha, String user,Status status) 
+            throws ErroValidacaoException {
         setId(id);
         setNome(nome);
         setCpf(cpf);
-        //setTelefone(telefones);
+        setTelefones(telefones);
         setSexo(sexo);
         this.senha = senha;
         this.user = user;

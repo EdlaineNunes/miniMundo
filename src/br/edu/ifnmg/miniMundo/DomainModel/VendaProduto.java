@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -48,6 +50,12 @@ public class VendaProduto {
     public void addProduto(Produto produto){
         if(produto != null) // o método length retorna o tamanho da string
             this.produtos.add(produto);
+        else
+           try {
+               throw new ErroValidacaoException("Produto Inválido!");
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(VendaProduto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void removeProduto(Produto produto){
         if(this.produtos.contains(produto))// o cantais faz um for e compara com tds os dados da lista

@@ -40,7 +40,7 @@ public class CadastrarFuncionario extends javax.swing.JInternalFrame {
         initComponents();
     }
      
-     public void setCliente(Funcionario func){
+     public void setFuncionario(Funcionario func){
          this.func = func;
          txtNome.setText(func.getNome());
          txtCPF.setText(func.getCpf());
@@ -282,13 +282,16 @@ public class CadastrarFuncionario extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(tblGerenciarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(280, 280, 280)
-                .addComponent(btnSalvar)
-                .addGap(79, 79, 79)
-                .addComponent(btnCancelar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(tblGerenciarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(280, 280, 280)
+                        .addComponent(btnSalvar)
+                        .addGap(79, 79, 79)
+                        .addComponent(btnCancelar)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,7 +301,8 @@ public class CadastrarFuncionario extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSalvar)
-                    .addComponent(btnCancelar)))
+                    .addComponent(btnCancelar))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();

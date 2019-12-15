@@ -53,7 +53,7 @@ public class PessoaRepositorio extends BancoDados {
                     return false;
             } else {
                 PreparedStatement sql = this.getConexao()
-                        .prepareStatement("update Pessoa set nome = ?, cpf = ? where id = ?");
+                        .prepareStatement("update Pessoa set nome = ?, cpf = ?, sexo = ? where id = ?");
               
                 sql.setString(1, obj.getNome());
                 sql.setString(2, obj.getCpf().replace(".", "").replace("-", ""));
@@ -83,7 +83,7 @@ public class PessoaRepositorio extends BancoDados {
 
             for(String telefone : pessoa.getTelefones()){
                 if(values.length() > 0) 
-                    values += ", ";             
+                    values += " and ";             
                 values += "("+pessoa.getId()+",'"+telefone+"')";
             }
             
@@ -182,9 +182,8 @@ public class PessoaRepositorio extends BancoDados {
             String consulta = "select * from Pessoa";
 
             if(where.length() >0 )
-                consulta += " where " + where + " ;";
-            else
-                consulta += ';';
+                consulta += " where " + where ;
+      
             
             PreparedStatement sql = this.getConexao()
                     .prepareStatement(consulta);
@@ -192,22 +191,43 @@ public class PessoaRepositorio extends BancoDados {
             ResultSet resultado = sql.executeQuery();
             List<Pessoa> pessoas = new ArrayList<>();
             while(resultado.next()) {
-               Pessoa pessoa = new Pessoa();
-               try{
+                Pessoa pessoa = new Pessoa();
+                try{
                     pessoa.setId( resultado.getInt("id"));
                     pessoa.setNome( resultado.getString("nome"));
                     pessoa.setCpf( resultado.getString("cpf"));
                     pessoa.setSexo( Sexo.valueOf(resultado.getString("sexo")));
-               }catch(Exception ex){
+                }catch(Exception ex){
                     pessoa = null;
                 }
-               pessoas.add(pessoa);
+                pessoas.add(pessoa);
             }
             return pessoas;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return null;
+    }
+    
+    public Pessoa PessoaId(Pessoa filtro) throws SQLException, ErroValidacaoException{    
+        if(filtro.getId() != 0 ){
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("select * from Pessoa where id = ?");   
+ 
+            sql.setInt(1, filtro.getId());
+            ResultSet resultado = sql.executeQuery();
+             
+            resultado.next();
+            Pessoa pessoa = new Pessoa();   
+                
+            pessoa.setId( resultado.getInt("id"));
+            pessoa.setNome( resultado.getString("nome"));
+            pessoa.setCpf( resultado.getString("cpf"));
+            pessoa.setSexo( Sexo.valueOf(resultado.getString("sexo")));
+            abrirTelefones(pessoa);
+            return pessoa;   
+        } else
+            return null;
     }
 
 }

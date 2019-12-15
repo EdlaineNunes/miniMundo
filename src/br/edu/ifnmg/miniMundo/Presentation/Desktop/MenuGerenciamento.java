@@ -34,6 +34,8 @@ public class MenuGerenciamento extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         Desktop = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         lblMiniMundo1 = new javax.swing.JLabel();
@@ -44,19 +46,27 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         mnuCadastro = new javax.swing.JMenu();
         mnuCadCliente = new javax.swing.JMenuItem();
         mnuBuscarCliente = new javax.swing.JMenuItem();
+        mnuEditarCliente = new javax.swing.JMenuItem();
         mnuFunc = new javax.swing.JMenu();
         mnuCadFUNC = new javax.swing.JMenuItem();
         mnuBuscarFunc = new javax.swing.JMenuItem();
+        mnuEditarFunc = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         mnuCadFornecedor = new javax.swing.JMenuItem();
         mnuBuscarFornec = new javax.swing.JMenuItem();
+        mnuEditarFornecedor = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         mnuCadProduto = new javax.swing.JMenuItem();
         mnuBuscarProduto = new javax.swing.JMenuItem();
+        mnuEditarProduto = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         mnuAquisicao = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         mnuVendas = new javax.swing.JMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
 
         setTitle("Mini Mundo - Gerenciamento de Opções");
         setBackground(new java.awt.Color(255, 255, 255));
@@ -122,6 +132,14 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         });
         mnuCadastro.add(mnuBuscarCliente);
 
+        mnuEditarCliente.setText("Editar Cliente");
+        mnuEditarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuEditarClienteActionPerformed(evt);
+            }
+        });
+        mnuCadastro.add(mnuEditarCliente);
+
         jMenuBar1.add(mnuCadastro);
 
         mnuFunc.setText("Funcionário");
@@ -141,6 +159,14 @@ public class MenuGerenciamento extends javax.swing.JFrame {
             }
         });
         mnuFunc.add(mnuBuscarFunc);
+
+        mnuEditarFunc.setText("Editar Func");
+        mnuEditarFunc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuEditarFuncActionPerformed(evt);
+            }
+        });
+        mnuFunc.add(mnuEditarFunc);
 
         jMenuBar1.add(mnuFunc);
 
@@ -162,6 +188,14 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         });
         jMenu1.add(mnuBuscarFornec);
 
+        mnuEditarFornecedor.setText("Editar Fornecedor");
+        mnuEditarFornecedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuEditarFornecedorActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuEditarFornecedor);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Produto");
@@ -181,6 +215,14 @@ public class MenuGerenciamento extends javax.swing.JFrame {
             }
         });
         jMenu2.add(mnuBuscarProduto);
+
+        mnuEditarProduto.setText("Editar Produto");
+        mnuEditarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuEditarProdutoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnuEditarProduto);
 
         jMenuBar1.add(jMenu2);
 
@@ -326,6 +368,38 @@ public class MenuGerenciamento extends javax.swing.JFrame {
         
     }//GEN-LAST:event_mnuVendasActionPerformed
 
+    private void mnuEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEditarClienteActionPerformed
+        // TODO add your handling code here:
+        EditarCliente tela = new EditarCliente();
+        
+        Desktop.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_mnuEditarClienteActionPerformed
+
+    private void mnuEditarFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEditarFuncActionPerformed
+        // TODO add your handling code here:
+        EditarFuncionario tela = new EditarFuncionario();
+        
+        Desktop.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_mnuEditarFuncActionPerformed
+
+    private void mnuEditarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEditarFornecedorActionPerformed
+        // TODO add your handling code here:
+        EditarFornecedor tela = new EditarFornecedor();
+        
+        Desktop.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_mnuEditarFornecedorActionPerformed
+
+    private void mnuEditarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEditarProdutoActionPerformed
+        // TODO add your handling code here:
+        EditarProduto tela = new EditarProduto();
+        
+        Desktop.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_mnuEditarProdutoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -372,6 +446,8 @@ public class MenuGerenciamento extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JLabel lblMiniMundo;
     private javax.swing.JLabel lblMiniMundo1;
     private javax.swing.JMenuItem mnuAquisicao;
@@ -384,6 +460,10 @@ public class MenuGerenciamento extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuCadFornecedor;
     private javax.swing.JMenuItem mnuCadProduto;
     private javax.swing.JMenu mnuCadastro;
+    private javax.swing.JMenuItem mnuEditarCliente;
+    private javax.swing.JMenuItem mnuEditarFornecedor;
+    private javax.swing.JMenuItem mnuEditarFunc;
+    private javax.swing.JMenuItem mnuEditarProduto;
     private javax.swing.JMenu mnuFunc;
     private javax.swing.JMenuItem mnuSair;
     private javax.swing.JMenu mnuSistema;

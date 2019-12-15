@@ -638,7 +638,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         if(txtId_emailBuscar.getText().length() > 0)
             filtro.setId(Integer.parseInt(txtId_emailBuscar.getText()));
         if(txtEmailBuscar.getText().length() > 0)
-            filtro.setEmail( Arrays.asList(txtEmailBuscar.getText()) );
+            filtro.setEmails( Arrays.asList(txtEmailBuscar.getText()) );
 
         List <Cliente> email = null;
         try {
@@ -679,6 +679,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         if(Integer.parseInt(txtId_clienteBusca.getText()) > 0 ){
             filtro.setId(Integer.parseInt(txtId_clienteBusca.getText()));
             repo_cliente.Ativar(filtro.getId());
+            JOptionPane.showMessageDialog(null, "Ativado com Sucesso!");
         }   
     }//GEN-LAST:event_btnAtivarActionPerformed
 
@@ -688,6 +689,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
         if(Integer.parseInt(txtId_clienteBusca.getText()) > 0 ){
             filtro.setId(Integer.parseInt(txtId_clienteBusca.getText()));
             repo_cliente.Desativar(filtro.getId());
+            JOptionPane.showMessageDialog(null, "Desativado com Sucesso!");
         }  
     }//GEN-LAST:event_btnDesativarActionPerformed
 
@@ -703,7 +705,7 @@ public class BuscarCliente extends javax.swing.JInternalFrame {
             Vector linha = new Vector();
             //adiciona linha por linha
             linha.add(cliente.getId());
-            linha.add(cliente.getEmail());
+            linha.add(cliente.getEmails());
                         
             //adiciona cada linha na tabela
             modelo.addRow(linha);

@@ -466,6 +466,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         if(Integer.parseInt(txtId_funcBusca.getText()) > 0 && txtUser.getText().isEmpty()){
             filtro.setId(Integer.parseInt(txtId_funcBusca.getText()));
             repo_func.Ativar(filtro.getId());
+            JOptionPane.showMessageDialog(null, "Ativado com Sucesso!");
         }
     }//GEN-LAST:event_btnAtivarActionPerformed
 
@@ -510,6 +511,7 @@ public class BuscarFuncionario extends javax.swing.JInternalFrame {
         if(Integer.parseInt(txtId_funcBusca.getText()) > 0 && txtUser.getText().isEmpty()){
             filtro.setId(Integer.parseInt(txtId_funcBusca.getText()));
             repo_func.Desativar(filtro.getId());
+            JOptionPane.showMessageDialog(null, "Desativado com Sucesso!");
         }
     }//GEN-LAST:event_btnDesativarActionPerformed
 

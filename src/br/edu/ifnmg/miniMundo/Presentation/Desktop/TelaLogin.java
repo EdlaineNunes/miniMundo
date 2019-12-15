@@ -142,7 +142,7 @@ public class TelaLogin extends javax.swing.JFrame {
                     this.setVisible(false);
                 }
                 else 
-                  JOptionPane.showMessageDialog(null, "Usuário Inválido!");  
+                  JOptionPane.showMessageDialog(null, "Dados Incorretos!");  
             } catch (ErroValidacaoException ex) {
                 Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
             }               

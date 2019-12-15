@@ -116,7 +116,7 @@ public class ValidarParaVendas extends javax.swing.JInternalFrame {
         if(!this.txtUser.getText().isEmpty())
         try {
             funcionario.setUser(txtUser.getText());
-            funcionario = repo_func.ValidarId(funcionario);
+            funcionario = repo_func.ValidarUser(funcionario);
             if(funcionario != null){
                 MenuGerenciamento.Desktop.add(tela);
                 tela.setVisible(true);

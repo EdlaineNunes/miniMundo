@@ -34,7 +34,6 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
     private Produto produto;
     private ProdutoRepositorio repo_produto;
     
-    
     private FornecedorRepositorio repo_fornec;
     
     public BuscarProduto() {
@@ -104,6 +103,7 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
         btnDesativar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         btnAtivar = new javax.swing.JButton();
+        lblInformacao = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Mini Mundo Supermecados - Buscar Produto");
@@ -287,6 +287,8 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
             }
         });
 
+        lblInformacao.setText("Para ativar/desativar insira o Id do Produto!");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -316,6 +318,10 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
                             .addComponent(btnNovoTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAtivar, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
                         .addGap(24, 24, 24))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(185, 185, 185)
+                .addComponent(lblInformacao)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,17 +332,22 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
                     .addComponent(cbxStatusTodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarTodos)
                     .addComponent(btnNovoTodos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(1, 1, 1)
+                .addComponent(lblInformacao)
+                .addGap(3, 3, 3)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(btnDesativar)
-                            .addComponent(jLabel3))
-                        .addGap(14, 14, 14))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGap(18, 18, 18))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAtivar)
-                        .addGap(18, 18, 18)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(ScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -393,9 +404,8 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
         } catch (ErroValidacaoException ex) {
             Logger.getLogger(BuscarProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        BuscarProduto tela = new BuscarProduto ();
-
+        
+        EditarProduto tela = new EditarProduto ();
         this.getParent().add(tela);
         tela.show();
     }//GEN-LAST:event_tabResultadoMouseClicked
@@ -437,6 +447,8 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
         if(Integer.parseInt(txtBusca.getText()) > 0)
            produto.setId(Integer.parseInt(txtBusca.getText()));
         repo_produto.Desativar(produto.getId());
+        JOptionPane.showMessageDialog(null, "Desativado com Sucesso!");
+        txtBusca.setText("");
     }//GEN-LAST:event_btnDesativarActionPerformed
 
     private void cbxStatusTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxStatusTodosActionPerformed
@@ -449,6 +461,8 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
         if(Integer.parseInt(txtBusca.getText()) > 0)
            produto.setId(Integer.parseInt(txtBusca.getText()));
         repo_produto.Ativar(produto.getId());
+        JOptionPane.showMessageDialog(null, "Ativado com Sucesso!");
+        txtBusca.setText("");
     }//GEN-LAST:event_btnAtivarActionPerformed
 
     private void preencherTabela(List<Produto> lista) {
@@ -546,6 +560,7 @@ public class BuscarProduto extends javax.swing.JInternalFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblDescricao;
     private javax.swing.JLabel lblFornecedor;
+    private javax.swing.JLabel lblInformacao;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblStatusTodos;
     private javax.swing.JLabel lblUnidVenda;

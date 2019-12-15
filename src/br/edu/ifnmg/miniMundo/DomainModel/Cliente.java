@@ -8,6 +8,8 @@ package br.edu.ifnmg.miniMundo.DomainModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +22,7 @@ public class Cliente extends Pessoa {
     private String bairro;
     private String nCasa;
     private String cidade;
-    private List<String> email;
+    private List<String> emails;
     private Status status;
     
     private Pattern regex_cpf = Pattern.compile("\\d{3}\\.?\\d{3}\\.?\\d{3}\\-?\\d{2}"); //formatar cpf
@@ -32,7 +34,7 @@ public class Cliente extends Pessoa {
         this.nCasa = "";
         this.nCasa = "";
         this.cidade = "";
-        this.email = new ArrayList<>();
+        this.emails = new ArrayList<>();
         this.status = Status.Ativo;
     }
 
@@ -48,7 +50,7 @@ public class Cliente extends Pessoa {
         this.bairro = bairro;
         this.nCasa = nCasa;
         this.cidade = cidade;
-        this.email = new ArrayList<>();
+        this.emails = new ArrayList<>();
         this.status = status;
     }
     
@@ -94,19 +96,25 @@ public class Cliente extends Pessoa {
 
     public void addEmail(String email){
         if(email != null && email.length() <50) // o método length retorna o tamanho da string
-            this.email.add(email);
+            this.emails.add(email);
+        else
+            try {
+               throw new ErroValidacaoException("Email Inválido!");
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void removeEmail(String email){
-        if(this.email.contains(email))// o contais faz um for e compara com tds os dados da lista
-            this.email.remove(email);
+        if(this.emails.contains(email))// o contais faz um for e compara com tds os dados da lista
+            this.emails.remove(email);
     }    
     
-    public List<String> getEmail() {
-        return email;
+    public List<String> getEmails() {
+        return emails;
     }
 
-    public void setEmail(List<String> email) {
-        this.email = email;
+    public void setEmails(List<String> emails) {
+        this.emails = emails;
     }
 
     public Status getStatus() {
@@ -152,7 +160,7 @@ public class Cliente extends Pessoa {
 
     @Override
     public String toString() {
-        return "Cliente{" + "rua=" + rua + ", bairro=" + bairro + ", nCasa=" + nCasa + ", cidade=" + cidade + ", emails=" + email + ", status=" + status + ", regex_cpf=" + regex_cpf + '}';
+        return "Cliente{" + "rua=" + rua + ", bairro=" + bairro + ", nCasa=" + nCasa + ", cidade=" + cidade + ", emails=" + emails + ", status=" + status + ", regex_cpf=" + regex_cpf + '}';
     }
 
     

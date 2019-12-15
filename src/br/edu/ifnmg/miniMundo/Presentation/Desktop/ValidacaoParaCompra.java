@@ -112,13 +112,14 @@ public class ValidacaoParaCompra extends javax.swing.JInternalFrame {
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
-        CadastrarProduto tela = new CadastrarProduto();    
+       // CadastrarProduto tela = new CadastrarProduto();  
+        CompraFornecedor tela = new CompraFornecedor();  
         funcionario = new Funcionario();
         
         if(!this.txtUser.getText().isEmpty())
             try {
                 funcionario.setUser(txtUser.getText());
-                funcionario = repo_func.ValidarId(funcionario);
+                funcionario = repo_func.ValidarUser(funcionario);
                 if(funcionario != null){
                     MenuGerenciamento.Desktop.add(tela);
                     tela.setVisible(true);

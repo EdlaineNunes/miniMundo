@@ -6,29 +6,26 @@
 package br.edu.ifnmg.miniMundo.DomainModel;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Objects;
-
 /**
  *
  * @author Edlâine
  */
-public class Estoque {  
-    
+public class ListaItens {
     private Produto produto;
-    private Date data;
-    private int unid;
+    private int qnt;
+    private BigDecimal total;
 
-    public Estoque() {
+    public ListaItens() {
         this.produto = new Produto();
-        this.data = new Date();
-        this.unid = 0;
+        this.qnt = 0;
+        this.total = new BigDecimal("0.0");
     }
-    
-    public Estoque(Produto produto, Date data, int unid) {
+
+    public ListaItens(Produto produto, int qnt, BigDecimal total) {
         this.produto = produto;
-        this.data = data;
-        this.unid = unid;
+        this.qnt = qnt;
+        this.total = total;
     }
 
     public Produto getProduto() {
@@ -39,28 +36,28 @@ public class Estoque {
         this.produto = produto;
     }
 
-    public Date getData() {
-        return data;
+    public int getQnt() {
+        return qnt;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setQnt(int qnt) {
+        this.qnt = qnt;
     }
 
-    public int getUnid() {
-        return unid;
+    public BigDecimal getTotal() {
+        return total;
     }
 
-    public void setUnid(int unid) {
-        this.unid = unid;
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
+        int hash = 7;
         hash = 53 * hash + Objects.hashCode(this.produto);
-        hash = 53 * hash + Objects.hashCode(this.data);
-        hash = 53 * hash + this.unid;
+        hash = 53 * hash + this.qnt;
+        hash = 53 * hash + Objects.hashCode(this.total);
         return hash;
     }
 
@@ -75,14 +72,14 @@ public class Estoque {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Estoque other = (Estoque) obj;
-        if (this.unid != other.unid) {
+        final ListaItens other = (ListaItens) obj;
+        if (this.qnt != other.qnt) {
             return false;
         }
         if (!Objects.equals(this.produto, other.produto)) {
             return false;
         }
-        if (!Objects.equals(this.data, other.data)) {
+        if (!Objects.equals(this.total, other.total)) {
             return false;
         }
         return true;
@@ -90,7 +87,11 @@ public class Estoque {
 
     @Override
     public String toString() {
-        return "Estoque{" + "produto=" + produto + ", data=" + data + ", unid=" + unid + '}';
+        return "ListaItens{" + "produto=" + produto + ", "
+                + "qnt=" + qnt + ", total=" + total + '}';
     }
-       
+    
+    
+    
+    
 }

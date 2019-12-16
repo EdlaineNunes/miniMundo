@@ -317,4 +317,22 @@ public class FornecedorRepositorio extends BancoDados{
         return null;
     }    
     
+    public int ChecarStatus(int id_fornec){
+
+        try {     
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("select status from Fornecedor where id = ?");   
+            sql.setInt(1, id_fornec);
+            ResultSet resultado = sql.executeQuery();
+            resultado.next();
+            Fornecedor fornec = new Fornecedor();   
+            //ativo 1, inativo 0
+            if(fornec.getStatus().toString() == "Ativo")
+                return 1;
+            return 0;         
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return 0;
+    }
 }

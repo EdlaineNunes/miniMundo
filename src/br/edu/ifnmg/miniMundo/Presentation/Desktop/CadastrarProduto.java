@@ -281,13 +281,17 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         //mostra msg de confirmação
         if (JOptionPane.showConfirmDialog(null, "Deseja realmente salvar o registro?",
             "Confirmar", JOptionPane.YES_NO_OPTION) == 0){
-            //clicou sim
-            if (this.repo_produto.Salvar(produto)){
-                JOptionPane.showMessageDialog(null, "Dados salvos com sucesso!");
-                dispose();
-            }else{
-                JOptionPane.showMessageDialog(null, "Falha ao salvar os dados! Consulte o administrador do banco de dados");
-                dispose();
+            try {
+                //clicou sim
+                if (this.repo_produto.Salvar(produto)){
+                    JOptionPane.showMessageDialog(null, "Dados salvos com sucesso!");
+                    dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Falha ao salvar os dados! Consulte o administrador do banco de dados");
+                    dispose();
+                }
+            } catch (ErroValidacaoException ex) {
+                Logger.getLogger(CadastrarProduto.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         //clicou em não

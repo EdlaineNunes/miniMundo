@@ -33,7 +33,7 @@ public class ProdutoRepositorio extends BancoDados{
         
     }
     
-    public boolean Salvar(Produto obj){
+    public boolean Salvar(Produto obj) throws ErroValidacaoException{
         try {  
             if(obj.getId() == 0){
                 PreparedStatement sql = this.getConexao()
@@ -55,8 +55,7 @@ public class ProdutoRepositorio extends BancoDados{
                     chave.next();
                     obj.setId(chave.getInt(1));
                     EstoqueRepositorio repo_estoque = new EstoqueRepositorio();
-                    repo_estoque.SalvarEstoque(obj.getId(),obj.getFornecedor().getId());
-                    
+                    repo_estoque.SalvarEstoque(obj.getId(),0);
                     return true;
                 }
                 else
@@ -78,7 +77,7 @@ public class ProdutoRepositorio extends BancoDados{
                 
                 if(sql.executeUpdate() > 0){
                     EstoqueRepositorio repo_estoque = new EstoqueRepositorio();
-                    repo_estoque.Modificar(obj.getId(),obj.getFornecedor().getId());
+                    repo_estoque.SalvarEstoque(obj.getId(),1);
                     return true;
                 }else
                     return false;
@@ -378,5 +377,24 @@ public class ProdutoRepositorio extends BancoDados{
                 System.out.println(ex.getMessage());
             }
         return null;
+    }
+    
+    public int ChecarStatus(int id_produto){
+
+        try {     
+            PreparedStatement sql = this.getConexao()
+                    .prepareStatement("select status from Produto where id = ?");   
+            sql.setInt(1, id_produto);
+            ResultSet resultado = sql.executeQuery();
+            resultado.next();
+            Produto produto = new Produto();   
+            //ativo 1, inativo 0
+            if(produto.getStatus().toString() == "Ativo")
+                return 1;
+            return 0;         
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return 0;
     }
 }

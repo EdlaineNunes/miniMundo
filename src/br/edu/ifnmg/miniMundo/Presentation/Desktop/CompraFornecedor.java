@@ -5,13 +5,22 @@
  */
 package br.edu.ifnmg.miniMundo.Presentation.Desktop;
 
+import br.edu.ifnmg.miniMundo.DomainModel.CompraProduto;
 import br.edu.ifnmg.miniMundo.DomainModel.ErroValidacaoException;
 import br.edu.ifnmg.miniMundo.DomainModel.Fornecedor;
+import br.edu.ifnmg.miniMundo.DomainModel.Funcionario;
+import br.edu.ifnmg.miniMundo.DomainModel.ListaItens;
 import br.edu.ifnmg.miniMundo.DomainModel.Produto;
 import br.edu.ifnmg.miniMundo.Persistence.FornecedorRepositorio;
 import br.edu.ifnmg.miniMundo.Persistence.ProdutoRepositorio;
+import br.edu.ifnmg.miniMundo.Persistence.ComprasRepositorio;
+import br.edu.ifnmg.miniMundo.Persistence.EstoqueRepositorio;
+import br.edu.ifnmg.miniMundo.Persistence.FuncionarioRepositorio;
 import static br.edu.ifnmg.miniMundo.Presentation.Desktop.MenuGerenciamento.Desktop;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -19,6 +28,7 @@ import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -31,9 +41,14 @@ public class CompraFornecedor extends javax.swing.JInternalFrame {
      */
     Produto produto;
     ProdutoRepositorio repo_produto;
-    
+    Fornecedor fornec;
+    FuncionarioRepositorio repo_func;
     FornecedorRepositorio repo_fornec;
-    
+    CompraProduto compra;
+    ComprasRepositorio repo_compra;
+    EstoqueRepositorio repo_estoque;
+    private Funcionario funcionario;
+
     public void atualizaCBX(){
         List<Fornecedor> fornecedores;
         fornecedores = repo_fornec.Buscar(null);
@@ -42,12 +57,17 @@ public class CompraFornecedor extends javax.swing.JInternalFrame {
         cbxFornecedor.setModel(model_fornec);    
     }
     
-    public CompraFornecedor() {
+    public CompraFornecedor(Funcionario funcionario) {
         produto = new Produto();
         repo_produto = new ProdutoRepositorio();
+        repo_func = new FuncionarioRepositorio();
         repo_fornec = new FornecedorRepositorio();
+        compra = new CompraProduto();
+        repo_compra = new ComprasRepositorio();
+        repo_estoque = new EstoqueRepositorio();
         initComponents();
         atualizaCBX();
+        this.funcionario = funcionario;
         
     }
 
@@ -80,7 +100,12 @@ public class CompraFornecedor extends javax.swing.JInternalFrame {
         btnAdicionar = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
+        tabResultado = new javax.swing.JTable();
         btnAtualiza = new javax.swing.JButton();
+        txtValorTotal = new javax.swing.JTextField();
+        lblPrecoFinal = new javax.swing.JLabel();
+        btnFinalizar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -132,8 +157,23 @@ public class CompraFornecedor extends javax.swing.JInternalFrame {
         lblQntd.setText("Insira a quantidade comprada:");
 
         btnAdicionar.setText("ADICIONAR");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         btnRemover.setText("REMOVER");
+
+        tabResultado.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Descrição", "Quantidade ", "Valor Unitário"
+            }
+        ));
+        jScrollPane1.setViewportView(tabResultado);
 
         btnAtualiza.setText("ATUALIZAR");
         btnAtualiza.addActionListener(new java.awt.event.ActionListener() {
@@ -142,14 +182,21 @@ public class CompraFornecedor extends javax.swing.JInternalFrame {
             }
         });
 
+        lblPrecoFinal.setText("VALOR FINAL:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblPrecoFinal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblQntd)
@@ -181,8 +228,8 @@ public class CompraFornecedor extends javax.swing.JInternalFrame {
                                         .addGap(28, 28, 28)
                                         .addComponent(btnNovoProduto)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblFornecedor)
@@ -226,29 +273,56 @@ public class CompraFornecedor extends javax.swing.JInternalFrame {
                     .addComponent(btnAdicionar)
                     .addComponent(btnRemover))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPrecoFinal))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Compra", jPanel1);
 
         jTabbedPane1.addTab("Compra de Produtos", jTabbedPane2);
 
+        btnFinalizar.setText("FINALIZAR COMPRA");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("CANCELAR");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCancelar)
+                        .addGap(56, 56, 56)
+                        .addComponent(btnFinalizar))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFinalizar)
+                    .addComponent(btnCancelar))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -268,6 +342,11 @@ public class CompraFornecedor extends javax.swing.JInternalFrame {
 
     private void btnEditarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProdutoActionPerformed
         // TODO add your handling code here:
+        EditarProduto tela = new EditarProduto();
+        
+        Desktop.add(tela);
+        tela.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnEditarProdutoActionPerformed
 
     private void btnBuscarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProdActionPerformed
@@ -304,6 +383,7 @@ public class CompraFornecedor extends javax.swing.JInternalFrame {
         
         Desktop.add(tela);
         tela.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnNovoProdutoActionPerformed
 
     private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizaActionPerformed
@@ -311,12 +391,131 @@ public class CompraFornecedor extends javax.swing.JInternalFrame {
         atualizaCBX();
     }//GEN-LAST:event_btnAtualizaActionPerformed
 
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // TODO add your handling code here:
+        produto = new Produto();
+        
+        produto.setId(Integer.parseInt(txtIdProduto.getText()));
+        if(txtQntdCompra.getText().length() > 0)
+            produto.setUnidComprada(Integer.parseInt(txtQntdCompra.getText() ));
+        try {
+            produto = repo_produto.Abrir(produto.getId());
+            //pega do banco de dados e joga para o text field
+            if(produto != null){
+                if(produto.getUnidComprada() > 
+                        Integer.parseInt(this.txtQntdCompra.getText())){
+                    AdicaoItens(produto);
+                    preencherTabela();
+                    calcularPreco();
+                    txtIdProduto.setText("");
+                    txtDescricaoProduto.setText("");
+                    txtQntdCompra.setText("");
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Quantidade Superior ao ESTOQUE!"); 
+                    txtQntdCompra.setText("");
+                }
+            }
+            else
+                this.txtDescricaoProduto.setText("Produto Inexistente!");
+                       
+        } catch (ErroValidacaoException ex) {
+            Logger.getLogger(CompraFornecedor.class.getName()).log(Level.SEVERE, null, ex);
+        }            
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        //mostra msg de confirmação
+        if (JOptionPane.showConfirmDialog(null, "Deseja realmente CANCELAR?",
+            "Confirmar", JOptionPane.YES_NO_OPTION) == 0){
+            dispose();
+        }  
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        // TODO add your handling code here:
+        CompraProduto compra = new CompraProduto();
+        compra.setFornec((Fornecedor) cbxFornecedor.getSelectedItem());
+        //compra.setFunc();
+        if(this.repo_fornec.ChecarStatus(compra.getFornec().getId()) == 1){
+            if(!this.compra.getItens().isEmpty()){
+                ComprasRepositorio repo_compra = new ComprasRepositorio();
+                compra.setFunc(funcionario);
+                compra.getFornec();
+                compra.setPreco_final(BigDecimal.
+                        valueOf(Double.valueOf(txtValorTotal.getText())));
+                
+                try {
+                    if(repo_compra.Salvar(compra) == true){
+                        //listagem não funcional
+                        repo_compra.ListagemItens(compra);
+                        JOptionPane.showMessageDialog(null, "Finalizado com Sucesso!");
+                        dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CompraFornecedor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Lista de Compras Vazia!");
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Fornecedor Inativo!");
+
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void preencherTabela(){
+        //cria uma tabela vazia
+        DefaultTableModel modelo = new DefaultTableModel();
+        //adiciona coluna por coluna        
+        modelo.addColumn("Descrição");
+        modelo.addColumn("Quantidade");
+        modelo.addColumn("Valor Unitário");
+              
+        //para cada item da lista
+  
+        List<ListaItens> itens = this.compra.getItens();
+        for (ListaItens item: itens){
+            //cria um vetor de linha
+            Vector linha = new Vector();
+            //adiciona linha por linha
+            linha.add(item.getProduto());
+            linha.add(item.getQnt());
+            linha.add(item.getTotal());            
+            //adiciona cada linha na tabela
+            modelo.addRow(linha);
+        }        
+        //adiciona o modelo que é a minha tabela na tabela da interface
+        tabResultado.setModel(modelo); 
+    }
+    
+    public void AdicaoItens(Produto produto) throws ErroValidacaoException{
+        ListaItens item = new ListaItens();
+        
+        item.setProduto(produto);
+        item.setQnt(Integer.parseInt(txtQntdCompra.getText()));
+        item.setTotal(produto.getPrecoCompra());
+        
+        this.compra.addItem(item);    
+    }
+    
+    public void calcularPreco(){
+        float preco = (float) 0.0;
+        for(ListaItens item: compra.getItens())
+            preco += item.getQnt() * item.getProduto().
+                    getPrecoCompra().setScale(2, RoundingMode.DOWN).
+                    floatValue();   
+        txtValorTotal.setText(String.valueOf(preco));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnAtualiza;
     private javax.swing.JButton btnBuscarProd;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditarProduto;
+    private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnNovoFornecedor;
     private javax.swing.JButton btnNovoProduto;
     private javax.swing.JButton btnRemover;
@@ -330,9 +529,12 @@ public class CompraFornecedor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblDescricao;
     private javax.swing.JLabel lblFornecedor;
     private javax.swing.JLabel lblInformacoes;
+    private javax.swing.JLabel lblPrecoFinal;
     private javax.swing.JLabel lblQntd;
+    private javax.swing.JTable tabResultado;
     private javax.swing.JTextField txtDescricaoProduto;
     private javax.swing.JTextField txtIdProduto;
     private javax.swing.JTextField txtQntdCompra;
+    private javax.swing.JTextField txtValorTotal;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,38 +10,36 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Edlâine
  */
-public class VendaProduto {
+public class CompraProduto {
     private int id;
     private BigDecimal preco_final;
     private List<ListaItens> itens;
-    private Cliente cliente;
     private Funcionario func;
+    private Fornecedor fornec;
     private Date data;
 
-    public VendaProduto() {
+    public CompraProduto() {
         this.id = 0;
         this.preco_final = new BigDecimal("0.0");
         this.itens = new ArrayList<ListaItens>();
-        this.cliente = new Cliente();
         this.func = new Funcionario();
+        this.fornec = new Fornecedor();
         this.data = new Date();
     }
 
-    public VendaProduto(int id, BigDecimal preco_final, 
-            List<ListaItens> itens, Cliente cliente, 
-            Funcionario func, Date data) {
+    public CompraProduto(int id, BigDecimal preco_final, 
+            List<ListaItens> itens, Funcionario func, 
+            Fornecedor fornec, Date data) {
         this.id = id;
         this.preco_final = preco_final;
         this.itens = itens;
-        this.cliente = cliente;
         this.func = func;
+        this.fornec = fornec;
         this.data = data;
     }
 
@@ -62,10 +60,8 @@ public class VendaProduto {
     }
 
     public void addItem(ListaItens item) throws ErroValidacaoException{
-        if(!this.itens.isEmpty())
+        if(this.itens != null)
             this.itens.add(item);
-        else
-           throw new ErroValidacaoException("Item inválido!");   
     }
     
     public void removeItem(ListaItens item) throws ErroValidacaoException{
@@ -83,20 +79,20 @@ public class VendaProduto {
         this.itens = itens;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public Funcionario getFunc() {
         return func;
     }
 
     public void setFunc(Funcionario func) {
         this.func = func;
+    }
+
+    public Fornecedor getFornec() {
+        return fornec;
+    }
+
+    public void setFornec(Fornecedor fornec) {
+        this.fornec = fornec;
     }
 
     public Date getData() {
@@ -109,13 +105,13 @@ public class VendaProduto {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 13 * hash + this.id;
-        hash = 13 * hash + Objects.hashCode(this.preco_final);
-        hash = 13 * hash + Objects.hashCode(this.itens);
-        hash = 13 * hash + Objects.hashCode(this.cliente);
-        hash = 13 * hash + Objects.hashCode(this.func);
-        hash = 13 * hash + Objects.hashCode(this.data);
+        int hash = 3;
+        hash = 23 * hash + this.id;
+        hash = 23 * hash + Objects.hashCode(this.preco_final);
+        hash = 23 * hash + Objects.hashCode(this.itens);
+        hash = 23 * hash + Objects.hashCode(this.func);
+        hash = 23 * hash + Objects.hashCode(this.fornec);
+        hash = 23 * hash + Objects.hashCode(this.data);
         return hash;
     }
 
@@ -130,7 +126,7 @@ public class VendaProduto {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final VendaProduto other = (VendaProduto) obj;
+        final CompraProduto other = (CompraProduto) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -140,10 +136,10 @@ public class VendaProduto {
         if (!Objects.equals(this.itens, other.itens)) {
             return false;
         }
-        if (!Objects.equals(this.cliente, other.cliente)) {
+        if (!Objects.equals(this.func, other.func)) {
             return false;
         }
-        if (!Objects.equals(this.func, other.func)) {
+        if (!Objects.equals(this.fornec, other.fornec)) {
             return false;
         }
         if (!Objects.equals(this.data, other.data)) {
@@ -154,9 +150,9 @@ public class VendaProduto {
 
     @Override
     public String toString() {
-        return "VendaProduto{" + "id=" + id + ", preco_final=" + 
-                preco_final + ", itens=" + itens + ", cliente=" + 
-                cliente + ", func=" + func + ", data=" + data + '}';
+        return "CompraProduto{" + "id=" + id + ", preco_final="
+                + preco_final + ", itens=" + itens + ", func=" +
+                func + ", fornec=" + fornec + ", data=" + data + '}';
     }
-        
+    
 }

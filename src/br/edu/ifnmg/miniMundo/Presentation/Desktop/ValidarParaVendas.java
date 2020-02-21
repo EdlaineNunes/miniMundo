@@ -110,7 +110,7 @@ public class ValidarParaVendas extends javax.swing.JInternalFrame {
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
-        VenderProduto tela = new VenderProduto();
+        //VenderProduto tela = new VenderProduto();
         funcionario = new Funcionario();
 
         if(!this.txtUser.getText().isEmpty())
@@ -118,6 +118,7 @@ public class ValidarParaVendas extends javax.swing.JInternalFrame {
             funcionario.setUser(txtUser.getText());
             funcionario = repo_func.ValidarUser(funcionario);
             if(funcionario != null){
+                vender tela = new vender(funcionario);
                 MenuGerenciamento.Desktop.add(tela);
                 tela.setVisible(true);
                 //tela.setVisible(true);

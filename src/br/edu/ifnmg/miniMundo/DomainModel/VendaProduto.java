@@ -64,8 +64,6 @@ public class VendaProduto {
     public void addItem(ListaItens item) throws ErroValidacaoException{
         if(!this.itens.isEmpty())
             this.itens.add(item);
-        else
-           throw new ErroValidacaoException("Item inválido!");   
     }
     
     public void removeItem(ListaItens item) throws ErroValidacaoException{
